@@ -1,6 +1,6 @@
-const { Model } = require("sequelize");
-const Sequelize = require("sequelize");
-const bcrypt = require("bcryptjs");
+const { Model } = require('sequelize');
+const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 class User extends Model {
   static init(sequelize) {
@@ -10,24 +10,23 @@ class User extends Model {
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        provider: Sequelize.BOOLEAN
+        provider: Sequelize.BOOLEAN,
       },
-      { sequelize }
+      { sequelize },
     );
 
-    //Executa modificações no usuario antes de gravar no banco de dados
-    this.addHook("beforeSave", async user => {
+    // Executa modificações no usuario antes de gravar no banco de dados
+    this.addHook('beforeSave', async (user) => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
     });
 
-    return this
+    return this;
   }
 
-  checkPassword(password){
-    return bcrypt.compare(password,this.password_hash)
-
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
   }
 }
 

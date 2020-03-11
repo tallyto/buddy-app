@@ -1,27 +1,23 @@
-const express = require('express')
-const routes = require('./routes')
-require('./database')
-class App{
-    constructor(){
-        this.server = express()
-        this.database()
-        this.middlewares()
-        this.routes()
-    }
+const express = require('express');
+const routes = require('./routes');
+require('./database');
 
-    database(){
+class App {
+  constructor() {
+    this.server = express();
+    this.middlewares();
+    this.routes();
+  }
 
-    }
 
-    middlewares(){
-        this.server.use(express.json())
-        this.server.use(express.urlencoded({extended: true}))
-        this.server.use(routes)
-    }
+  middlewares() {
+    this.server.use(express.json());
+    this.server.use(express.urlencoded({ extended: true }));
+  }
 
-    routes(){
-
-    }
+  routes() {
+    this.server.use(routes);
+  }
 }
 
-module.exports = new App().server
+module.exports = new App().server;
