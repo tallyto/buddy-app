@@ -1,0 +1,5 @@
+sudo docker run --name postgres -e POSTGRES_PASSWORD=buddy@app123 -p 5432:5432 -d -t postgres 
+
+sudo docker run --name mongo -p 27017:27017 -d -t mongo
+
+sudo docker run --name redis -p 6379:6379 -d -t redis:alpine
