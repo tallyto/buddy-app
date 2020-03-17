@@ -9,6 +9,9 @@ const FileController = require('./app/controllers/FileController');
 const routes = Router();
 const upload = multer(multerConfig);
 
+routes.get('/', (req, res) => {
+  res.send('<h1>Buddypet</h1>');
+});
 routes.get('/users', UserController.show);
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
