@@ -2,6 +2,12 @@ const Yup = require('yup');
 const User = require('../models/User');
 
 class UserController {
+  async show(req, res) {
+    const user = await User.findAll();
+
+    return res.json(user);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
