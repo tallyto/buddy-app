@@ -18,3 +18,46 @@ create database buddypet;
 exit
 
 exit
+
+#Liberar porta do servidor
+
+sudo ufw allow 3001
+
+#Parar processos na porta
+
+lsof -i :3001
+
+kill -9 PID #id do processo
+
+#Proxy reverso
+
+sudo apt install nginx
+
+sudo ufw allow 80
+
+#Configuração nginx
+
+cd /etc/nginx/sites-available
+
+sudo nano default
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        server_name _;
+
+        location / {
+                proxy_pass http://localhost:3001;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+ 
+        }
+
+}
+
+sudo service nginx restart
+
