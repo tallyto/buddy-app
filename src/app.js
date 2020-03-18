@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const routes = require('./routes');
 require('./database');
 
@@ -15,6 +16,7 @@ class App {
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: true }));
     this.server.use(cors());
+    this.server.use('/files', express.static(path.resolve(__dirname, '..', 'temp', 'uploads')));
   }
 
   routes() {

@@ -1,9 +1,19 @@
 const Yup = require('yup');
 const User = require('../models/User');
+const File = require('../models/File');
 
 class UserController {
   async show(req, res) {
-    const user = await User.findAll();
+    const user = await User.findAll({
+      attributes: ['id', 'email', 'name', 'avatar_id'],
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['path', 'name', 'url'],
+        },
+      ],
+    });
 
     return res.json(user);
   }
