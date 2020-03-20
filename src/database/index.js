@@ -5,7 +5,7 @@ const Appointment = require('../app/models/Appointment');
 
 const databaseConfig = require('../config/database');
 
-const models = [User, File];
+const models = [User, File, Appointment];
 
 class Database {
   constructor() {
