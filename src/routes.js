@@ -32,6 +32,7 @@ routes.get('/pets', PetController.index);
 
 routes.post('/vacinas', VacinaController.store);
 
+routes.get('/profile', UserController.profile);
 routes.put('/users', UserController.update);
 
 routes.get('/providers', ProviderController.index);

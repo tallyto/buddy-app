@@ -4,8 +4,8 @@ const File = require('../models/File');
 class ProviderController {
   async index(req, res) {
     const providers = await User.findAll({
-      whare: { provider: false },
-      attributes: ['id', 'email', 'name', 'avatar_id'],
+      where: { provider: true },
+      attributes: ['id', 'email', 'name', 'avatar_id', 'provider'],
       include: [
         {
           model: File,
@@ -17,6 +17,5 @@ class ProviderController {
     res.json(providers);
   }
 }
-
 
 module.exports = new ProviderController();

@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const Yup = require('yup');
 const Pets = require('./../models/Pet');
+const User = require('./../models/User');
 
 class PetsController {
   async store(req, res) {
@@ -27,15 +28,22 @@ class PetsController {
       genero,
       descricao,
       nascimento,
-
     });
-
 
     return res.json(pets);
   }
 
   async index(req, res) {
-    const pets = await Pets.findAll({ where: { user_id: req.userId } });
+    const pets = await Pets.findAll({
+      where: { user_id: req.userId },
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
     return res.json(pets);
   }
 }
