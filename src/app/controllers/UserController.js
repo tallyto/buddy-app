@@ -6,7 +6,7 @@ class UserController {
   async profile(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
-      attributes: ['id', 'email', 'name', 'avatar_id', 'nascimento', 'cpf', 'endereco'],
+      attributes: ['id', 'email', 'name', 'avatar_id', 'nascimento', 'cpf', 'endereco', 'telefone'],
       include: [
         {
           model: File,
@@ -21,7 +21,7 @@ class UserController {
 
   async show(req, res) {
     const user = await User.findAll({
-      attributes: ['id', 'email', 'name', 'avatar_id', 'nascimento', 'cpf', 'endereco'],
+      attributes: ['id', 'email', 'name', 'avatar_id', 'nascimento', 'cpf', 'endereco', 'telefone'],
       include: [
         {
           model: File,
@@ -61,6 +61,7 @@ class UserController {
       email: Yup.string(),
       nascimento: Yup.date(),
       cpf: Yup.string(),
+      telefone: Yup.string(),
       endereco: Yup.string(),
       oldPassword: Yup.string().min(6),
       password: Yup.string().min(6).when('oldPassword', (oldPassword, field) => (oldPassword ? field.required() : field)),
@@ -88,12 +89,12 @@ class UserController {
     }
 
     const {
-      id, name, nascimento, cpf, endereco,
+      id, name, nascimento, cpf, endereco, telefone,
     } = await user.update(req.body);
 
 
     return res.json({
-      id, name, email, nascimento, cpf, endereco,
+      id, name, email, nascimento, cpf, endereco, telefone,
     });
   }
 }

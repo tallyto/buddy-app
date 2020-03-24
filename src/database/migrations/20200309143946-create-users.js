@@ -29,6 +29,10 @@ module.exports = {
       allowNull: true,
       unique: true,
     },
+    telefone: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     endereco: {
       type: Sequelize.STRING,
       allowNull: true,
