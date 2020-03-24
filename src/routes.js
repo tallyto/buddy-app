@@ -24,11 +24,12 @@ routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.post('/categorias', CategoriaController.store);
-
+routes.get('/all-pets', PetController.show);
 routes.use(authMiddleware);
 
 routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
+
 
 routes.post('/vacinas', VacinaController.store);
 

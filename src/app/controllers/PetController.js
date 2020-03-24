@@ -46,6 +46,20 @@ class PetsController {
     });
     return res.json(pets);
   }
+
+  async show(req, res) {
+    const pets = await Pets.findAll({
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
+
+    return res.json(pets);
+  }
 }
 
 module.exports = new PetsController();
