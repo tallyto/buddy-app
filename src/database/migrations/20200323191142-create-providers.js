@@ -9,7 +9,7 @@ module.exports = {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING,
@@ -18,16 +18,16 @@ module.exports = {
     },
     cpf: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     endereco: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     nascimento: {
       type: Sequelize.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     password_hash: {
       type: Sequelize.STRING,
@@ -35,7 +35,7 @@ module.exports = {
     },
     bio: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     categoria_id: {
       type: Sequelize.INTEGER,

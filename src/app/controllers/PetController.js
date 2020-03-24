@@ -10,7 +10,7 @@ class PetsController {
       raca: Yup.string().required(),
       genero: Yup.string().required(),
       descricao: Yup.string().required(),
-      nascimento: Yup.date().required(),
+      idade: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -18,7 +18,7 @@ class PetsController {
     }
 
     const {
-      name, raca, genero, descricao, nascimento,
+      name, raca, genero, descricao, idade,
     } = req.body;
 
     const pets = await Pets.create({
@@ -27,7 +27,7 @@ class PetsController {
       raca,
       genero,
       descricao,
-      nascimento,
+      idade,
     });
 
     return res.json(pets);

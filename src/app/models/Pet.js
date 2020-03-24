@@ -9,7 +9,7 @@ class Pets extends Model {
         raca: Sequelize.STRING,
         genero: Sequelize.STRING,
         descricao: Sequelize.STRING,
-        nascimento: Sequelize.DATE,
+        idade: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -21,6 +21,7 @@ class Pets extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 }
 

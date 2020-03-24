@@ -9,7 +9,7 @@ module.exports = {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING,
@@ -20,10 +20,18 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    provider: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
-      allowNull: false,
+    nascimento: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    },
+    cpf: {
+      type: Sequelize.STRING,
+      allowNull: true,
+      unique: true,
+    },
+    endereco: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     created_at: {
       type: Sequelize.DATE,

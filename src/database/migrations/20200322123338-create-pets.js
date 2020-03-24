@@ -22,8 +22,8 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    nascimento: {
-      type: Sequelize.DATE,
+    idade: {
+      type: Sequelize.INTEGER,
       allowNull: false,
     },
     user_id: {
@@ -32,6 +32,13 @@ module.exports = {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       allowNull: false,
+    },
+    avatar_id: {
+      type: Sequelize.INTEGER,
+      references: { model: 'files', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
+      allowNull: true,
     },
     created_at: {
       type: Sequelize.DATE,
