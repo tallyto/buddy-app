@@ -10,6 +10,7 @@ const AppointmentController = require('./app/controllers/AppointmentController')
 const PetController = require('./app/controllers/PetController');
 const VacinaController = require('./app/controllers/VacinaController');
 const CategoriaController = require('./app/controllers/CategoriaController');
+const ProfileController = require('./app/controllers/ProfileController');
 
 
 const routes = Router();
@@ -19,22 +20,25 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
-routes.get('/users', UserController.show);
+routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
+
 routes.post('/sessions', SessionController.store);
 
 routes.post('/categorias', CategoriaController.store);
+
 routes.get('/all-pets', PetController.show);
+
 routes.use(authMiddleware);
+
+routes.get('/profile', ProfileController.index);
+
+routes.put('/users', UserController.update);
 
 routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
 
-
 routes.post('/vacinas', VacinaController.store);
-
-routes.get('/profile', UserController.profile);
-routes.put('/users', UserController.update);
 
 routes.get('/providers', ProviderController.index);
 

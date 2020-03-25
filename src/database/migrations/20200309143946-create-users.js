@@ -20,15 +20,6 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    nascimento: {
-      type: Sequelize.DATE,
-      allowNull: true,
-    },
-    cpf: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      unique: true,
-    },
     telefone: {
       type: Sequelize.STRING,
       allowNull: true,

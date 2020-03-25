@@ -1,4 +1,3 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.addColumn('users', 'avatar_id', {
     type: Sequelize.INTEGER,

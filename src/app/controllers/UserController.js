@@ -3,25 +3,9 @@ const User = require('../models/User');
 const File = require('../models/File');
 
 class UserController {
-  async profile(req, res) {
-    const user = await User.findOne({
-      where: { id: req.userId },
-      attributes: ['id', 'email', 'name', 'avatar_id', 'nascimento', 'cpf', 'endereco', 'telefone'],
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['path', 'name', 'url'],
-        },
-      ],
-    });
-
-    return res.json(user);
-  }
-
-  async show(req, res) {
+  async index(req, res) {
     const user = await User.findAll({
-      attributes: ['id', 'email', 'name', 'avatar_id', 'nascimento', 'cpf', 'endereco', 'telefone'],
+      attributes: ['id', 'email', 'name', 'avatar_id', 'endereco', 'telefone'],
       include: [
         {
           model: File,
@@ -59,8 +43,6 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string(),
-      nascimento: Yup.date(),
-      cpf: Yup.string(),
       telefone: Yup.string(),
       endereco: Yup.string(),
       oldPassword: Yup.string().min(6),
@@ -89,12 +71,12 @@ class UserController {
     }
 
     const {
-      id, name, nascimento, cpf, endereco, telefone,
+      id, name, endereco, telefone,
     } = await user.update(req.body);
 
 
     return res.json({
-      id, name, email, nascimento, cpf, endereco, telefone,
+      id, name, email, endereco, telefone,
     });
   }
 }
