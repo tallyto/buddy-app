@@ -3,6 +3,8 @@ const multer = require('multer');
 const UserController = require('./app/controllers/UserController.js');
 const SessionController = require('./app/controllers/SessionController.js');
 const authMiddleware = require('./app/middlewares/auth');
+const providerAuth = require('./app/middlewares/providerAuth');
+const SessionProviderController = require('./app/controllers/SessionProviderController');
 const multerConfig = require('./config/multer');
 const FileController = require('./app/controllers/FileController');
 const ProviderController = require('./app/controllers/ProviderController');
@@ -23,8 +25,12 @@ routes.get('/', (req, res) => {
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
 
-routes.post('/sessions', SessionController.store);
+routes.get('/providers', ProviderController.index);
+routes.post('/providers', ProviderController.store);
 
+routes.post('/provider-sessions', SessionProviderController.store);
+routes.post('/sessions', SessionController.store);
+routes.post('/files', upload.single('file'), FileController.store);
 routes.post('/categorias', CategoriaController.store);
 
 routes.get('/all-pets', PetController.show);
@@ -40,10 +46,11 @@ routes.get('/pets', PetController.index);
 
 routes.post('/vacinas', VacinaController.store);
 
-routes.get('/providers', ProviderController.index);
-
-routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/appointments', AppointmentController.store);
+
+routes.use(providerAuth);
+routes.put('/providers', ProviderController.update);
+
 
 module.exports = routes;

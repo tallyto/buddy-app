@@ -33,6 +33,10 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    telefone: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     categoria_id: {
       type: Sequelize.INTEGER,
       references: { model: 'categorias', key: 'id' },
