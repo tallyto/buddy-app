@@ -3,7 +3,7 @@ const Yup = require('yup');
 const Provider = require('../models/Provider');
 const authConfig = require('../../config/auth');
 
-class SessionController {
+class SessionProviderController {
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
@@ -41,4 +41,4 @@ class SessionController {
   }
 }
 
-module.exports = new SessionController();
+module.exports = new SessionProviderController();

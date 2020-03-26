@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { Model } = require('sequelize');
 
-class Vacinas extends Model {
+class Vacina extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -18,8 +18,8 @@ class Vacinas extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Pets, { foreignKey: 'pet_id', as: 'pets' });
+    this.belongsTo(models.Pet, { foreignKey: 'pet_id', as: 'pets' });
   }
 }
 
-module.exports = Vacinas;
+module.exports = Vacina;

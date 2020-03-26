@@ -18,7 +18,7 @@ class Provider extends Model {
       { sequelize },
     );
 
-    // Executa modificações no usuario antes de gravar no banco de dados
+    // Executa modificações no provider antes de gravar no banco de dados
     this.addHook('beforeSave', async (provider) => {
       if (provider.password) {
         provider.password_hash = await bcrypt.hash(provider.password, 8);
@@ -31,6 +31,7 @@ class Provider extends Model {
   // Faz a referencia de um id de arquvio na tabela de usuário
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.belongsTo(models.Categoria, { foreignKey: 'categoria_id', as: 'categoria' });
   }
 
   checkPassword(password) {

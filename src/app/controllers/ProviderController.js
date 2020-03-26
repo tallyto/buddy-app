@@ -1,16 +1,32 @@
 const Yup = require('yup');
 const Provider = require('../models/Provider');
 const File = require('../models/File');
+const Categoria = require('../models/Categoria');
 
 class ProviderController {
   async index(req, res) {
     const provider = await Provider.findAll({
-      attributes: ['id', 'email', 'name', 'avatar_id', 'endereco', 'telefone', 'bio', 'cpf'],
+      attributes: [
+        'id',
+        'name',
+        'email',
+        'endereco',
+        'telefone',
+        'bio',
+        'cpf',
+        'avatar_id',
+        'categoria_id',
+      ],
       include: [
         {
           model: File,
           as: 'avatar',
           attributes: ['path', 'name', 'url'],
+        },
+        {
+          model: Categoria,
+          as: 'categoria',
+          attributes: ['name'],
         },
       ],
     });
@@ -21,23 +37,28 @@ class ProviderController {
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string().required(),
-      password: Yup.string().required().min(6),
+      password: Yup.string()
+        .required()
+        .min(6),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
-    const providerExist = await Provider.findOne({ where: { email: req.body.email } });
 
+    const providerExist = await Provider.findOne({
+      where: { email: req.body.email },
+    });
 
     if (providerExist) {
       return res.status(400).json({ error: 'Provider already exists.' });
     }
-    const {
-      id, email,
-    } = await Provider.create(req.body);
+
+    const { id, email } = await Provider.create(req.body);
+
     return res.json({
-      id, email,
+      id,
+      email,
     });
   }
 
@@ -50,10 +71,11 @@ class ProviderController {
       cpf: Yup.string(),
       bio: Yup.string(),
       oldPassword: Yup.string().min(6),
-      password: Yup.string().min(6).when('oldPassword', (oldPassword, field) => (oldPassword ? field.required() : field)),
+      password: Yup.string()
+        .min(6)
+        .when('oldPassword', (oldPassword, field) => (oldPassword ? field.required() : field)),
       comfirmPassword: Yup.string().when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
     });
-
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
@@ -76,11 +98,18 @@ class ProviderController {
 
     const {
       id, name, endereco, telefone, cpf, bio,
-    } = await provider.update(req.body);
-
+    } = await provider.update(
+      req.body,
+    );
 
     return res.json({
-      id, name, email, endereco, telefone, cpf, bio,
+      id,
+      name,
+      email,
+      endereco,
+      telefone,
+      cpf,
+      bio,
     });
   }
 }

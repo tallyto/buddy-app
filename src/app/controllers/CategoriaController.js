@@ -2,7 +2,7 @@
 const Yup = require('yup');
 const Categoria = require('./../models/Categoria');
 
-class PetsController {
+class CategoriaController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -29,4 +29,4 @@ class PetsController {
   }
 }
 
-module.exports = new PetsController();
+module.exports = new CategoriaController();

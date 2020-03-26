@@ -28,16 +28,17 @@ routes.post('/users', UserController.store);
 routes.get('/providers', ProviderController.index);
 routes.post('/providers', ProviderController.store);
 
-routes.post('/provider-sessions', SessionProviderController.store);
+routes.post('/sessions/providers', SessionProviderController.store);
 routes.post('/sessions', SessionController.store);
 routes.post('/files', upload.single('file'), FileController.store);
 routes.post('/categorias', CategoriaController.store);
 
-routes.get('/all-pets', PetController.show);
+routes.get('/pets/all', PetController.show);
 
+// Rota de usuários
 routes.use(authMiddleware);
 
-routes.get('/profile', ProfileController.index);
+routes.get('/profile', ProfileController.user);
 
 routes.put('/users', UserController.update);
 
@@ -49,8 +50,10 @@ routes.post('/vacinas', VacinaController.store);
 
 routes.post('/appointments', AppointmentController.store);
 
+// Rota de providers
 routes.use(providerAuth);
 routes.put('/providers', ProviderController.update);
+routes.get('/providers/profile', ProfileController.provider);
 
 
 module.exports = routes;

@@ -22,7 +22,6 @@ class PetsController {
       tipo,
       pet_id,
       validade,
-
     });
 
     return res.json(vacinas);

@@ -6,8 +6,6 @@ const Pet = require('../app/models/Pet');
 const Vacina = require('../app/models/Vacina');
 const Categoria = require('../app/models/Categoria');
 const Provider = require('../app/models/Provider');
-
-
 const databaseConfig = require('../config/database');
 
 const models = [User, File, Appointment, Pet, Vacina, Categoria, Provider];
