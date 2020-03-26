@@ -18,7 +18,7 @@ class Vacina extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Pet, { foreignKey: 'pet_id', as: 'pets' });
+    this.belongsTo(models.Pets, { foreignKey: 'pet_id', as: 'pets' });
   }
 }
 
