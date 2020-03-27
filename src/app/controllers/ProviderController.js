@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const Yup = require('yup');
 const Provider = require('../models/Provider');
 const File = require('../models/File');
@@ -14,6 +15,9 @@ class ProviderController {
         'telefone',
         'bio',
         'cpf',
+        'passeador',
+        'adestrador',
+        'clinica',
         'avatar_id',
         'categoria_id',
       ],
@@ -83,10 +87,18 @@ class ProviderController {
     const provider = await Provider.findByPk(req.params.id);
 
     const {
-      id, name, endereco, email, telefone, cpf, bio, clinica, adestrador, passeador, nascimento,
-    } = await provider.update(
-      req.body,
-    );
+      id,
+      name,
+      endereco,
+      email,
+      telefone,
+      cpf,
+      bio,
+      clinica,
+      adestrador,
+      passeador,
+      nascimento,
+    } = await provider.update(req.body);
 
     return res.json({
       id,
@@ -112,6 +124,9 @@ class ProviderController {
       cpf: Yup.string(),
       bio: Yup.string(),
       nascimento: Yup.date(),
+      clinica: Yup.boolean(),
+      adestrador: Yup.boolean(),
+      passeador: Yup.boolean(),
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
@@ -139,10 +154,19 @@ class ProviderController {
     }
 
     const {
-      id, name, endereco, telefone, cpf, bio, nascimento,
-    } = await provider.update(
-      req.body,
-    );
+      id,
+      name,
+      endereco,
+      telefone,
+      cpf,
+      bio,
+      nascimento,
+      clinica,
+      adestrador,
+      passeador,
+      categoria_id,
+      avatar_id,
+    } = await provider.update(req.body);
 
     return res.json({
       id,
@@ -153,6 +177,11 @@ class ProviderController {
       cpf,
       bio,
       nascimento,
+      clinica,
+      adestrador,
+      passeador,
+      categoria_id,
+      avatar_id,
     });
   }
 }

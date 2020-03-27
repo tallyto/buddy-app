@@ -13,6 +13,9 @@ const PetController = require('./app/controllers/PetController');
 const VacinaController = require('./app/controllers/VacinaController');
 const CategoriaController = require('./app/controllers/CategoriaController');
 const ProfileController = require('./app/controllers/ProfileController');
+const ClinicaController = require('./app/controllers/ClinicaController');
+const PasseadorController = require('./app/controllers/PasseadorController');
+const AdestradorController = require('./app/controllers/AdestradorController');
 
 
 const routes = Router();
@@ -24,6 +27,10 @@ routes.get('/', (req, res) => {
 
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
+routes.get('/providers/clinica', ClinicaController.index);
+routes.get('/providers/passeador', PasseadorController.index);
+routes.get('/vacinas', VacinaController.index);
+routes.get('/providers/adestrador', AdestradorController.index);
 
 routes.get('/providers', ProviderController.index);
 routes.post('/providers', ProviderController.store);
@@ -38,7 +45,7 @@ routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 // Rota de usuários
 routes.use(authMiddleware);
 
-routes.get('/profile', ProfileController.user);
+routes.get('/users/profile', ProfileController.user);
 
 routes.put('/users', UserController.update);
 

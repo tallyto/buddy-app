@@ -26,6 +26,12 @@ class PetsController {
 
     return res.json(vacinas);
   }
+
+  async index(req, res) {
+    const vacinas = await Vacinas.findAll();
+
+    return res.send(vacinas);
+  }
 }
 
 module.exports = new PetsController();
