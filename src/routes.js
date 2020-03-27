@@ -34,7 +34,7 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.post('/categorias', CategoriaController.store);
 
 routes.get('/pets/all', PetController.show);
-
+routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 // Rota de usuários
 routes.use(authMiddleware);
 

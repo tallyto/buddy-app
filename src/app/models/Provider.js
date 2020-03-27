@@ -14,6 +14,10 @@ class Provider extends Model {
         cpf: Sequelize.STRING,
         bio: Sequelize.STRING,
         endereco: Sequelize.STRING,
+        clinica: Sequelize.BOOLEAN,
+        passeador: Sequelize.BOOLEAN,
+        adestrador: Sequelize.BOOLEAN,
+        nascimento: Sequelize.DATE,
       },
       { sequelize },
     );

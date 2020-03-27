@@ -62,6 +62,47 @@ class ProviderController {
     });
   }
 
+  async cadastro(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string(),
+      telefone: Yup.string(),
+      endereco: Yup.string(),
+      cpf: Yup.string(),
+      bio: Yup.string(),
+      clinica: Yup.boolean(),
+      adestrador: Yup.boolean(),
+      passeador: Yup.boolean(),
+      nascimento: Yup.date(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const provider = await Provider.findByPk(req.params.id);
+
+    const {
+      id, name, endereco, email, telefone, cpf, bio, clinica, adestrador, passeador, nascimento,
+    } = await provider.update(
+      req.body,
+    );
+
+    return res.json({
+      id,
+      name,
+      email,
+      endereco,
+      telefone,
+      cpf,
+      bio,
+      clinica,
+      adestrador,
+      passeador,
+      nascimento,
+    });
+  }
+
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
@@ -70,6 +111,7 @@ class ProviderController {
       endereco: Yup.string(),
       cpf: Yup.string(),
       bio: Yup.string(),
+      nascimento: Yup.date(),
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
@@ -97,7 +139,7 @@ class ProviderController {
     }
 
     const {
-      id, name, endereco, telefone, cpf, bio,
+      id, name, endereco, telefone, cpf, bio, nascimento,
     } = await provider.update(
       req.body,
     );
@@ -110,6 +152,7 @@ class ProviderController {
       telefone,
       cpf,
       bio,
+      nascimento,
     });
   }
 }
