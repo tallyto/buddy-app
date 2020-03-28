@@ -43,6 +43,8 @@ routes.post('/sessions/providers', SessionProviderController.store);
 routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/categorias', CategoriaController.store);
+routes.get('/categorias', CategoriaController.index);
+
 
 routes.get('/pets/all', PetController.show);
 

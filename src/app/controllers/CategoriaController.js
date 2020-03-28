@@ -26,6 +26,15 @@ class CategoriaController {
       return res.json({ error: 'Houve um erro ao cadastrar categoria' });
     }
   }
+
+  async index(req, res) {
+    try {
+      const categoria = await Categoria.findAll();
+      return res.json(categoria);
+    } catch (error) {
+      return res.json({ error: 'Erro ao listar categorias' });
+    }
+  }
 }
 
 module.exports = new CategoriaController();
