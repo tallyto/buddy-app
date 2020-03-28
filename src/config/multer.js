@@ -2,7 +2,6 @@ const multer = require('multer');
 const crypto = require('crypto');
 const { extname, resolve } = require('path');
 
-
 module.exports = {
   storage: multer.diskStorage({
     destination: resolve(__dirname, '..', '..', 'temp', 'uploads'),

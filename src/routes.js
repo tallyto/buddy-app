@@ -8,7 +8,6 @@ const SessionProviderController = require('./app/controllers/SessionProviderCont
 const multerConfig = require('./config/multer');
 const FileController = require('./app/controllers/FileController');
 const ProviderController = require('./app/controllers/ProviderController');
-const AppointmentController = require('./app/controllers/AppointmentController');
 const PetController = require('./app/controllers/PetController');
 const VacinaController = require('./app/controllers/VacinaController');
 const CategoriaController = require('./app/controllers/CategoriaController');
@@ -25,24 +24,31 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
+// Users
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
-routes.get('/providers/clinica', ClinicaController.index);
-routes.get('/providers/passeador', PasseadorController.index);
-routes.get('/vacinas', VacinaController.index);
-routes.get('/providers/adestrador', AdestradorController.index);
 
+// Providers
 routes.get('/providers', ProviderController.index);
 routes.post('/providers', ProviderController.store);
+routes.get('/providers/clinica', ClinicaController.index);
+routes.get('/providers/passeador', PasseadorController.index);
+routes.get('/providers/adestrador', AdestradorController.index);
+routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
-routes.post('/sessions/providers', SessionProviderController.store);
+// Session
 routes.post('/sessions', SessionController.store);
+routes.post('/sessions/providers', SessionProviderController.store);
+
 routes.post('/files', upload.single('file'), FileController.store);
+
 routes.post('/categorias', CategoriaController.store);
 
 routes.get('/pets/all', PetController.show);
-routes.put('/providers/cadastro/:id', ProviderController.cadastro);
-// Rota de usuários
+
+routes.get('/vacinas', VacinaController.index);
+
+// Rotas protegidas por autenticação de usuario
 routes.use(authMiddleware);
 
 routes.get('/users/profile', ProfileController.user);
@@ -54,13 +60,10 @@ routes.get('/pets', PetController.index);
 
 routes.post('/vacinas', VacinaController.store);
 
-
-routes.post('/appointments', AppointmentController.store);
-
-// Rota de providers
+// Rotas protegidas por autenticação de provider
 routes.use(providerAuth);
+
 routes.put('/providers', ProviderController.update);
 routes.get('/providers/profile', ProfileController.provider);
-
 
 module.exports = routes;
