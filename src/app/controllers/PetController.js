@@ -2,6 +2,8 @@
 const Yup = require('yup');
 const Pets = require('./../models/Pet');
 const User = require('./../models/User');
+const File = require('./../models/File');
+
 
 class PetsController {
   async index(req, res) {
@@ -13,6 +15,10 @@ class PetsController {
             model: User,
             as: 'user',
             attributes: ['name', 'email'],
+          }, {
+            model: File,
+            as: 'avatar',
+            attributes: ['path', 'name', 'url'],
           },
         ],
       });
@@ -30,6 +36,11 @@ class PetsController {
             model: User,
             as: 'user',
             attributes: ['name', 'email'],
+          },
+          {
+            model: File,
+            as: 'avatar',
+            attributes: ['path', 'name', 'url'],
           },
         ],
       });
@@ -70,6 +81,31 @@ class PetsController {
       return res.json(pets);
     } catch (error) {
       return res.json({ error: 'Houve um erro ao cadastrar um pet' });
+    }
+  }
+
+  async update(req, res) {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string(),
+        raca: Yup.string(),
+        genero: Yup.string(),
+        descricao: Yup.string(),
+        idade: Yup.number(),
+      });
+
+      if (!(await schema.isValid(req.body))) {
+        return res.status(400).json({ error: 'Validation fails' });
+      }
+
+
+      const pet = await Pets.findByPk(req.params.petId);
+
+      const pets = await pet.update(req.body);
+
+      return res.json(pets);
+    } catch (error) {
+      return res.json({ error: 'Houve um erro ao atualizar um pet' });
     }
   }
 }

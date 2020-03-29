@@ -59,6 +59,8 @@ routes.put('/users', UserController.update);
 
 routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
+routes.put('/pets/:petId', PetController.update);
+
 
 routes.post('/vacinas', VacinaController.store);
 
