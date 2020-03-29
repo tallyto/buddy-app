@@ -14,6 +14,17 @@ class FileController {
       return res.json({ error: 'Houve um erro ao cadastrar imagem' });
     }
   }
+
+  async index(req, res) {
+    try {
+      const file = await File.findAll({
+        attributes: ['id', 'path', 'name'],
+      });
+      return res.json(file);
+    } catch (error) {
+      return res.json({ error: 'Houve um erro ao listar todas as imagens' });
+    }
+  }
 }
 
 module.exports = new FileController();

@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 const Yup = require('yup');
-const Vacinas = require('./../models/Vacina');
+const Vacinas = require('../models/Vacina');
+const Pet = require('../models/Pet');
+
 
 class PetsController {
   async store(req, res) {
@@ -33,7 +35,9 @@ class PetsController {
 
   async index(req, res) {
     try {
-      const vacinas = await Vacinas.findAll();
+      const vacinas = await Vacinas.findAll(
+        { include: [{ model: Pet, as: 'pets' }] },
+      );
 
       return res.json(vacinas);
     } catch (error) {
