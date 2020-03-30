@@ -15,6 +15,7 @@ const ProfileController = require('./app/controllers/ProfileController');
 const ClinicaController = require('./app/controllers/ClinicaController');
 const PasseadorController = require('./app/controllers/PasseadorController');
 const AdestradorController = require('./app/controllers/AdestradorController');
+const AgendamentoController = require('./app/controllers/AgendamentoController');
 
 
 const routes = Router();
@@ -46,7 +47,6 @@ routes.get('/files', FileController.index);
 routes.post('/categorias', CategoriaController.store);
 routes.get('/categorias', CategoriaController.index);
 
-
 routes.get('/pets/all', PetController.show);
 
 routes.get('/vacinas', VacinaController.index);
@@ -62,6 +62,8 @@ routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
 routes.put('/pets/:petId', PetController.update);
 
+routes.post('/agendamentos', AgendamentoController.store);
+routes.get('/agendamentos', AgendamentoController.index);
 
 routes.post('/vacinas', VacinaController.store);
 
