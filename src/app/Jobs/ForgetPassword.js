@@ -7,7 +7,7 @@ class ForgetPassword {
 
   async handle({ data }) {
     const { user, email } = data;
-    console.log('A fila executou');
+    console.log('Enviando email de alteração de senha');
     await Mail.sendMail({
       to: `${user} <${email}>`,
       subject: 'Solicitação de alteração de senha',

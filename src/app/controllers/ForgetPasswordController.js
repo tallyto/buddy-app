@@ -23,7 +23,7 @@ class ForgetPasswordController {
       email,
     });
 
-    return res.json(user);
+    return res.json();
   }
 }
 
