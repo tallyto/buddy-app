@@ -16,6 +16,7 @@ const ClinicaController = require('./app/controllers/ClinicaController');
 const PasseadorController = require('./app/controllers/PasseadorController');
 const AdestradorController = require('./app/controllers/AdestradorController');
 const AgendamentoController = require('./app/controllers/AgendamentoController');
+const ForgetPasswordController = require('./app/controllers/ForgetPasswordController');
 
 
 const routes = Router();
@@ -28,6 +29,9 @@ routes.get('/', (req, res) => {
 // Users
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
+
+// ForgetPassword
+routes.post('/forget-password', ForgetPasswordController.store);
 
 // Providers
 routes.get('/providers', ProviderController.index);
