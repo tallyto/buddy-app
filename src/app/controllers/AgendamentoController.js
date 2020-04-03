@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 const Yup = require('yup');
-const Agendamento = require('./../models/Agendamento');
-const User = require('./../models/User');
-const Provider = require('./../models/Provider');
+const Agendamento = require('../models/Agendamento');
+const User = require('../models/User');
+const Provider = require('../models/Provider');
 
 class AgendamentoController {
   async index(req, res) {
