@@ -6,14 +6,7 @@ class UserController {
   async index(req, res) {
     try {
       const user = await User.findAll({
-        attributes: [
-          'id',
-          'email',
-          'name',
-          'avatar_id',
-          'endereco',
-          'telefone',
-        ],
+        attributes: ['id', 'email', 'name', 'avatar_id', 'endereco', 'telefone'],
         include: [
           {
             model: File,
@@ -53,7 +46,7 @@ class UserController {
         email,
       });
     } catch (error) {
-      return res.json({ error: 'Erro ao cadastrar usuário' });
+      return res.json({ error: `Erro ao cadastrar usuário ${error}` });
     }
   }
 
@@ -102,7 +95,7 @@ class UserController {
         telefone,
       });
     } catch (error) {
-      return res.jon({ error: 'Erro ao atualizar usuário' });
+      return res.json({ error: `Erro ao atualizar usuário ${error}` });
     }
   }
 }

@@ -6,9 +6,7 @@ const jobs = [ForgetPassword];
 
 class Queue {
   constructor() {
-    this.queues = {
-
-    };
+    this.queues = {};
 
     this.init();
   }
@@ -40,6 +38,5 @@ class Queue {
     console.log(`Queue ${job.queue.name}: FAILED`, error);
   }
 }
-
 
 module.exports = new Queue();

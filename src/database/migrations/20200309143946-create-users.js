@@ -28,6 +28,14 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    token: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    token_created_at: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    },
     created_at: {
       type: Sequelize.DATE,
       allowNull: false,

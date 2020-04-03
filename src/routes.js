@@ -32,6 +32,8 @@ routes.post('/users', UserController.store);
 
 // ForgetPassword
 routes.post('/forget-password', ForgetPasswordController.store);
+routes.post('/forget-password/:token', ForgetPasswordController.create);
+
 
 // Providers
 routes.get('/providers', ProviderController.index);

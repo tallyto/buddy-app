@@ -12,6 +12,8 @@ class User extends Model {
         password_hash: Sequelize.STRING,
         telefone: Sequelize.STRING,
         endereco: Sequelize.STRING,
+        token: Sequelize.STRING,
+        token_created_at: Sequelize.DATE,
       },
       { sequelize },
     );
