@@ -27,11 +27,13 @@ class ForgetPasswordController {
 
     const { token } = await user.save();
 
-    await Queue.add(ForgetPassword.key, {
+    /**
+    *  await Queue.add(ForgetPassword.key, {
       user: user.name,
       token,
       email,
     });
+    */
 
     return res.json(token);
   }

@@ -11,13 +11,13 @@ require('./database');
 class App {
   constructor() {
     this.server = express();
-    Sentry.init(sentryConfig);
+    // Sentry.init(sentryConfig);
     this.middlewares();
     this.routes();
   }
 
   middlewares() {
-    this.server.use(Sentry.Handlers.requestHandler());
+    // this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: true }));
     this.server.use(cors());
@@ -29,13 +29,15 @@ class App {
     this.server.use(Sentry.Handlers.errorHandler());
   }
 
-  exceptionHandler() {
+  /**
+   *  exceptionHandler() {
     this.server.use(async (erro, req, res, next) => {
       const errors = await new Youch(erro, req).toJSON();
 
       return res.status(500).json(errors);
     });
   }
+  */
 }
 
 module.exports = new App().server;

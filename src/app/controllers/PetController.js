@@ -4,7 +4,6 @@ const Pets = require('../models/Pet');
 const User = require('../models/User');
 const File = require('../models/File');
 
-
 class PetsController {
   async index(req, res) {
     const pets = await Pets.findAll({
@@ -14,7 +13,8 @@ class PetsController {
           model: User,
           as: 'user',
           attributes: ['name', 'email'],
-        }, {
+        },
+        {
           model: File,
           as: 'avatar',
           attributes: ['path', 'name', 'url'],
@@ -85,12 +85,10 @@ class PetsController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-
     const pet = await Pets.findByPk(req.params.petId);
+    const newPet = await pet.update(req.body);
 
-    const pets = await pet.update(req.body);
-
-    return res.json(pets);
+    return res.json(newPet);
   }
 }
 
