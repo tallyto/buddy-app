@@ -1,13 +1,13 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('agendamentos', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('notifications', {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
-    date: {
-      type: Sequelize.DATE,
+    content: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
     user_id: {
@@ -24,11 +24,6 @@ module.exports = {
       onDelete: 'SET NULL',
       allowNull: false,
     },
-    canceled_at: {
-      type: Sequelize.DATE,
-      allowNull: true,
-      default: false,
-    },
     created_at: {
       type: Sequelize.DATE,
       allowNull: false,
@@ -39,5 +34,5 @@ module.exports = {
     },
   }),
 
-  down: (queryInterface) => queryInterface.dropTable('agendamentos'),
+  down: (queryInterface) => queryInterface.dropTable('notifications'),
 };

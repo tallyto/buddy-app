@@ -1,8 +1,14 @@
 /* eslint-disable camelcase */
 const Yup = require('yup');
+const {
+  parseISO, startOfHour, isBefore, format,
+} = require('date-fns');
+const pt = require('date-fns/locale/pt');
 const Agendamento = require('../models/Agendamento');
-const User = require('../models/User');
+const File = require('../models/File');
 const Provider = require('../models/Provider');
+const User = require('../models/User');
+const Notification = require('../models/Notification');
 
 class AgendamentoController {
   async index(req, res) {
@@ -13,8 +19,12 @@ class AgendamentoController {
         canceled_at: null,
       },
       include: [
-        { model: User, as: 'user', attributes: ['name', 'email'] },
-        { model: Provider, as: 'provider', attributes: ['name', 'email'] },
+        {
+          model: Provider,
+          as: 'provider',
+          attributes: ['name', 'email'],
+          include: [{ model: File, as: 'avatar' }],
+        },
       ],
       limit: 20,
       offset: (page - 1) * 20,
@@ -35,10 +45,45 @@ class AgendamentoController {
 
     const { provider_id, date } = req.body;
 
+    const hourStart = startOfHour(parseISO(date));
+    // Verifica se a data passou
+    if (isBefore(hourStart, new Date())) {
+      return res.status(400).json({ error: 'Past dates are not permitted' });
+    }
+    // Verifica se a data esta disponivel
+    const checkAvailability = await Agendamento.findOne({
+      where: {
+        date: hourStart,
+        provider_id,
+        canceled_at: null,
+      },
+    });
+
+    if (checkAvailability) {
+      return res
+        .status(400)
+        .json({ error: 'Data de agendamento nao disponivel' });
+    }
+
     const agendamento = await Agendamento.create({
       user_id: req.userId,
       provider_id,
-      date,
+      date: hourStart,
+    });
+
+    /**
+     * Notifica prestador de serviços sobre novo agendamento
+     */
+    const user = await User.findByPk(req.userId);
+    const formattedDate = format(
+      hourStart,
+      "'dia' dd 'de' MMMM', às' H:mm'h'",
+      { locale: pt },
+    );
+    await Notification.create({
+      content: `Novo agendamento de ${user.name} para ${formattedDate} `,
+      provider_id,
+      user_id: req.userId,
     });
 
     return res.json(agendamento);

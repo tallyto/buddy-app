@@ -6,10 +6,12 @@ const Vacina = require('../app/models/Vacina');
 const Categoria = require('../app/models/Categoria');
 const Provider = require('../app/models/Provider');
 const Agendamento = require('../app/models/Agendamento');
+const Notification = require('../app/models/Notification');
+
 
 const databaseConfig = require('../config/database');
 
-const models = [User, File, Pet, Vacina, Categoria, Provider, Agendamento];
+const models = [User, File, Pet, Vacina, Categoria, Provider, Agendamento, Notification];
 
 class Database {
   constructor() {

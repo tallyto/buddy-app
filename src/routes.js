@@ -17,6 +17,7 @@ const PasseadorController = require('./app/controllers/PasseadorController');
 const AdestradorController = require('./app/controllers/AdestradorController');
 const AgendamentoController = require('./app/controllers/AgendamentoController');
 const ForgetPasswordController = require('./app/controllers/ForgetPasswordController');
+const AgendaController = require('./app/controllers/AgendaController');
 
 
 const routes = Router();
@@ -78,5 +79,6 @@ routes.use(providerAuth);
 
 routes.put('/providers', ProviderController.update);
 routes.get('/providers/profile', ProfileController.provider);
+routes.get('/agenda', AgendaController.index);
 
 module.exports = routes;

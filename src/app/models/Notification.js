@@ -1,12 +1,11 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 
-class Agendamento extends Model {
+class Notification extends Model {
   static init(sequelize) {
     super.init(
       {
-        date: Sequelize.DATE,
-        canceled_at: Sequelize.DATE,
+        content: Sequelize.STRING,
       },
       { sequelize },
     );
@@ -22,4 +21,4 @@ class Agendamento extends Model {
   }
 }
 
-module.exports = Agendamento;
+module.exports = Notification;
