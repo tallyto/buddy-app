@@ -5,8 +5,7 @@ class ForgetPassword {
     return 'ForgetPassword';
   }
 
-  /**
-   *  async handle({ data }) {
+  async handle({ data }) {
     const { user, email, token } = data;
     console.log('Enviando email de alteração de senha');
     await Mail.sendMail({
@@ -16,7 +15,6 @@ class ForgetPassword {
       context: { user, token },
     });
   }
-   */
 }
 
 module.exports = new ForgetPassword();

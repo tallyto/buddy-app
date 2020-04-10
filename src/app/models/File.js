@@ -10,7 +10,7 @@ class File extends Model {
         url: {
           type: Sequelize.VIRTUAL,
           get() {
-            return `http://buddyaplicativo.com.br/files/${this.path}`;
+            return `https://buddy-pet.herokuapp.com/files/${this.path}`;
           },
         },
       },

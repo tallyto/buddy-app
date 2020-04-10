@@ -5,8 +5,7 @@ const redisConfig = require('../config/redis');
 const jobs = [ForgetPassword];
 
 class Queue {
-  /**
-   * constructor() {
+  constructor() {
     this.queues = {};
 
     this.init();
@@ -38,8 +37,6 @@ class Queue {
   handleFailure(job, error) {
     console.log(`Queue ${job.queue.name}: FAILED`, error);
   }
-   */
-
 }
 
-module.exports = new Queue();
+// module.exports = new Queue();
