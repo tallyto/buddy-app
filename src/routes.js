@@ -73,6 +73,8 @@ routes.put('/pets/:petId', PetController.update);
 
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos', AgendamentoController.index);
+routes.delete('/agendamentos/:id', AgendamentoController.delete);
+
 
 routes.post('/vacinas', VacinaController.store);
 

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const Yup = require('yup');
 const {
-  parseISO, startOfHour, isBefore, format,
+  parseISO, startOfHour, isBefore, format, subHours,
 } = require('date-fns');
 const pt = require('date-fns/locale/pt');
 const Agendamento = require('../models/Agendamento');
@@ -85,6 +85,25 @@ class AgendamentoController {
       provider_id,
       user_id: req.userId,
     });
+
+    return res.json(agendamento);
+  }
+
+  async delete(req, res) {
+    const agendamento = await Agendamento.findByPk(req.params.id);
+    if (agendamento.user_id !== req.userId) {
+      return res.status(401).json({ error: "You don't heve permission to cancel this appointment" });
+    }
+
+    const dateWithSub = subHours(agendamento.date, 2);
+
+    if (isBefore(dateWithSub, new Date())) {
+      return res.status(401).json({ error: 'You cant only cancel appointments 2 hours in advance' });
+    }
+
+    agendamento.canceled_at = new Date();
+
+    await agendamento.save;
 
     return res.json(agendamento);
   }
