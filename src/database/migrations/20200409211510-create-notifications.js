@@ -10,6 +10,11 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    read: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+      default: false,
+    },
     user_id: {
       type: Sequelize.INTEGER,
       references: { model: 'users', key: 'id' },

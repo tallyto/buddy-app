@@ -15,6 +15,6 @@ module.exports = {
   SessionProviderController: require('../app/controllers/SessionProviderController'),
   UserController: require('../app/controllers/UserController'),
   VacinaController: require('../app/controllers/VacinaController'),
-
+  NotificationController: require('../app/controllers/NotificationController'),
 
 };

@@ -16,6 +16,7 @@ const {
   SessionProviderController,
   UserController,
   VacinaController,
+  NotificationController,
 } = require('./config/require');
 
 const authMiddleware = require('./app/middlewares/auth');
@@ -81,5 +82,7 @@ routes.use(providerAuth);
 routes.put('/providers', ProviderController.update);
 routes.get('/providers/profile', ProfileController.provider);
 routes.get('/agenda', AgendaController.index);
+routes.get('/notifications', NotificationController.index);
+routes.put('/notifications/:id', NotificationController.update);
 
 module.exports = routes;
