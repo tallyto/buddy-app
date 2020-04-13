@@ -11,6 +11,14 @@ class UserController {
           model: File,
           as: 'avatar',
           attributes: ['path', 'name', 'url'],
+        }, {
+          association: 'pets',
+          attributes: ['id', 'name', 'raca', 'genero', 'descricao', 'idade', 'avatar_id'],
+          include: [{
+            model: File,
+            as: 'avatar',
+            attributes: ['path', 'name', 'url'],
+          }],
         },
       ],
     });
@@ -20,7 +28,9 @@ class UserController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      email: Yup.string().email().required(),
+      email: Yup.string()
+        .email()
+        .required(),
       password: Yup.string()
         .required()
         .min(6),
@@ -72,6 +82,14 @@ class UserController {
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
       return res.status(401).json({ error: 'Password does not match' });
+    }
+
+    // Verifica se o avatar é valido
+    if (req.body.avatar_id) {
+      const file = await File.findByPk(req.body.avatar_id);
+      if (!file) {
+        return res.status(400).json({ error: 'Avatar not exist' });
+      }
     }
 
     const {

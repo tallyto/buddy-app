@@ -1,24 +1,26 @@
 const { Router } = require('express');
 const multer = require('multer');
-const UserController = require('./app/controllers/UserController.js');
-const SessionController = require('./app/controllers/SessionController.js');
+const {
+  AdestradorController,
+  AgendaController,
+  AgendamentoController,
+  CategoriaController,
+  ClinicaController,
+  FileController,
+  ForgetPasswordController,
+  PasseadorController,
+  PetController,
+  ProfileController,
+  ProviderController,
+  SessionController,
+  SessionProviderController,
+  UserController,
+  VacinaController,
+} = require('./config/require');
+
 const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
-const SessionProviderController = require('./app/controllers/SessionProviderController');
 const multerConfig = require('./config/multer');
-const FileController = require('./app/controllers/FileController');
-const ProviderController = require('./app/controllers/ProviderController');
-const PetController = require('./app/controllers/PetController');
-const VacinaController = require('./app/controllers/VacinaController');
-const CategoriaController = require('./app/controllers/CategoriaController');
-const ProfileController = require('./app/controllers/ProfileController');
-const ClinicaController = require('./app/controllers/ClinicaController');
-const PasseadorController = require('./app/controllers/PasseadorController');
-const AdestradorController = require('./app/controllers/AdestradorController');
-const AgendamentoController = require('./app/controllers/AgendamentoController');
-const ForgetPasswordController = require('./app/controllers/ForgetPasswordController');
-const AgendaController = require('./app/controllers/AgendaController');
-
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -34,7 +36,6 @@ routes.post('/users', UserController.store);
 // ForgetPassword
 routes.post('/forget-password', ForgetPasswordController.store);
 routes.post('/forget-password/:token', ForgetPasswordController.create);
-
 
 // Providers
 routes.get('/providers', ProviderController.index);

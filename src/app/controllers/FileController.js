@@ -1,6 +1,11 @@
 const File = require('../models/File');
 
 class FileController {
+  async index(req, res) {
+    const file = await File.findAll();
+    return res.json(file);
+  }
+
   async store(req, res) {
     const { originalname: name, filename: path } = req.file;
 
@@ -8,11 +13,6 @@ class FileController {
       name, path,
     });
 
-    return res.json(file);
-  }
-
-  async index(req, res) {
-    const file = await File.findAll();
     return res.json(file);
   }
 }

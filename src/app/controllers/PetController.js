@@ -36,7 +36,7 @@ class PetsController {
           model: File,
           as: 'avatar',
           attributes: ['path', 'name', 'url'],
-        },
+        }, { association: 'vacinas' },
       ],
     });
 
@@ -83,6 +83,14 @@ class PetsController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    // Verifica se o avatar é valido
+    if (req.body.avatar_id) {
+      const file = await File.findByPk(req.body.avatar_id);
+      if (!file) {
+        return res.status(400).json({ error: 'Avatar not exist' });
+      }
     }
 
     const pet = await Pets.findByPk(req.params.petId);

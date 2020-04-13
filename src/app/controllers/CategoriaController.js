@@ -3,6 +3,11 @@ const Yup = require('yup');
 const Categoria = require('../models/Categoria');
 
 class CategoriaController {
+  async index(req, res) {
+    const categoria = await Categoria.findAll();
+    return res.json(categoria);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -20,11 +25,6 @@ class CategoriaController {
       name,
     });
 
-    return res.json(categoria);
-  }
-
-  async index(req, res) {
-    const categoria = await Categoria.findAll();
     return res.json(categoria);
   }
 }

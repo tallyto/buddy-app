@@ -30,6 +30,7 @@ class User extends Model {
 
   // Faz a referencia de um id de arquvio na tabela de usuário
   static associate(models) {
+    this.hasMany(models.Pets, { foreignKey: 'user_id', as: 'pets' });
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 

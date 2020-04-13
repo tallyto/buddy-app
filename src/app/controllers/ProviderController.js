@@ -69,7 +69,7 @@ class ProviderController {
   async cadastro(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
-      email: Yup.string(),
+      email: Yup.string().email(),
       telefone: Yup.string(),
       endereco: Yup.string(),
       cpf: Yup.string(),
@@ -118,7 +118,7 @@ class ProviderController {
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
-      email: Yup.string(),
+      email: Yup.string().email(),
       telefone: Yup.string(),
       endereco: Yup.string(),
       cpf: Yup.string(),
@@ -151,6 +151,21 @@ class ProviderController {
 
     if (oldPassword && !(await provider.checkPassword(oldPassword))) {
       return res.status(401).json({ error: 'Password does not match' });
+    }
+
+    // Verifica se o avatar é valido
+    if (req.body.avatar_id) {
+      const file = await File.findByPk(req.body.avatar_id);
+      if (!file) {
+        return res.status(400).json({ error: 'Avatar not exist' });
+      }
+    }
+
+    if (req.body.categoria_id) {
+      const categoria = await Categoria.findByPk(req.body.categoria_id);
+      if (!categoria) {
+        return res.status(400).json({ error: 'Categoria not exist' });
+      }
     }
 
     const {
