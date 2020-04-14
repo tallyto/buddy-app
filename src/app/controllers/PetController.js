@@ -17,7 +17,6 @@ class PetsController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['path', 'name', 'url'],
         },
       ],
     });
@@ -35,7 +34,6 @@ class PetsController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['path', 'name', 'url'],
         }, { association: 'vacinas' },
       ],
     });

@@ -12,7 +12,6 @@ class ProfileController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['path', 'name', 'url'],
         },
       ],
     });
@@ -42,7 +41,6 @@ class ProfileController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['path', 'name', 'url'],
         },
         {
           model: Categoria,

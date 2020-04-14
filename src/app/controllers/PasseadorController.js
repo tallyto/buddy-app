@@ -26,7 +26,6 @@ class PasseadorController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['path', 'name', 'url'],
         },
         {
           model: Categoria,

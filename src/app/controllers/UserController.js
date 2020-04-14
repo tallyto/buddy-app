@@ -10,7 +10,6 @@ class UserController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['path', 'name', 'url'],
         }, {
           association: 'pets',
           attributes: ['id', 'name', 'raca', 'genero', 'descricao', 'idade', 'avatar_id'],
