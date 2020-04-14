@@ -54,7 +54,6 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/files', FileController.index);
 routes.delete('/files/:id', FileController.delete);
 
-
 routes.post('/categorias', CategoriaController.store);
 routes.get('/categorias', CategoriaController.index);
 
@@ -66,7 +65,6 @@ routes.get('/vacinas', VacinaController.index);
 routes.use(authMiddleware);
 
 routes.get('/users/profile', ProfileController.user);
-
 routes.put('/users', UserController.update);
 
 routes.post('/pets', PetController.store);
@@ -74,13 +72,12 @@ routes.get('/pets', PetController.index);
 routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
-
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos', AgendamentoController.index);
 routes.delete('/agendamentos/:id', AgendamentoController.delete);
 
-
 routes.post('/vacinas', VacinaController.store);
+routes.delete('/vacinas/:id', VacinaController.delete);
 
 // Rotas protegidas por autenticação de provider
 routes.use(providerAuth);

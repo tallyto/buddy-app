@@ -4,6 +4,14 @@ const Vacinas = require('../models/Vacina');
 const Pet = require('../models/Pet');
 
 class PetsController {
+  async index(req, res) {
+    const vacinas = await Vacinas.findAll(
+      { include: [{ model: Pet, as: 'pets' }] },
+    );
+
+    return res.json(vacinas);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       tipo: Yup.string().required(),
@@ -28,12 +36,15 @@ class PetsController {
     return res.json(vacinas);
   }
 
-  async index(req, res) {
-    const vacinas = await Vacinas.findAll(
-      { include: [{ model: Pet, as: 'pets' }] },
-    );
+  async delete(req, res) {
+    const vacina = await Vacinas.findByPk(req.params.id);
+    if (!vacina) {
+      return res.status(400).json({ error: 'Vacina does exist' });
+    }
 
-    return res.json(vacinas);
+    await vacina.destroy();
+
+    return res.json();
   }
 }
 
