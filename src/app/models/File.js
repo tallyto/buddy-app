@@ -6,13 +6,9 @@ class File extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        path: Sequelize.STRING,
-        url: {
-          type: Sequelize.VIRTUAL,
-          get() {
-            return `https://buddy-pet.herokuapp.com/files/${this.path}`;
-          },
-        },
+        size: Sequelize.STRING,
+        key: Sequelize.STRING,
+        url: Sequelize.STRING,
       },
       { sequelize },
     );

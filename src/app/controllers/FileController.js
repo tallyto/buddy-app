@@ -1,4 +1,5 @@
 const File = require('../models/File');
+const removeImageS3 = require('../../config/removeImageS3.js');
 
 class FileController {
   async index(req, res) {
@@ -7,13 +8,26 @@ class FileController {
   }
 
   async store(req, res) {
-    const { originalname: name, filename: path } = req.file;
+    const {
+      originalname: name, size, key, location: url = '',
+    } = req.file;
 
     const file = await File.create({
-      name, path,
+      name,
+      size,
+      key,
+      url,
     });
 
     return res.json(file);
+  }
+
+  async delete(req, res) {
+    const file = await File.findByPk(req.params.id);
+    removeImageS3(file.key);
+    await file.destroy();
+
+    return res.json();
   }
 }
 

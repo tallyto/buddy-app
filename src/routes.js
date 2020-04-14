@@ -52,6 +52,8 @@ routes.post('/sessions/providers', SessionProviderController.store);
 
 routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/files', FileController.index);
+routes.delete('/files/:id', FileController.delete);
+
 
 routes.post('/categorias', CategoriaController.store);
 routes.get('/categorias', CategoriaController.index);
