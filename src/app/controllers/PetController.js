@@ -93,10 +93,27 @@ class PetsController {
       }
     }
 
-    const pet = await Pets.findByPk(req.params.petId);
+    const pet = await Pets.findByPk(req.params.id);
     const newPet = await pet.update(req.body);
 
     return res.json(newPet);
+  }
+
+  async delete(req, res) {
+    const pet = await Pets.findByPk(req.params.id);
+
+    if (!pet) {
+      return res.status(400).json({ error: 'Pet does not exist' });
+    }
+
+    if (pet.user_id !== req.userId) {
+      return res.status(401).json({ error: "You don't have permition for delete this pet" });
+    }
+
+    await pet.destroy();
+
+
+    return res.json();
   }
 }
 

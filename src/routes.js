@@ -69,7 +69,9 @@ routes.put('/users', UserController.update);
 
 routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
-routes.put('/pets/:petId', PetController.update);
+routes.put('/pets/:id', PetController.update);
+routes.delete('/pets/:id', PetController.delete);
+
 
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos', AgendamentoController.index);
