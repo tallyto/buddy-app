@@ -43,7 +43,8 @@ module.exports = {
   limits: {
     fileSize: 2 * 1024 * 1024,
   },
-  fileFilter: (req, file, cb) => {
+  /**
+   *  fileFilter: (req, file, cb) => {
     const allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
 
     if (allowedMimes.includes(file.mimetype)) {
@@ -52,4 +53,6 @@ module.exports = {
       cb(new Error('Invalid file type.'));
     }
   },
+   */
+
 };
