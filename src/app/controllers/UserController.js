@@ -16,7 +16,6 @@ class UserController {
           include: [{
             model: File,
             as: 'avatar',
-            attributes: ['path', 'name', 'url'],
           }],
         },
       ],
