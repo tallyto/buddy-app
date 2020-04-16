@@ -4,10 +4,6 @@ const app = require('../../src/app');
 const truncate = require('../util/truncate');
 
 describe('Session', () => {
-  beforeEach(async () => {
-    await truncate();
-  });
-
   it('Deve fazer login', async () => {
     const user = { email: 'rodrigues.tallyto@hotmail.com', password: '123321' };
     await request(app).post('/users').send(user);
@@ -32,7 +28,6 @@ describe('Session', () => {
 
   it('Deve falhar ao colocar dados invalidos', async () => {
     const user = { email: 'rodrigues.tallyto@hotmail.com', password: '123321' };
-    await request(app).post('/users').send(user);
     const response = await request(app).post('/sessions').send({ ...user, email: 'usuario@usuario' });
     expect(response.status).toEqual(400);
   });

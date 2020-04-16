@@ -4,10 +4,6 @@ const app = require('../../src/app');
 const truncate = require('../util/truncate');
 
 describe('Users', () => {
-  beforeEach(async () => {
-    await truncate();
-  });
-
   it('Deve cadastar um usuario', async () => {
     const user = { email: 'rodrigues.tallyto@hotmail.com', password: '123321' };
     const response = await request(app).post('/users').send(user);
