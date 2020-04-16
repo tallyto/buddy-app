@@ -9,6 +9,8 @@ const Agendamento = require('../app/models/Agendamento');
 const Notification = require('../app/models/Notification');
 const CreditCard = require('../app/models/CreditCard');
 const Endereco = require('../app/models/Endereco');
+const Post = require('../app/models/Post');
+
 
 const databaseConfig = require('../config/database');
 
@@ -23,6 +25,7 @@ const models = [
   Notification,
   CreditCard,
   Endereco,
+  Post,
 ];
 
 class Database {

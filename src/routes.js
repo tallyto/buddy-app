@@ -13,6 +13,7 @@ const {
   PetController,
   ProfileController,
   ProviderController,
+  PostController,
   SessionController,
   SessionProviderController,
   UserController,
@@ -54,6 +55,12 @@ routes.get('/providers/adestrador', AdestradorController.index);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
 routes.get('/credit-card', CreditCardController.index);
+
+routes.get('/posts', PostController.index);
+routes.post('/posts', PostController.store);
+routes.put('/posts/:id', PostController.update);
+routes.delete('/posts/:id', PostController.delete);
+
 
 // Session
 routes.post('/sessions', SessionController.store);

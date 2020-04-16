@@ -12,6 +12,7 @@ module.exports = {
   PetController: require('../app/controllers/PetController'),
   ProfileController: require('../app/controllers/ProfileController'),
   ProviderController: require('../app/controllers/ProviderController'),
+  PostController: require('../app/controllers/PostController'),
   SessionController: require('../app/controllers/SessionController'),
   SessionProviderController: require('../app/controllers/SessionProviderController'),
   UserController: require('../app/controllers/UserController'),
@@ -19,6 +20,4 @@ module.exports = {
   NotificationController: require('../app/controllers/NotificationController'),
   CreditCardController: require('../app/controllers/CreditCardController'),
   EnderecoController: require('../app/controllers/EnderecoController'),
-
-
 };
