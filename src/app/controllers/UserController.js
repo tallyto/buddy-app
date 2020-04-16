@@ -11,15 +11,50 @@ class UserController {
           model: File,
           as: 'avatar',
           attributes: ['id', 'name', 'url'],
-        }, {
+        },
+        {
           association: 'pets',
-          attributes: ['id', 'name', 'raca', 'genero', 'descricao', 'idade', 'avatar_id'],
-          include: [{
-            model: File,
-            as: 'avatar',
-            attributes: ['id', 'name', 'url'],
-          }],
-        }, { association: 'enderecos' }, { association: 'credit_cards' },
+          attributes: [
+            'id',
+            'name',
+            'raca',
+            'genero',
+            'descricao',
+            'idade',
+            'avatar_id',
+          ],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'name', 'url'],
+            },
+          ],
+        },
+        {
+          association: 'enderecos',
+          attributes: [
+            'id',
+            'rua',
+            'complemento',
+            'cep',
+            'bairro',
+            'cidade',
+            'user_id',
+            'provider_id',
+          ],
+        },
+        {
+          association: 'credit_cards',
+          attributes: [
+            'id',
+            'titular',
+            'card_number',
+            'validade',
+            'cvv',
+            'user_id',
+          ],
+        },
       ],
     });
 
@@ -94,9 +129,7 @@ class UserController {
       }
     }
 
-    const {
-      id, name, telefone,
-    } = await user.update(req.body);
+    const { id, name, telefone } = await user.update(req.body);
 
     return res.json({
       id,
