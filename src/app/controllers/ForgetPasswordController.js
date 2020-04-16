@@ -33,8 +33,7 @@ class ForgetPasswordController {
       token,
       email,
     });
-     */
-
+    */
 
     return res.json(token);
   }
@@ -65,6 +64,7 @@ class ForgetPasswordController {
     user.token = null;
     user.token_created_at = null;
     user.password = password;
+
     await user.save();
 
     return res.json(user);

@@ -16,5 +16,8 @@ module.exports = {
   UserController: require('../app/controllers/UserController'),
   VacinaController: require('../app/controllers/VacinaController'),
   NotificationController: require('../app/controllers/NotificationController'),
+  CreditCardController: require('../app/controllers/CreditCardController'),
+  EnderecoController: require('../app/controllers/EnderecoController'),
+
 
 };

@@ -5,9 +5,10 @@ class Vacina extends Model {
   static init(sequelize) {
     super.init(
       {
-        tipo: Sequelize.STRING,
+        vacina: Sequelize.STRING,
         data: Sequelize.DATE,
-        validade: Sequelize.DATE,
+        revacinar: Sequelize.DATE,
+        peso: Sequelize.FLOAT,
       },
       {
         sequelize,

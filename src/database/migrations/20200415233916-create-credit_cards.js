@@ -1,30 +1,30 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('vacinas', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('credit_cards', {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
-    vacina: {
+    titular: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    data: {
-      type: Sequelize.DATE,
+    card_number: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
-    revacinar: {
-      type: Sequelize.DATE,
+    validade: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
-    peso: {
-      type: Sequelize.FLOAT,
+    cvv: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
-    pet_id: {
+    user_id: {
       type: Sequelize.INTEGER,
-      references: { model: 'pets', key: 'id' },
+      references: { model: 'users', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       allowNull: false,
@@ -39,5 +39,5 @@ module.exports = {
     },
   }),
 
-  down: (queryInterface) => queryInterface.dropTable('vacinas'),
+  down: (queryInterface) => queryInterface.dropTable('credit_cards'),
 };

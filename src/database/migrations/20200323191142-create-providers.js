@@ -21,13 +21,9 @@ module.exports = {
       allowNull: true,
       unique: true,
     },
-    endereco: {
-      type: Sequelize.STRING,
+    nascimento: {
+      type: Sequelize.DATE,
       allowNull: true,
-    },
-    password_hash: {
-      type: Sequelize.STRING,
-      allowNull: false,
     },
     bio: {
       type: Sequelize.STRING,
@@ -36,6 +32,22 @@ module.exports = {
     telefone: {
       type: Sequelize.STRING,
       allowNull: true,
+    },
+    clinica: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    passeador: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    adestrador: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    password_hash: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
     categoria_id: {
       type: Sequelize.INTEGER,

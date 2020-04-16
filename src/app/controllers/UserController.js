@@ -5,17 +5,19 @@ const File = require('../models/File');
 class UserController {
   async index(req, res) {
     const user = await User.findAll({
-      attributes: ['id', 'email', 'name', 'avatar_id', 'endereco', 'telefone'],
+      attributes: ['id', 'email', 'name', 'telefone', 'avatar_id'],
       include: [
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         }, {
           association: 'pets',
           attributes: ['id', 'name', 'raca', 'genero', 'descricao', 'idade', 'avatar_id'],
           include: [{
             model: File,
             as: 'avatar',
+            attributes: ['id', 'name', 'url'],
           }],
         },
       ],
@@ -37,13 +39,17 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
+
     const userExist = await User.findOne({
       where: { email: req.body.email },
     });
+
     if (userExist) {
       return res.status(400).json({ error: 'User already exists.' });
     }
+
     const { id, email } = await User.create(req.body);
+
     return res.json({
       id,
       email,
@@ -55,7 +61,6 @@ class UserController {
       name: Yup.string(),
       email: Yup.string().email(),
       telefone: Yup.string(),
-      endereco: Yup.string(),
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
@@ -82,7 +87,6 @@ class UserController {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
-    // Verifica se o avatar é valido
     if (req.body.avatar_id) {
       const file = await File.findByPk(req.body.avatar_id);
       if (!file) {
@@ -91,14 +95,13 @@ class UserController {
     }
 
     const {
-      id, name, endereco, telefone,
+      id, name, telefone,
     } = await user.update(req.body);
 
     return res.json({
       id,
       name,
       email,
-      endereco,
       telefone,
     });
   }

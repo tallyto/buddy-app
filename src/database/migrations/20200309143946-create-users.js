@@ -16,17 +16,13 @@ module.exports = {
       allowNull: false,
       unique: true,
     },
-    password_hash: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     telefone: {
       type: Sequelize.STRING,
       allowNull: true,
     },
-    endereco: {
+    password_hash: {
       type: Sequelize.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     token: {
       type: Sequelize.STRING,

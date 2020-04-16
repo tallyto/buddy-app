@@ -3,41 +3,58 @@ const Yup = require('yup');
 const Vacinas = require('../models/Vacina');
 const Pet = require('../models/Pet');
 
-class PetsController {
+class VacinaController {
   async index(req, res) {
-    const vacinas = await Vacinas.findAll(
-      { include: [{ model: Pet, as: 'pets' }] },
-    );
+    const vacinas = await Vacinas.findAll({
+      attributes: ['id', 'vacina', 'data', 'revacinar', 'peso'],
+      include: [
+        {
+          model: Pet,
+          as: 'pets',
+          attributes: [
+            'id',
+            'name',
+            'raca',
+            'genero',
+            'descricao',
+            'idade',
+            'user_id',
+            'avatar_id',
+          ],
+        },
+      ],
+    });
 
     return res.json(vacinas);
   }
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      tipo: Yup.string().required(),
+      vacina: Yup.string().required(),
       pet_id: Yup.number().required(),
-      validade: Yup.date().required(),
+      revacinar: Yup.date().required(),
+      peso: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { tipo, pet_id, validade } = req.body;
+    const pet = await Pet.findByPk(req.body.pet_id);
+    if (!pet) {
+      return res.status(400).json({ error: 'Pet does not exist' });
+    }
 
     const data = new Date();
-    const vacinas = await Vacinas.create({
-      data,
-      tipo,
-      pet_id,
-      validade,
-    });
+
+    const vacinas = await Vacinas.create({ ...req.body, data });
 
     return res.json(vacinas);
   }
 
   async delete(req, res) {
     const vacina = await Vacinas.findByPk(req.params.id);
+
     if (!vacina) {
       return res.status(400).json({ error: 'Vacina does exist' });
     }
@@ -48,4 +65,4 @@ class PetsController {
   }
 }
 
-module.exports = new PetsController();
+module.exports = new VacinaController();

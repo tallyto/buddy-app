@@ -1,33 +1,25 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('vacinas', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('posts', {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
-    vacina: {
+    title: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    data: {
-      type: Sequelize.DATE,
+    content: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
-    revacinar: {
-      type: Sequelize.DATE,
-      allowNull: false,
-    },
-    peso: {
-      type: Sequelize.FLOAT,
-      allowNull: false,
-    },
-    pet_id: {
+    avatar_id: {
       type: Sequelize.INTEGER,
-      references: { model: 'pets', key: 'id' },
+      references: { model: 'files', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-      allowNull: false,
+      onDelete: 'SET NULL',
+      allowNull: true,
     },
     created_at: {
       type: Sequelize.DATE,
@@ -39,5 +31,5 @@ module.exports = {
     },
   }),
 
-  down: (queryInterface) => queryInterface.dropTable('vacinas'),
+  down: (queryInterface) => queryInterface.dropTable('posts'),
 };

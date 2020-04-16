@@ -17,6 +17,11 @@ class PetsController {
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
+        },
+        {
+          association: 'vacinas',
+          attributes: ['id', 'vacina', 'data', 'revacinar', 'peso'],
         },
       ],
     });
@@ -34,7 +39,12 @@ class PetsController {
         {
           model: File,
           as: 'avatar',
-        }, { association: 'vacinas' },
+          attributes: ['id', 'name', 'url'],
+        },
+        {
+          association: 'vacinas',
+          attributes: ['id', 'vacina', 'data', 'revacinar', 'peso'],
+        },
       ],
     });
 
@@ -54,17 +64,9 @@ class PetsController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const {
-      name, raca, genero, descricao, idade,
-    } = req.body;
-
     const pets = await Pets.create({
+      ...req.body,
       user_id: req.userId,
-      name,
-      raca,
-      genero,
-      descricao,
-      idade,
     });
 
     return res.json(pets);
@@ -105,11 +107,12 @@ class PetsController {
     }
 
     if (pet.user_id !== req.userId) {
-      return res.status(401).json({ error: "You don't have permition for delete this pet" });
+      return res
+        .status(401)
+        .json({ error: "You don't have permition for delete this pet" });
     }
 
     await pet.destroy();
-
 
     return res.json();
   }

@@ -7,11 +7,23 @@ const Categoria = require('../app/models/Categoria');
 const Provider = require('../app/models/Provider');
 const Agendamento = require('../app/models/Agendamento');
 const Notification = require('../app/models/Notification');
-
+const CreditCard = require('../app/models/CreditCard');
+const Endereco = require('../app/models/Endereco');
 
 const databaseConfig = require('../config/database');
 
-const models = [User, File, Pet, Vacina, Categoria, Provider, Agendamento, Notification];
+const models = [
+  User,
+  File,
+  Pet,
+  Vacina,
+  Categoria,
+  Provider,
+  Agendamento,
+  Notification,
+  CreditCard,
+  Endereco,
+];
 
 class Database {
   constructor() {

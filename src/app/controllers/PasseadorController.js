@@ -16,7 +16,6 @@ class PasseadorController {
         'telefone',
         'cpf',
         'bio',
-        'endereco',
         'passeador',
         'nascimento',
         'avatar_id',
@@ -26,6 +25,7 @@ class PasseadorController {
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,

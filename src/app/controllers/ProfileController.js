@@ -7,11 +7,12 @@ class ProfileController {
   async user(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
-      attributes: ['id', 'email', 'name', 'avatar_id', 'endereco', 'telefone'],
+      attributes: ['id', 'email', 'name', 'avatar_id', 'telefone'],
       include: [
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         },
       ],
     });
@@ -26,7 +27,6 @@ class ProfileController {
         'id',
         'name',
         'email',
-        'endereco',
         'telefone',
         'bio',
         'cpf',
@@ -41,6 +41,7 @@ class ProfileController {
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,

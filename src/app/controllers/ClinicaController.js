@@ -15,7 +15,6 @@ class ClinicaController {
         'telefone',
         'cpf',
         'bio',
-        'endereco',
         'clinica',
         'nascimento',
         'avatar_id',
@@ -25,6 +24,7 @@ class ClinicaController {
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,

@@ -8,21 +8,20 @@ class Provider extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        password: Sequelize.VIRTUAL,
-        password_hash: Sequelize.STRING,
         telefone: Sequelize.STRING,
         cpf: Sequelize.STRING,
         bio: Sequelize.STRING,
-        endereco: Sequelize.STRING,
+        nascimento: Sequelize.DATE,
         clinica: Sequelize.BOOLEAN,
         passeador: Sequelize.BOOLEAN,
         adestrador: Sequelize.BOOLEAN,
-        nascimento: Sequelize.DATE,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
+
       },
       { sequelize },
     );
 
-    // Executa modificações no provider antes de gravar no banco de dados
     this.addHook('beforeSave', async (provider) => {
       if (provider.password) {
         provider.password_hash = await bcrypt.hash(provider.password, 8);
@@ -32,10 +31,10 @@ class Provider extends Model {
     return this;
   }
 
-  // Faz a referencia de um id de arquvio na tabela de usuário
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
     this.belongsTo(models.Categoria, { foreignKey: 'categoria_id', as: 'categoria' });
+    this.hasMany(models.Endereco, { foreignKey: 'provider_id', as: 'enderecos' });
   }
 
   checkPassword(password) {

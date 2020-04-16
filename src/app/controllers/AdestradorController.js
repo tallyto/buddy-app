@@ -15,7 +15,6 @@ class AdestradorController {
         'telefone',
         'cpf',
         'bio',
-        'endereco',
         'adestrador',
         'nascimento',
         'avatar_id',
@@ -25,6 +24,7 @@ class AdestradorController {
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,

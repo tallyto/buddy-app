@@ -11,7 +11,6 @@ class ProviderController {
         'id',
         'name',
         'email',
-        'endereco',
         'telefone',
         'bio',
         'cpf',
@@ -25,6 +24,7 @@ class ProviderController {
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,
@@ -70,13 +70,12 @@ class ProviderController {
       name: Yup.string(),
       email: Yup.string().email(),
       telefone: Yup.string(),
-      endereco: Yup.string(),
       cpf: Yup.string(),
       bio: Yup.string(),
+      nascimento: Yup.date(),
       clinica: Yup.boolean(),
       adestrador: Yup.boolean(),
       passeador: Yup.boolean(),
-      nascimento: Yup.date(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -93,10 +92,10 @@ class ProviderController {
       telefone,
       cpf,
       bio,
+      nascimento,
       clinica,
       adestrador,
       passeador,
-      nascimento,
     } = await provider.update(req.body);
 
     return res.json({
@@ -107,10 +106,10 @@ class ProviderController {
       telefone,
       cpf,
       bio,
+      nascimento,
       clinica,
       adestrador,
       passeador,
-      nascimento,
     });
   }
 
@@ -119,7 +118,6 @@ class ProviderController {
       name: Yup.string(),
       email: Yup.string().email(),
       telefone: Yup.string(),
-      endereco: Yup.string(),
       cpf: Yup.string(),
       bio: Yup.string(),
       nascimento: Yup.date(),
@@ -152,7 +150,6 @@ class ProviderController {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
-    // Verifica se o avatar é valido
     if (req.body.avatar_id) {
       const file = await File.findByPk(req.body.avatar_id);
       if (!file) {
@@ -170,7 +167,6 @@ class ProviderController {
     const {
       id,
       name,
-      endereco,
       telefone,
       cpf,
       bio,
@@ -186,7 +182,6 @@ class ProviderController {
       id,
       name,
       email,
-      endereco,
       telefone,
       cpf,
       bio,

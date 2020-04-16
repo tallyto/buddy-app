@@ -17,6 +17,8 @@ const {
   UserController,
   VacinaController,
   NotificationController,
+  EnderecoController,
+  CreditCardController,
 } = require('./config/require');
 
 const authMiddleware = require('./app/middlewares/auth');
@@ -46,6 +48,8 @@ routes.get('/providers/passeador', PasseadorController.index);
 routes.get('/providers/adestrador', AdestradorController.index);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
+routes.get('/credit-card', CreditCardController.index);
+
 // Session
 routes.post('/sessions', SessionController.store);
 routes.post('/sessions/providers', SessionProviderController.store);
@@ -56,6 +60,12 @@ routes.delete('/files/:id', FileController.delete);
 
 routes.post('/categorias', CategoriaController.store);
 routes.get('/categorias', CategoriaController.index);
+
+routes.get('/enderecos', EnderecoController.index);
+routes.post('/enderecos', EnderecoController.store);
+routes.put('/enderecos/:id', EnderecoController.update);
+routes.delete('/enderecos/:id', EnderecoController.delete);
+
 
 routes.get('/pets/all', PetController.show);
 
@@ -75,6 +85,10 @@ routes.delete('/pets/:id', PetController.delete);
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos', AgendamentoController.index);
 routes.delete('/agendamentos/:id', AgendamentoController.delete);
+
+routes.post('/credit-card', CreditCardController.store);
+routes.put('/credit-card/:id', CreditCardController.update);
+routes.delete('/credit-card/:id', CreditCardController.delete);
 
 routes.post('/vacinas', VacinaController.store);
 routes.delete('/vacinas/:id', VacinaController.delete);

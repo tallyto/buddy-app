@@ -24,10 +24,13 @@ class FileController {
 
   async delete(req, res) {
     const file = await File.findByPk(req.params.id);
+
     if (!file) {
       return res.status(400).json({ error: 'Avatar not exist' });
     }
+
     removeImageS3(file.key);
+
     await file.destroy();
 
     return res.json();

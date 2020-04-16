@@ -17,13 +17,7 @@ class CategoriaController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const {
-      name,
-    } = req.body;
-
-    const categoria = await Categoria.create({
-      name,
-    });
+    const categoria = await Categoria.create(req.body);
 
     return res.json(categoria);
   }

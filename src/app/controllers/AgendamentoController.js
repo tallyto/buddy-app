@@ -1,7 +1,11 @@
 /* eslint-disable camelcase */
 const Yup = require('yup');
 const {
-  parseISO, startOfHour, isBefore, format, subHours,
+  parseISO,
+  startOfHour,
+  isBefore,
+  format,
+  subHours,
 } = require('date-fns');
 const pt = require('date-fns/locale/pt');
 const Agendamento = require('../models/Agendamento');
@@ -23,7 +27,10 @@ class AgendamentoController {
           model: Provider,
           as: 'provider',
           attributes: ['name', 'email'],
-          include: [{ model: File, as: 'avatar' }],
+
+          include: [
+            { model: File, as: 'avatar', attributes: ['id', 'name', 'url'] },
+          ],
         },
       ],
       limit: 20,
@@ -46,10 +53,12 @@ class AgendamentoController {
     const { provider_id, date } = req.body;
 
     const hourStart = startOfHour(parseISO(date));
+
     // Verifica se a data passou
     if (isBefore(hourStart, new Date())) {
       return res.status(400).json({ error: 'Past dates are not permitted' });
     }
+
     // Verifica se a data esta disponivel
     const checkAvailability = await Agendamento.findOne({
       where: {
@@ -75,11 +84,13 @@ class AgendamentoController {
      * Notifica prestador de serviços sobre novo agendamento
      */
     const user = await User.findByPk(req.userId);
+
     const formattedDate = format(
       hourStart,
       "'dia' dd 'de' MMMM', às' H:mm'h'",
       { locale: pt },
     );
+
     await Notification.create({
       content: `Novo agendamento de ${user.name} para ${formattedDate} `,
       provider_id,
@@ -91,19 +102,30 @@ class AgendamentoController {
 
   async delete(req, res) {
     const agendamento = await Agendamento.findByPk(req.params.id);
+    if (!agendamento) {
+      return res.status(400).json({ error: 'Appointtment does not exist' });
+    }
     if (agendamento.user_id !== req.userId) {
-      return res.status(401).json({ error: "You don't heve permission to cancel this appointment" });
+      return res
+        .status(401)
+        .json({
+          error: "You don't heve permission to cancel this appointment",
+        });
     }
 
     const dateWithSub = subHours(agendamento.date, 2);
 
     if (isBefore(dateWithSub, new Date())) {
-      return res.status(401).json({ error: 'You cant only cancel appointments 2 hours in advance' });
+      return res
+        .status(401)
+        .json({
+          error: 'You cant only cancel appointments 2 hours in advance',
+        });
     }
 
     agendamento.canceled_at = new Date();
 
-    await agendamento.save;
+    await agendamento.save();
 
     return res.json(agendamento);
   }
