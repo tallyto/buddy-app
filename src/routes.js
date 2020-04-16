@@ -72,6 +72,9 @@ routes.delete('/files/:id', FileController.delete);
 
 routes.post('/categorias', CategoriaController.store);
 routes.get('/categorias', CategoriaController.index);
+routes.put('/categorias/:id', CategoriaController.update);
+routes.delete('/categorias/:id', CategoriaController.delete);
+
 
 routes.get('/enderecos', EnderecoController.index);
 routes.post('/enderecos', EnderecoController.store);
