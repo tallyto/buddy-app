@@ -19,7 +19,7 @@ class UserController {
             as: 'avatar',
             attributes: ['id', 'name', 'url'],
           }],
-        }, { association: 'credit_cards' },
+        }, { association: 'enderecos' }, { association: 'credit_cards' },
       ],
     });
 
