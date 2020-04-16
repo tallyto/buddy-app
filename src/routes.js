@@ -8,6 +8,7 @@ const {
   ClinicaController,
   FileController,
   ForgetPasswordController,
+  ForgetPasswordProviderController,
   PasseadorController,
   PetController,
   ProfileController,
@@ -39,6 +40,10 @@ routes.post('/users', UserController.store);
 // ForgetPassword
 routes.post('/forget-password', ForgetPasswordController.store);
 routes.post('/forget-password/:token', ForgetPasswordController.create);
+
+// ForgetPassword
+routes.post('/providers/forget-password', ForgetPasswordProviderController.store);
+routes.post('/providers/forget-password/:token', ForgetPasswordProviderController.create);
 
 // Providers
 routes.get('/providers', ProviderController.index);

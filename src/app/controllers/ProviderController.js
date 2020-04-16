@@ -14,6 +14,7 @@ class ProviderController {
         'telefone',
         'bio',
         'cpf',
+        'nascimento',
         'passeador',
         'adestrador',
         'clinica',
@@ -30,6 +31,19 @@ class ProviderController {
           model: Categoria,
           as: 'categoria',
           attributes: ['name'],
+        },
+        {
+          association: 'enderecos',
+          attributes: [
+            'id',
+            'rua',
+            'complemento',
+            'cep',
+            'bairro',
+            'cidade',
+            'user_id',
+            'provider_id',
+          ],
         },
       ],
     });

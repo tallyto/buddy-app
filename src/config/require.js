@@ -7,6 +7,7 @@ module.exports = {
   ClinicaController: require('../app/controllers/ClinicaController'),
   FileController: require('../app/controllers/FileController'),
   ForgetPasswordController: require('../app/controllers/ForgetPasswordController'),
+  ForgetPasswordProviderController: require('../app/controllers/ForgetPasswordProviderController'),
   PasseadorController: require('../app/controllers/PasseadorController'),
   PetController: require('../app/controllers/PetController'),
   ProfileController: require('../app/controllers/ProfileController'),
