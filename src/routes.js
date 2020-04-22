@@ -1,17 +1,13 @@
 const { Router } = require('express');
 const multer = require('multer');
 const {
-  AdestradorController,
   AgendaController,
   AgendamentoController,
   CategoriaController,
-  ClinicaController,
   FileController,
   ForgetPasswordController,
   ForgetPasswordProviderController,
-  PasseadorController,
   PetController,
-  ProfileController,
   ProviderController,
   PostController,
   SessionController,
@@ -21,6 +17,7 @@ const {
   NotificationController,
   EnderecoController,
   CreditCardController,
+  TypeOfProviderController,
 } = require('./config/require');
 
 const authMiddleware = require('./app/middlewares/auth');
@@ -49,9 +46,9 @@ routes.post('/providers/forget-password/:token', ForgetPasswordProviderControlle
 // Providers
 routes.get('/providers', ProviderController.index);
 routes.post('/providers', ProviderController.store);
-routes.get('/providers/clinica', ClinicaController.index);
-routes.get('/providers/passeador', PasseadorController.index);
-routes.get('/providers/adestrador', AdestradorController.index);
+routes.get('/providers/clinica', TypeOfProviderController.clinica);
+routes.get('/providers/passeador', TypeOfProviderController.passeador);
+routes.get('/providers/adestrador', TypeOfProviderController.adestrador);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
 routes.get('/credit-card', CreditCardController.index);
@@ -60,7 +57,6 @@ routes.get('/posts', PostController.index);
 routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.update);
 routes.delete('/posts/:id', PostController.delete);
-
 
 // Session
 routes.post('/sessions', SessionController.store);
@@ -75,12 +71,10 @@ routes.get('/categorias', CategoriaController.index);
 routes.put('/categorias/:id', CategoriaController.update);
 routes.delete('/categorias/:id', CategoriaController.delete);
 
-
 routes.get('/enderecos', EnderecoController.index);
 routes.post('/enderecos', EnderecoController.store);
 routes.put('/enderecos/:id', EnderecoController.update);
 routes.delete('/enderecos/:id', EnderecoController.delete);
-
 
 routes.get('/pets/all', PetController.show);
 
@@ -89,7 +83,7 @@ routes.get('/vacinas', VacinaController.index);
 // Rotas protegidas por autenticação de usuario
 routes.use(authMiddleware);
 
-routes.get('/users/profile', ProfileController.user);
+routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
 
 routes.post('/pets', PetController.store);
@@ -111,10 +105,10 @@ routes.delete('/vacinas/:id', VacinaController.delete);
 // Rotas protegidas por autenticação de provider
 routes.use(providerAuth);
 
-routes.put('/providers', ProviderController.update);
-routes.get('/providers/profile', ProfileController.provider);
+routes.get('/providers/profile', ProviderController.show);
 routes.get('/agenda', AgendaController.index);
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
+routes.put('/providers/', ProviderController.update);
 
 module.exports = routes;

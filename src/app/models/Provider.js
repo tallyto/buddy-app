@@ -15,6 +15,7 @@ class Provider extends Model {
         clinica: Sequelize.BOOLEAN,
         passeador: Sequelize.BOOLEAN,
         adestrador: Sequelize.BOOLEAN,
+        crmv: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         token: Sequelize.STRING,

@@ -1,16 +1,12 @@
 /* eslint-disable global-require */
 module.exports = {
-  AdestradorController: require('../app/controllers/AdestradorController'),
   AgendaController: require('../app/controllers/AgendaController'),
   AgendamentoController: require('../app/controllers/AgendamentoController'),
   CategoriaController: require('../app/controllers/CategoriaController'),
-  ClinicaController: require('../app/controllers/ClinicaController'),
   FileController: require('../app/controllers/FileController'),
   ForgetPasswordController: require('../app/controllers/ForgetPasswordController'),
   ForgetPasswordProviderController: require('../app/controllers/ForgetPasswordProviderController'),
-  PasseadorController: require('../app/controllers/PasseadorController'),
   PetController: require('../app/controllers/PetController'),
-  ProfileController: require('../app/controllers/ProfileController'),
   ProviderController: require('../app/controllers/ProviderController'),
   PostController: require('../app/controllers/PostController'),
   SessionController: require('../app/controllers/SessionController'),
@@ -20,4 +16,5 @@ module.exports = {
   NotificationController: require('../app/controllers/NotificationController'),
   CreditCardController: require('../app/controllers/CreditCardController'),
   EnderecoController: require('../app/controllers/EnderecoController'),
+  TypeOfProviderController: require('../app/controllers/TypeOfProviderController'),
 };
