@@ -7,6 +7,11 @@ class Agendamento extends Model {
       {
         date: Sequelize.DATE,
         canceled_at: Sequelize.DATE,
+        value: Sequelize.STRING,
+        description: Sequelize.STRING,
+        payment: Sequelize.STRING,
+
+
       },
       { sequelize },
     );

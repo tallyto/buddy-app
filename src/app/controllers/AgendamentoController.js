@@ -44,13 +44,19 @@ class AgendamentoController {
     const schema = Yup.object().shape({
       date: Yup.date().required(),
       provider_id: Yup.number().required(),
+      value: Yup.string().required(),
+      description: Yup.string().required(),
+
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { provider_id, date } = req.body;
+    const {
+      provider_id, date, value, description, payment,
+
+    } = req.body;
 
     const hourStart = startOfHour(parseISO(date));
 
@@ -76,8 +82,11 @@ class AgendamentoController {
 
     const agendamento = await Agendamento.create({
       user_id: req.userId,
-      provider_id,
       date: hourStart,
+      provider_id,
+      value,
+      description,
+      payment,
     });
 
     /**
