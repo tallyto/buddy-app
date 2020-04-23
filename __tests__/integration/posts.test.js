@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../../src/app');
 const truncate = require('../util/truncate');
 
-describe('posts', () => {
+describe('post', () => {
   it('Deve cadastrar um post', async () => {
     const post = { title: 'meu post', content: 'conteudo' };
     const response = await request(app).post('/posts').send(post);

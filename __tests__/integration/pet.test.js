@@ -3,10 +3,10 @@ const request = require('supertest');
 const app = require('../../src/app');
 const truncate = require('../util/truncate');
 
-describe('Pets', () => {
-  beforeEach(async () => {
-    await truncate();
-  });
+describe('pet', () => {
+  // beforeEach(async () => {
+  //   await truncate();
+  // });
   it('Deve cadastrar um pet', async () => {
     const user = { email: 'rodrigues.tallyto@hotmail.com', password: '123321' };
     const pets = {
@@ -43,13 +43,6 @@ describe('Pets', () => {
   });
 
   it('Deve listar todos os pets', async () => {
-    const user = { email: 'rodrigues.tallyto@hotmail.com', password: '123321' };
-    const pets = {
-      name: 'Pretinha', raca: 'Vira-lata', genero: 'Cachorro', descricao: 'Matadora', idade: 3,
-    };
-    await request(app).post('/users').send(user);
-    const session = await request(app).post('/sessions').send(user);
-    await request(app).post('/pets').send(pets).set('Authorization', `Bearer ${session.body.token}`);
     const response = await request(app).get('/pets/all');
     expect(Array.isArray(response.body));
   });

@@ -14,11 +14,6 @@ describe('providers', () => {
   });
 
   it('Deve listar todos os providers', async () => {
-    const provider = { email: 'provider@provider.com', password: '123321' };
-    await request(app)
-      .post('/providers')
-      .send(provider);
-
     const response = await request(app).get('/providers');
 
     expect(Array.isArray(response.body));

@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../../src/app');
 const truncate = require('../util/truncate');
 
-describe('Users', () => {
+describe('user', () => {
   it('Deve cadastar um usuario', async () => {
     const user = { email: 'rodrigues.tallyto@hotmail.com', password: '123321' };
     const response = await request(app).post('/users').send(user);
