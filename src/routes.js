@@ -94,7 +94,7 @@ routes.delete('/pets/:id', PetController.delete);
 
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos', AgendamentoController.index);
-routes.get('/agendamentos/:providerId', AgendamentoController.show);
+routes.get('/agendamento/:providerId', AgendamentoController.show);
 
 routes.delete('/agendamentos/:id', AgendamentoController.delete);
 
