@@ -40,6 +40,32 @@ class AgendamentoController {
     return res.json(agendamento);
   }
 
+  async show(req, res) {
+    const { page = 1 } = req.query;
+    const agendamento = await Agendamento.findAll({
+      where: {
+        user_id: req.userId,
+        canceled_at: null,
+        provider_id: req.params.providerId,
+      },
+      include: [
+        {
+          model: Provider,
+          as: 'provider',
+          attributes: ['name', 'email'],
+
+          include: [
+            { model: File, as: 'avatar', attributes: ['id', 'name', 'url'] },
+          ],
+        },
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+      order: ['date'],
+    });
+    return res.json(agendamento);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       date: Yup.date().required(),
