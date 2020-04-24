@@ -59,6 +59,9 @@ routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.update);
 routes.delete('/posts/:id', PostController.delete);
 
+routes.get('/agendamentos', AgendamentoController.index);
+
+
 // Session
 routes.post('/sessions', SessionController.store);
 routes.post('/sessions/providers', SessionProviderController.store);
@@ -93,7 +96,6 @@ routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
 routes.post('/agendamentos', AgendamentoController.store);
-routes.get('/agendamentos', AgendamentoController.index);
 routes.get('/agendamento/:providerId', AgendamentoController.show);
 
 routes.delete('/agendamentos/:id', AgendamentoController.delete);

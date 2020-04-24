@@ -18,10 +18,6 @@ class AgendamentoController {
   async index(req, res) {
     const { page = 1 } = req.query;
     const agendamento = await Agendamento.findAll({
-      where: {
-        user_id: req.userId,
-        canceled_at: null,
-      },
       include: [
         {
           model: Provider,
