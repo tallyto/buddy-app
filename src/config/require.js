@@ -17,4 +17,6 @@ module.exports = {
   CreditCardController: require('../app/controllers/CreditCardController'),
   EnderecoController: require('../app/controllers/EnderecoController'),
   TypeOfProviderController: require('../app/controllers/TypeOfProviderController'),
+  AgendaDisponivelController: require('../app/controllers/AgendaDisponivelController'),
+
 };

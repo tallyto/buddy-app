@@ -18,6 +18,7 @@ const {
   EnderecoController,
   CreditCardController,
   TypeOfProviderController,
+  AgendaDisponivelController,
 } = require('./config/require');
 
 const authMiddleware = require('./app/middlewares/auth');
@@ -85,7 +86,7 @@ routes.use(authMiddleware);
 
 routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
-
+routes.get('/provider/:providerId/disponivel', AgendaDisponivelController.index);
 routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
 routes.put('/pets/:id', PetController.update);
