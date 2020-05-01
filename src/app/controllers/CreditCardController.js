@@ -15,6 +15,8 @@ class CreditCardController {
       card_number: Yup.string().required(),
       validade: Yup.string().required(),
       cvv: Yup.string().required(),
+      payment: Yup.string().required(),
+
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -32,6 +34,8 @@ class CreditCardController {
       card_number: Yup.string(),
       validade: Yup.string(),
       cvv: Yup.string(),
+      payment: Yup.string(),
+
     });
 
     if (!(await schema.isValid(req.body))) {
