@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const Yup = require('yup');
 const User = require('../models/User');
 const File = require('../models/File');
@@ -36,10 +37,12 @@ class UserController {
           attributes: [
             'id',
             'rua',
+            'numero',
             'complemento',
             'cep',
             'bairro',
             'cidade',
+            'estado',
             'user_id',
             'provider_id',
           ],
@@ -53,6 +56,7 @@ class UserController {
             'validade',
             'cvv',
             'user_id',
+            'payment',
           ],
         },
       ],
@@ -95,10 +99,12 @@ class UserController {
           attributes: [
             'id',
             'rua',
+            'numero',
             'complemento',
             'cep',
             'bairro',
             'cidade',
+            'estado',
             'user_id',
             'provider_id',
           ],
@@ -112,6 +118,7 @@ class UserController {
             'validade',
             'cvv',
             'user_id',
+            'payment',
           ],
         },
       ],
@@ -170,7 +177,7 @@ class UserController {
 
     const user = await User.findByPk(req.userId);
 
-    if (email !== user.email) {
+    if (email && email !== user.email) {
       const userExist = await User.findOne({ where: { email } });
       if (userExist) {
         return res.status(400).json({ error: 'User already exists.' });
@@ -188,13 +195,16 @@ class UserController {
       }
     }
 
-    const { id, name, telefone } = await user.update(req.body);
+    const {
+      id, name, telefone, avatar_id,
+    } = await user.update(req.body);
 
     return res.json({
       id,
       name,
       email,
       telefone,
+      avatar_id,
     });
   }
 }

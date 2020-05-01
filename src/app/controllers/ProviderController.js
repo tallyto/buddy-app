@@ -38,10 +38,12 @@ class ProviderController {
           attributes: [
             'id',
             'rua',
+            'numero',
             'complemento',
             'cep',
             'bairro',
             'cidade',
+            'estado',
             'user_id',
             'provider_id',
           ],
@@ -115,10 +117,12 @@ class ProviderController {
           attributes: [
             'id',
             'rua',
+            'numero',
             'complemento',
             'cep',
             'bairro',
             'cidade',
+            'estado',
             'user_id',
             'provider_id',
           ],
@@ -148,6 +152,7 @@ class ProviderController {
       comfirmPassword: Yup.string().when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
     });
 
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
@@ -156,7 +161,7 @@ class ProviderController {
 
     const provider = await Provider.findByPk(req.providerId);
 
-    if (email !== provider.email) {
+    if (email && email !== provider.email) {
       const providerExist = await Provider.findOne({ where: { email } });
       if (providerExist) {
         return res.status(400).json({ error: 'Provider already exists.' });
@@ -165,20 +170,6 @@ class ProviderController {
 
     if (oldPassword && !(await provider.checkPassword(oldPassword))) {
       return res.status(401).json({ error: 'Password does not match' });
-    }
-
-    if (req.body.avatar_id) {
-      const file = await File.findByPk(req.body.avatar_id);
-      if (!file) {
-        return res.status(400).json({ error: 'Avatar not exist' });
-      }
-    }
-
-    if (req.body.categoria_id) {
-      const categoria = await Categoria.findByPk(req.body.categoria_id);
-      if (!categoria) {
-        return res.status(400).json({ error: 'Categoria not exist' });
-      }
     }
 
     const {
@@ -192,8 +183,8 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
-      categoria_id,
       avatar_id,
+      categoria_id,
     } = await provider.update(req.body);
 
     return res.json({
@@ -208,8 +199,8 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
-      categoria_id,
       avatar_id,
+      categoria_id,
     });
   }
 
@@ -240,7 +231,8 @@ class ProviderController {
 
     const provider = await Provider.findByPk(req.params.id);
 
-    if (email !== provider.email) {
+
+    if (email && email !== provider.email) {
       const providerExist = await Provider.findOne({ where: { email } });
       if (providerExist) {
         return res.status(400).json({ error: 'Provider already exists.' });
@@ -249,20 +241,6 @@ class ProviderController {
 
     if (oldPassword && !(await provider.checkPassword(oldPassword))) {
       return res.status(401).json({ error: 'Password does not match' });
-    }
-
-    if (req.body.avatar_id) {
-      const file = await File.findByPk(req.body.avatar_id);
-      if (!file) {
-        return res.status(400).json({ error: 'Avatar not exist' });
-      }
-    }
-
-    if (req.body.categoria_id) {
-      const categoria = await Categoria.findByPk(req.body.categoria_id);
-      if (!categoria) {
-        return res.status(400).json({ error: 'Categoria not exist' });
-      }
     }
 
     const {
@@ -276,8 +254,8 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
-      categoria_id,
       avatar_id,
+      categoria_id,
     } = await provider.update(req.body);
 
     return res.json({
@@ -292,8 +270,8 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
-      categoria_id,
       avatar_id,
+      categoria_id,
     });
   }
 }
