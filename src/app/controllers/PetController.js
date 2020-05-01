@@ -57,7 +57,7 @@ class PetsController {
       raca: Yup.string().required(),
       genero: Yup.string().required(),
       descricao: Yup.string().required(),
-      idade: Yup.number().required(),
+      nascimento: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -78,7 +78,7 @@ class PetsController {
       raca: Yup.string(),
       genero: Yup.string(),
       descricao: Yup.string(),
-      idade: Yup.number(),
+      nascimento: Yup.date(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -94,9 +94,9 @@ class PetsController {
     }
 
     const pet = await Pets.findByPk(req.params.id);
-    const newPet = await pet.update(req.body);
+    await pet.update(req.body);
 
-    return res.json(newPet);
+    return res.json(pet);
   }
 
   async delete(req, res) {

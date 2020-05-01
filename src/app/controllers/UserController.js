@@ -15,15 +15,6 @@ class UserController {
         },
         {
           association: 'pets',
-          attributes: [
-            'id',
-            'name',
-            'raca',
-            'genero',
-            'descricao',
-            'idade',
-            'avatar_id',
-          ],
           include: [
             {
               model: File,
@@ -34,30 +25,9 @@ class UserController {
         },
         {
           association: 'enderecos',
-          attributes: [
-            'id',
-            'rua',
-            'numero',
-            'complemento',
-            'cep',
-            'bairro',
-            'cidade',
-            'estado',
-            'user_id',
-            'provider_id',
-          ],
         },
         {
           association: 'credit_cards',
-          attributes: [
-            'id',
-            'titular',
-            'card_number',
-            'validade',
-            'cvv',
-            'user_id',
-            'payment',
-          ],
         },
       ],
     });
@@ -77,15 +47,6 @@ class UserController {
         },
         {
           association: 'pets',
-          attributes: [
-            'id',
-            'name',
-            'raca',
-            'genero',
-            'descricao',
-            'idade',
-            'avatar_id',
-          ],
           include: [
             {
               model: File,
@@ -96,30 +57,9 @@ class UserController {
         },
         {
           association: 'enderecos',
-          attributes: [
-            'id',
-            'rua',
-            'numero',
-            'complemento',
-            'cep',
-            'bairro',
-            'cidade',
-            'estado',
-            'user_id',
-            'provider_id',
-          ],
         },
         {
           association: 'credit_cards',
-          attributes: [
-            'id',
-            'titular',
-            'card_number',
-            'validade',
-            'cvv',
-            'user_id',
-            'payment',
-          ],
         },
       ],
     });

@@ -29,7 +29,7 @@ class App {
     this.server.use(Sentry.Handlers.errorHandler());
   }
 
-  
+
   exceptionHandler() {
     this.server.use(async (erro, req, res, next) => {
       const errors = await new Youch(erro, req).toJSON();
@@ -37,7 +37,6 @@ class App {
       return res.status(500).json(errors);
     });
   }
-
 }
 
 module.exports = new App().server;

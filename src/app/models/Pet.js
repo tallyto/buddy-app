@@ -9,7 +9,7 @@ class Pets extends Model {
         raca: Sequelize.STRING,
         genero: Sequelize.STRING,
         descricao: Sequelize.STRING,
-        idade: Sequelize.INTEGER,
+        nascimento: Sequelize.DATE,
       },
       {
         sequelize,

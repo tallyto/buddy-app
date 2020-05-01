@@ -11,16 +11,6 @@ class VacinaController {
         {
           model: Pet,
           as: 'pets',
-          attributes: [
-            'id',
-            'name',
-            'raca',
-            'genero',
-            'descricao',
-            'idade',
-            'user_id',
-            'avatar_id',
-          ],
         },
       ],
     });
