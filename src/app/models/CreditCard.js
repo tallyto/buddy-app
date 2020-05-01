@@ -9,6 +9,7 @@ class CreditCard extends Model {
         card_number: Sequelize.STRING,
         validade: Sequelize.STRING,
         cvv: Sequelize.STRING,
+        payment: Sequelize.STRING,
       },
       { sequelize },
     );

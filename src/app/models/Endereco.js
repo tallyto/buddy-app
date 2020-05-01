@@ -11,6 +11,7 @@ class Endereco extends Model {
         cep: Sequelize.STRING,
         bairro: Sequelize.STRING,
         cidade: Sequelize.STRING,
+        estado: Sequelize.STRING,
       },
       { sequelize },
     );

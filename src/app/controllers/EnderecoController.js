@@ -16,6 +16,7 @@ class EnderecoController {
       complemento: Yup.string().required(),
       bairro: Yup.string().required(),
       cidade: Yup.string().required(),
+      estado: Yup.string().required(),
       user_id: Yup.number(),
       provider_id: Yup.number(),
     });
@@ -38,6 +39,7 @@ class EnderecoController {
       cidade: Yup.string(),
       user_id: Yup.number(),
       provider_id: Yup.number(),
+      estado: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
