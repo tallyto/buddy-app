@@ -90,7 +90,7 @@ routes.get('/vacinas', VacinaController.index);
 routes.use(authMiddleware);
 
 
-routes.post('/chat/:id', ChatController.store);
+routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
 
 routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);

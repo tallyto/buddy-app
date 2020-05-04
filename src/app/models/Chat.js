@@ -16,6 +16,7 @@ class Chat extends Model {
       foreignKey: 'provider_id',
       as: 'provider',
     });
+    this.belongsTo(models.Pets, { foreignKey: 'pet_id', as: 'pets' });
   }
 }
 

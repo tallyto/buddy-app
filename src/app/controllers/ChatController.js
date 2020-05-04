@@ -2,13 +2,15 @@
 const Chat = require('../models/Chat');
 const User = require('../models/User');
 const File = require('../models/File');
+const Pet = require('../models/Pet');
 
 class ChatController {
   async store(req, res) {
     const chat = await Chat.findOne({
       where: {
-        provider_id: req.params.id,
+        provider_id: req.params.providerId,
         user_id: req.userId,
+        pet_id: req.params.petId,
       },
     });
 
@@ -17,8 +19,9 @@ class ChatController {
     }
 
     const newChat = await Chat.create({
-      provider_id: req.params.id,
+      provider_id: req.params.providerId,
       user_id: req.userId,
+      pet_id: req.params.petId,
     });
 
     return res.json(newChat);
@@ -35,6 +38,10 @@ class ChatController {
           as: 'user',
           attributes: ['name'],
           include: [{ model: File, as: 'avatar', attributes: ['url'] }],
+        },
+        {
+          model: Pet,
+          as: 'pets',
         },
       ],
     });
