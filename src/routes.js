@@ -19,6 +19,7 @@ const {
   CreditCardController,
   TypeOfProviderController,
   AgendaDisponivelController,
+  ChatController,
 } = require('./config/require');
 
 const authMiddleware = require('./app/middlewares/auth');
@@ -32,6 +33,7 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
+routes.get('/chat/:id', ChatController.index);
 // Users
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
@@ -86,6 +88,9 @@ routes.get('/vacinas', VacinaController.index);
 
 // Rotas protegidas por autenticação de usuario
 routes.use(authMiddleware);
+
+
+routes.post('/chat/:id', ChatController.store);
 
 routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);

@@ -18,5 +18,6 @@ module.exports = {
   EnderecoController: require('../app/controllers/EnderecoController'),
   TypeOfProviderController: require('../app/controllers/TypeOfProviderController'),
   AgendaDisponivelController: require('../app/controllers/AgendaDisponivelController'),
+  ChatController: require('../app/controllers/ChatController'),
 
 };

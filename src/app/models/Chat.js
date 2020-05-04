@@ -1,16 +1,10 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 
-class Agendamento extends Model {
+class Chat extends Model {
   static init(sequelize) {
     super.init(
-      {
-        date: Sequelize.DATE,
-        canceled_at: Sequelize.DATE,
-        value: Sequelize.STRING,
-        description: Sequelize.STRING,
-        payment: Sequelize.STRING,
-      },
+      {},
       { sequelize },
     );
     return this;
@@ -25,4 +19,4 @@ class Agendamento extends Model {
   }
 }
 
-module.exports = Agendamento;
+module.exports = Chat;
