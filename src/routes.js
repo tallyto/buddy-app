@@ -21,7 +21,7 @@ const {
   AgendaDisponivelController,
   ChatController,
 } = require('./config/require');
-
+const AgentamentoUser = require('./app/controllers/AgendamentoUserController');
 const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
 const multerConfig = require('./config/multer');
@@ -87,6 +87,7 @@ routes.get('/vacinas', VacinaController.index);
 // Rotas protegidas por autenticação de usuario
 routes.use(authMiddleware);
 
+routes.post('/agendamenos/aceitar/:id', AgentamentoUser.store);
 
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
 routes.get('/agendamentos', AgendamentoController.index);
@@ -119,6 +120,5 @@ routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
 routes.put('/providers/', ProviderController.update);
 routes.post('/agendamentos', AgendamentoController.store);
-
 
 module.exports = routes;

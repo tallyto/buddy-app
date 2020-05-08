@@ -12,6 +12,8 @@ const Agendamento = require('../models/Agendamento');
 const File = require('../models/File');
 const Provider = require('../models/Provider');
 const User = require('../models/User');
+const Pet = require('../models/Pet');
+
 const Notification = require('../models/Notification');
 
 class AgendamentoController {
@@ -85,6 +87,11 @@ class AgendamentoController {
       user_id, date, value, description, payment, pet_id,
 
     } = req.body;
+
+    const pet = await Pet.findByPk(pet_id);
+    if (!pet) {
+      return res.status(401).json({ error: 'Você precisa informar um pet para cadastrar um agendamento' });
+    }
 
     const hourStart = startOfHour(parseISO(date));
 

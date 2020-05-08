@@ -4,7 +4,7 @@ module.exports = {
     references: { model: 'pets', key: 'id' },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
-    allowNull: true,
+    allowNull: false,
   }),
 
   down: (queryInterface) => queryInterface.removeColumn('agendamentos', 'pet_id'),
