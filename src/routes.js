@@ -61,8 +61,6 @@ routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.update);
 routes.delete('/posts/:id', PostController.delete);
 
-routes.get('/agendamentos', AgendamentoController.index);
-
 
 // Session
 routes.post('/sessions', SessionController.store);
@@ -91,6 +89,7 @@ routes.use(authMiddleware);
 
 
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
+routes.get('/agendamentos', AgendamentoController.index);
 
 routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
@@ -100,7 +99,6 @@ routes.get('/pets', PetController.index);
 routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
-routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamento/:providerId', AgendamentoController.show);
 
 routes.delete('/agendamentos/:id', AgendamentoController.delete);
@@ -120,5 +118,7 @@ routes.get('/agenda', AgendaController.index);
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
 routes.put('/providers/', ProviderController.update);
+routes.post('/agendamentos', AgendamentoController.store);
+
 
 module.exports = routes;

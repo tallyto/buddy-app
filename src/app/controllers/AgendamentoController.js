@@ -18,6 +18,11 @@ class AgendamentoController {
   async index(req, res) {
     const { page = 1 } = req.query;
     const agendamento = await Agendamento.findAll({
+      where: {
+        user_id: req.userId,
+        canceled_at: null,
+
+      },
       include: [
         {
           model: Provider,
@@ -65,7 +70,8 @@ class AgendamentoController {
   async store(req, res) {
     const schema = Yup.object().shape({
       date: Yup.date().required(),
-      provider_id: Yup.number().required(),
+      user_id: Yup.number().required(),
+      pet_id: Yup.number().required(),
       value: Yup.string().required(),
       description: Yup.string().required(),
 
@@ -76,7 +82,7 @@ class AgendamentoController {
     }
 
     const {
-      provider_id, date, value, description, payment,
+      user_id, date, value, description, payment, pet_id,
 
     } = req.body;
 
@@ -91,7 +97,7 @@ class AgendamentoController {
     const checkAvailability = await Agendamento.findOne({
       where: {
         date: hourStart,
-        provider_id,
+        provider_id: req.providerId,
         canceled_at: null,
       },
     });
@@ -103,12 +109,13 @@ class AgendamentoController {
     }
 
     const agendamento = await Agendamento.create({
-      user_id: req.userId,
+      user_id,
       date: hourStart,
-      provider_id,
+      provider_id: req.providerId,
       value,
       description,
       payment,
+      pet_id,
     });
 
     /**
@@ -124,8 +131,8 @@ class AgendamentoController {
 
     await Notification.create({
       content: `Novo agendamento de ${user.name} para ${formattedDate} `,
-      provider_id,
-      user_id: req.userId,
+      provider_id: req.providerId,
+      user_id,
     });
 
     return res.json(agendamento);
