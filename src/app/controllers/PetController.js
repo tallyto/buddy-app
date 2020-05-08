@@ -66,6 +66,11 @@ class PetsController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
+    const user = await User.findByPk(req.userId);
+    if (!user) {
+      return res.status(401).json({ error: 'Não é possivel atribuir um pet a um usuário que não existe' });
+    }
+
     const pets = await Pets.create({
       ...req.body,
       user_id: req.userId,
