@@ -31,6 +31,9 @@ class VacinaController {
     }
 
     const pet = await Pet.findByPk(req.body.pet_id);
+    if (pet.user_id !== req.userId) {
+      return res.status(401).json({ error: 'Você não pode adicionar uma vacina a um pet que não seja desse usuario' });
+    }
     if (!pet) {
       return res.status(400).json({ error: 'Pet does not exist' });
     }

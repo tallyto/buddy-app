@@ -33,7 +33,14 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
+// Global
+routes.get('/credit-card', CreditCardController.index);
+routes.get('/pets/all', PetController.show);
+routes.get('/vacinas', VacinaController.index);
+
+// Chat
 routes.get('/chat/:id', ChatController.index);
+
 // Users
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
@@ -42,7 +49,7 @@ routes.post('/users', UserController.store);
 routes.post('/forget-password', ForgetPasswordController.store);
 routes.post('/forget-password/:token', ForgetPasswordController.create);
 
-// ForgetPassword
+// ForgetPassword provider
 routes.post('/providers/forget-password', ForgetPasswordProviderController.store);
 routes.post('/providers/forget-password/:token', ForgetPasswordProviderController.create);
 
@@ -54,8 +61,7 @@ routes.get('/providers/passeador', TypeOfProviderController.passeador);
 routes.get('/providers/adestrador', TypeOfProviderController.adestrador);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
-routes.get('/credit-card', CreditCardController.index);
-
+// Posts
 routes.get('/posts', PostController.index);
 routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.update);
@@ -66,59 +72,73 @@ routes.delete('/posts/:id', PostController.delete);
 routes.post('/sessions', SessionController.store);
 routes.post('/sessions/providers', SessionProviderController.store);
 
+// Files
 routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/files', FileController.index);
 routes.delete('/files/:id', FileController.delete);
 
+// Categorias
 routes.post('/categorias', CategoriaController.store);
 routes.get('/categorias', CategoriaController.index);
 routes.put('/categorias/:id', CategoriaController.update);
 routes.delete('/categorias/:id', CategoriaController.delete);
 
+// Enderecos
 routes.get('/enderecos', EnderecoController.index);
 routes.post('/enderecos', EnderecoController.store);
 routes.put('/enderecos/:id', EnderecoController.update);
 routes.delete('/enderecos/:id', EnderecoController.delete);
 
-routes.get('/pets/all', PetController.show);
-
-routes.get('/vacinas', VacinaController.index);
-
 // Rotas protegidas por autenticação de usuario
 routes.use(authMiddleware);
 
-routes.post('/agendamenos/aceitar/:id', AgentamentoUser.store);
-
-routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
-routes.get('/agendamentos', AgendamentoController.index);
-
+// User
 routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
+
+// Agendamentos
+routes.get('/agendamentos', AgendamentoController.index);
+routes.post('/agendamenos/aceitar/:id', AgentamentoUser.store);
+
+// Chat
+routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
+
+// Agenda diponivel provider
 routes.get('/provider/:providerId/disponivel', AgendaDisponivelController.index);
+
+// Pets
 routes.post('/pets', PetController.store);
 routes.get('/pets', PetController.index);
 routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
-routes.get('/agendamento/:providerId', AgendamentoController.show);
+// Vacinas
+routes.post('/vacinas', VacinaController.store);
+routes.delete('/vacinas/:id', VacinaController.delete);
 
+routes.get('/agendamento/:providerId', AgendamentoController.show);
 routes.delete('/agendamentos/:id', AgendamentoController.delete);
 
+// Cartão de crédito
 routes.post('/credit-card', CreditCardController.store);
 routes.put('/credit-card/:id', CreditCardController.update);
 routes.delete('/credit-card/:id', CreditCardController.delete);
 
-routes.post('/vacinas', VacinaController.store);
-routes.delete('/vacinas/:id', VacinaController.delete);
-
 // Rotas protegidas por autenticação de provider
 routes.use(providerAuth);
 
+// Provider
 routes.get('/providers/profile', ProviderController.show);
+routes.put('/providers/', ProviderController.update);
+
+// Agenda
 routes.get('/agenda', AgendaController.index);
+
+// Notificações
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:id', NotificationController.update);
-routes.put('/providers/', ProviderController.update);
+
+// Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
 
 module.exports = routes;
