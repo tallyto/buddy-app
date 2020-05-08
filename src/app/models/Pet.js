@@ -7,8 +7,10 @@ class Pets extends Model {
       {
         name: Sequelize.STRING,
         raca: Sequelize.STRING,
-        genero: Sequelize.STRING,
-        descricao: Sequelize.STRING,
+        especie: Sequelize.STRING,
+        pelagem: Sequelize.STRING,
+        sexo: Sequelize.STRING,
+        condicao: Sequelize.STRING,
         nascimento: Sequelize.DATE,
       },
       {

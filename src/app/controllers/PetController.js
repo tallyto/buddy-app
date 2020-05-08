@@ -55,8 +55,10 @@ class PetsController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       raca: Yup.string().required(),
-      genero: Yup.string().required(),
-      descricao: Yup.string().required(),
+      especie: Yup.string().required(),
+      pelagem: Yup.string().required(),
+      sexo: Yup.string().required(),
+      condicao: Yup.string().required(),
       nascimento: Yup.string().required(),
     });
 
@@ -76,13 +78,25 @@ class PetsController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       raca: Yup.string(),
-      genero: Yup.string(),
-      descricao: Yup.string(),
-      nascimento: Yup.date(),
+      especie: Yup.string(),
+      pelagem: Yup.string(),
+      sexo: Yup.string(),
+      condicao: Yup.string(),
+      nascimento: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const pet = await Pets.findByPk(req.params.id);
+
+    if (!pet) {
+      return res.status(400).json({ error: 'Pet does not exist' });
+    }
+
+    if (pet.user_id !== req.userId) {
+      return res.status(401).json({ error: 'Você não pode atualizar um pet que não é seu' });
     }
 
     // Verifica se o avatar é valido
@@ -93,7 +107,6 @@ class PetsController {
       }
     }
 
-    const pet = await Pets.findByPk(req.params.id);
     await pet.update(req.body);
 
     return res.json(pet);

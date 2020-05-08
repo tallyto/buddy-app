@@ -10,15 +10,23 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    especie: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     raca: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    genero: {
+    pelagem: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    descricao: {
+    sexo: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    condicao: {
       type: Sequelize.STRING,
       allowNull: false,
     },
