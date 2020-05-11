@@ -97,8 +97,10 @@ routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
 
 // Agendamentos
-routes.get('/agendamentos', AgendamentoController.index);
+routes.get('/agendamentos/user', AgentamentoUser.index);
 routes.post('/agendamenos/aceitar/:id', AgentamentoUser.store);
+routes.get('/agendamento/:providerId', AgentamentoUser.show);
+routes.delete('/agendamentos/:id', AgentamentoUser.delete);
 
 // Chat
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
@@ -116,8 +118,6 @@ routes.delete('/pets/:id', PetController.delete);
 routes.post('/vacinas', VacinaController.store);
 routes.delete('/vacinas/:id', VacinaController.delete);
 
-routes.get('/agendamento/:providerId', AgendamentoController.show);
-routes.delete('/agendamentos/:id', AgendamentoController.delete);
 
 // Cartão de crédito
 routes.post('/credit-card', CreditCardController.store);
@@ -140,5 +140,7 @@ routes.put('/notifications/:id', NotificationController.update);
 
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
+routes.get('/agendamentos/provider', AgendamentoController.index);
+
 
 module.exports = routes;
