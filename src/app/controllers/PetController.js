@@ -59,6 +59,7 @@ class PetsController {
       pelagem: Yup.string().required(),
       sexo: Yup.string().required(),
       condicao: Yup.string().required(),
+      temperamento: Yup.string().required(),
       nascimento: Yup.string().required(),
     });
 
@@ -87,6 +88,8 @@ class PetsController {
       pelagem: Yup.string(),
       sexo: Yup.string(),
       condicao: Yup.string(),
+      temperamento: Yup.string(),
+
       nascimento: Yup.string(),
     });
 
