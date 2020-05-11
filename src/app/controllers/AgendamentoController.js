@@ -44,6 +44,16 @@ class AgendamentoController {
     return res.json(agendamento);
   }
 
+  async show(req, res) {
+    const { page = 1 } = req.query;
+    const agendamento = await Agendamento.findAll({
+      limit: 20,
+      offset: (page - 1) * 20,
+      order: ['date'],
+    });
+    return res.json(agendamento);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       date: Yup.date().required(),

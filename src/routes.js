@@ -37,6 +37,7 @@ routes.get('/', (req, res) => {
 routes.get('/credit-card', CreditCardController.index);
 routes.get('/pets/all', PetController.show);
 routes.get('/vacinas', VacinaController.index);
+routes.get('/agendamentos', AgendamentoController.show);
 
 // Chat
 routes.get('/chat/:id', ChatController.index);
