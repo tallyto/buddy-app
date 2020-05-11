@@ -45,6 +45,7 @@ class AgendamentoUserController {
         user_id: req.userId,
         canceled_at: null,
         provider_id: req.params.providerId,
+        accept: true,
       },
       include: [
         {
