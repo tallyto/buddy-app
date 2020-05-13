@@ -37,6 +37,7 @@ class Provider extends Model {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
     this.belongsTo(models.Categoria, { foreignKey: 'categoria_id', as: 'categoria' });
     this.hasMany(models.Endereco, { foreignKey: 'provider_id', as: 'enderecos' });
+    this.hasMany(models.ContaBancaria, { foreignKey: 'provider_id', as: 'contas' });
   }
 
   checkPassword(password) {

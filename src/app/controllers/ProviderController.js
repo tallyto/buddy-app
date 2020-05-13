@@ -26,28 +26,16 @@ class ProviderController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,
           as: 'categoria',
-          attributes: ['name'],
+
         },
         {
           association: 'enderecos',
-          attributes: [
-            'id',
-            'rua',
-            'numero',
-            'complemento',
-            'cep',
-            'bairro',
-            'cidade',
-            'estado',
-            'user_id',
-            'provider_id',
-          ],
         },
+        { association: 'contas' },
       ],
     });
 
@@ -105,28 +93,16 @@ class ProviderController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,
           as: 'categoria',
-          attributes: ['name'],
+
         },
         {
           association: 'enderecos',
-          attributes: [
-            'id',
-            'rua',
-            'numero',
-            'complemento',
-            'cep',
-            'bairro',
-            'cidade',
-            'estado',
-            'user_id',
-            'provider_id',
-          ],
         },
+        { association: 'contas' },
       ],
     });
 

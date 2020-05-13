@@ -22,6 +22,8 @@ const {
   ChatController,
 } = require('./config/require');
 const AgentamentoUser = require('./app/controllers/AgendamentoUserController');
+const ContaBancaria = require('./app/controllers/ContaBancariaController');
+
 const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
 const multerConfig = require('./config/multer');
@@ -38,6 +40,7 @@ routes.get('/credit-card', CreditCardController.index);
 routes.get('/pets/all', PetController.show);
 routes.get('/vacinas', VacinaController.index);
 routes.get('/agendamentos', AgendamentoController.show);
+routes.get('/conta-bancaria', ContaBancaria.index);
 
 // Chat
 routes.get('/chat/:id', ChatController.index);
@@ -142,6 +145,12 @@ routes.put('/notifications/:id', NotificationController.update);
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos/provider', AgendamentoController.index);
+
+// Conta Bancaria
+
+routes.post('/conta-bancaria', ContaBancaria.store);
+routes.put('/conta-bancaria/:id', ContaBancaria.update);
+routes.delete('/conta-bancaria/:id', ContaBancaria.destroy);
 
 
 module.exports = routes;
