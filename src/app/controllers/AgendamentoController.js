@@ -31,11 +31,10 @@ class AgendamentoController {
           as: 'user',
           attributes: ['name', 'email'],
 
-          include: [
-            { model: File, as: 'avatar', attributes: ['id', 'name', 'url'] },
-          ],
+          include: [{ model: File, as: 'avatar' }, { association: 'enderecos' }],
+
         },
-        { model: Pet, as: 'pets' },
+        { model: Pet, as: 'pets', include: [{ model: File, as: 'avatar' }] },
       ],
       limit: 20,
       offset: (page - 1) * 20,
@@ -67,7 +66,7 @@ class AgendamentoController {
     }
 
     const {
-      user_id, date, value, description, payment, pet_id,
+      user_id, date, value, description, pet_id,
     } = req.body;
 
     const pet = await Pet.findByPk(pet_id);
@@ -105,7 +104,6 @@ class AgendamentoController {
       provider_id: req.providerId,
       value,
       description,
-      payment,
       pet_id,
     });
 

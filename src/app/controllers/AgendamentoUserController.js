@@ -5,6 +5,7 @@ const {
   format,
   subHours,
 } = require('date-fns');
+const Yup = require('yup');
 const Agendamento = require('../models/Agendamento');
 const Provider = require('../models/Provider');
 const File = require('../models/File');
@@ -27,7 +28,14 @@ class AgendamentoUserController {
           attributes: ['name', 'email', 'clinica', 'passeador', 'adestrador'],
 
           include: [
-            { model: File, as: 'avatar', attributes: ['id', 'name', 'url'] },
+            { model: File, as: 'avatar' },
+          ],
+        },
+        {
+          model: Pet,
+          as: 'pets',
+          include: [
+            { model: File, as: 'avatar' },
           ],
         },
       ],
@@ -54,10 +62,16 @@ class AgendamentoUserController {
           attributes: ['name', 'email'],
 
           include: [
-            { model: File, as: 'avatar', attributes: ['id', 'name', 'url'] },
+            { model: File, as: 'avatar' },
           ],
         },
-        { model: Pet, as: 'pets' },
+        {
+          model: Pet,
+          as: 'pets',
+          include: [
+            { model: File, as: 'avatar' },
+          ],
+        },
       ],
       limit: 20,
       offset: (page - 1) * 20,
@@ -67,6 +81,14 @@ class AgendamentoUserController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      payment: Yup.string(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const agendamento = await Agendamento.findByPk(req.params.id);
     if (!agendamento) {
       return res.status(400).json({ error: 'Agendamento não existe' });
@@ -80,12 +102,10 @@ class AgendamentoUserController {
         });
     }
 
-
-    await agendamento.update({ accept: true });
+    await agendamento.update({ ...req.body, accept: true });
 
     return res.json(agendamento);
   }
-
 
   async delete(req, res) {
     const agendamento = await Agendamento.findByPk(req.params.id);
