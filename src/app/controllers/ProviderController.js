@@ -207,6 +207,17 @@ class ProviderController {
 
     const provider = await Provider.findByPk(req.params.id);
 
+    if (!provider) {
+      return res.status(401).json({ error: 'Você não pode cadastar um usuario que não existe' });
+    }
+
+    // Verifica se o avatar é valido
+    if (req.body.avatar_id) {
+      const file = await File.findByPk(req.body.avatar_id);
+      if (!file) {
+        return res.status(400).json({ error: 'Avatar not exist' });
+      }
+    }
 
     if (email && email !== provider.email) {
       const providerExist = await Provider.findOne({ where: { email } });
