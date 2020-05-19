@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable camelcase */
 const Yup = require('yup');
 const {
@@ -55,7 +57,6 @@ class AgendamentoController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      date: Yup.date().required(),
       user_id: Yup.number().required(),
       pet_id: Yup.number().required(),
       value: Yup.string().required(),
@@ -76,36 +77,42 @@ class AgendamentoController {
       });
     }
 
-    const hourStart = startOfHour(parseISO(date));
+    const agendamentos = [];
+    for (const datas of date) {
+      const hourStart = startOfHour(parseISO(datas));
 
-    // Verifica se a data passou
-    if (isBefore(hourStart, new Date())) {
-      return res.status(400).json({ error: 'Past dates are not permitted' });
-    }
+      // Verifica se a data passou
+      if (isBefore(hourStart, new Date())) {
+        return res.status(400).json({ error: 'Past dates are not permitted' });
+      }
 
-    // Verifica se a data esta disponivel
-    const checkAvailability = await Agendamento.findOne({
-      where: {
+      // Verifica se a data esta disponivel
+      const checkAvailability = await Agendamento.findOne({
+        where: {
+          date: hourStart,
+          provider_id: req.providerId,
+          canceled_at: null,
+        },
+      });
+
+      if (checkAvailability) {
+        return res
+          .status(400)
+          .json({ error: 'Data de agendamento nao disponivel' });
+      }
+
+      const agendamento = await Agendamento.create({
+        user_id,
         date: hourStart,
         provider_id: req.providerId,
-        canceled_at: null,
-      },
-    });
+        value,
+        description,
+        pet_id,
+      });
 
-    if (checkAvailability) {
-      return res
-        .status(400)
-        .json({ error: 'Data de agendamento nao disponivel' });
+      agendamentos.push(agendamento);
     }
 
-    const agendamento = await Agendamento.create({
-      user_id,
-      date: hourStart,
-      provider_id: req.providerId,
-      value,
-      description,
-      pet_id,
-    });
 
     /**
      * Notifica prestador de serviços sobre novo agendamento
@@ -124,7 +131,7 @@ class AgendamentoController {
     //   user_id,
     // });
 
-    return res.json(agendamento);
+    return res.json(agendamentos);
   }
 }
 
