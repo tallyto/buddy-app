@@ -17,8 +17,8 @@ class ProviderController {
         'nascimento',
         'passeador',
         'adestrador',
-        'crmv',
         'clinica',
+        'crmv',
         'avatar_id',
         'categoria_id',
       ],
@@ -30,7 +30,6 @@ class ProviderController {
         {
           model: Categoria,
           as: 'categoria',
-
         },
         {
           association: 'enderecos',
@@ -70,7 +69,6 @@ class ProviderController {
     });
   }
 
-
   async show(req, res) {
     const provider = await Provider.findOne({
       where: { id: req.providerId },
@@ -97,7 +95,6 @@ class ProviderController {
         {
           model: Categoria,
           as: 'categoria',
-
         },
         {
           association: 'enderecos',
@@ -128,14 +125,24 @@ class ProviderController {
       comfirmPassword: Yup.string().when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
     });
 
-
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { email, oldPassword } = req.body;
+    const { email, oldPassword, avatar_id } = req.body;
+
+    if (!avatar_id) {
+      const avatar = await File.findByPk(avatar_id);
+      if (!avatar) {
+        return res.status(401).json({ error: 'Avatar not exist' });
+      }
+    }
 
     const provider = await Provider.findByPk(req.providerId);
+
+    if (!provider) {
+      return res.status(401).json({ error: 'Provider does not exist' });
+    }
 
     if (email && email !== provider.email) {
       const providerExist = await Provider.findOne({ where: { email } });
@@ -159,7 +166,6 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
-      avatar_id,
       categoria_id,
     } = await provider.update(req.body);
 
@@ -208,7 +214,9 @@ class ProviderController {
     const provider = await Provider.findByPk(req.params.id);
 
     if (!provider) {
-      return res.status(401).json({ error: 'Você não pode cadastar um usuario que não existe' });
+      return res
+        .status(401)
+        .json({ error: 'Você não pode cadastar um usuario que não existe' });
     }
 
     // Verifica se o avatar é valido
