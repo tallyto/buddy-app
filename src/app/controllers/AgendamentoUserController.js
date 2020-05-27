@@ -83,28 +83,37 @@ class AgendamentoUserController {
   async store(req, res) {
     const schema = Yup.object().shape({
       payment: Yup.string(),
+      agendamentos: Yup.array().required()
     });
 
+    const {agendamentos} = req.body
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const agendamento = await Agendamento.findByPk(req.params.id);
-    if (!agendamento) {
-      return res.status(400).json({ error: 'Agendamento não existe' });
+    const response = []
+    for (const agendamento_id of agendamentos){
+
+      const agendamento = await Agendamento.findByPk(agendamento_id);
+      if (!agendamento) {
+        return res.status(400).json({ error: 'Agendamento não existe' });
+      }
+  
+      if (agendamento.user_id !== req.userId) {
+        return res
+          .status(401)
+          .json({
+            error: 'Você não pode aceitar um agendamento que não lhe pertence',
+          });
+      }
+  
+      await agendamento.update({ ...req.body, accept: true });
+
+      response.push(agendamento)
     }
 
-    if (agendamento.user_id !== req.userId) {
-      return res
-        .status(401)
-        .json({
-          error: 'Você não pode aceitar um agendamento que não lhe pertence',
-        });
-    }
 
-    await agendamento.update({ ...req.body, accept: true });
-
-    return res.json(agendamento);
+    return res.json(response);
   }
 
   async delete(req, res) {

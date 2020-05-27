@@ -102,7 +102,7 @@ routes.put('/users', UserController.update);
 
 // Agendamentos
 routes.get('/agendamentos/user', AgentamentoUser.index);
-routes.post('/agendamenos/aceitar/:id', AgentamentoUser.store);
+routes.post('/agendamenos/aceitar', AgentamentoUser.store);
 routes.get('/agendamento/:providerId', AgentamentoUser.show);
 routes.delete('/agendamentos/:id', AgentamentoUser.delete);
 
