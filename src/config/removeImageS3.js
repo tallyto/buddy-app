@@ -2,15 +2,15 @@ const aws = require('aws-sdk');
 
 const s3 = new aws.S3(
   {
-    accessKeyId: 'AKIAVHKUOQJ4CZFWM32J',
-    secretAccessKey: '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',
-    region: 'sa-east-1',
+    accessKeyId: 'AKIAVCHI6YVLOWQ6PKP4',
+    secretAccessKey: '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',
+    region: 'us-east-2',
   },
 );
 
 module.exports = function removeImageS3(key) {
   s3.deleteObject({
-    Bucket: 'buddy-pet',
+    Bucket: 'buddypet',
     Key: key,
   }, (err, data) => {
     if (err) {

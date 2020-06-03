@@ -20,11 +20,11 @@ const storageTypes = {
   }),
   s3: multerS3({
     s3: new aws.S3({
-      accessKeyId: 'AKIAVHKUOQJ4CZFWM32J',
-      secretAccessKey: '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',
-      region: 'sa-east-1',
+      accessKeyId: 'AKIAVCHI6YVLOWQ6PKP4',
+      secretAccessKey: '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',
+      region: 'us-east-2',
     }),
-    bucket: 'buddy-pet',
+    bucket: 'buddypet',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {
