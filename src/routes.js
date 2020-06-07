@@ -23,7 +23,10 @@ const {
 } = require('./config/require');
 const AgentamentoUser = require('./app/controllers/AgendamentoUserController');
 const ContaBancaria = require('./app/controllers/ContaBancariaController');
+const ConsultaController = require('./app/controllers/ConsultaController');
+const HistoricoController = require('./app/controllers/HistoricoController');
 
+const FichaController = require('./app/controllers/FichaController');
 const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
 const multerConfig = require('./config/multer');
@@ -41,6 +44,7 @@ routes.get('/pets/all', PetController.show);
 routes.get('/vacinas', VacinaController.index);
 routes.get('/agendamentos', AgendamentoController.show);
 routes.get('/conta-bancaria', ContaBancaria.index);
+routes.get('/consultas', ConsultaController.index);
 
 // Chat
 routes.get('/chat/:id', ChatController.index);
@@ -118,11 +122,6 @@ routes.get('/pets', PetController.index);
 routes.put('/pets/:id', PetController.update);
 routes.delete('/pets/:id', PetController.delete);
 
-// Vacinas
-routes.post('/vacinas', VacinaController.store);
-routes.delete('/vacinas/:id', VacinaController.delete);
-
-
 // Cartão de crédito
 routes.post('/credit-card', CreditCardController.store);
 routes.put('/credit-card/:id', CreditCardController.update);
@@ -151,6 +150,18 @@ routes.get('/agendamentos/provider', AgendamentoController.index);
 routes.post('/conta-bancaria', ContaBancaria.store);
 routes.put('/conta-bancaria/:id', ContaBancaria.update);
 routes.delete('/conta-bancaria/:id', ContaBancaria.destroy);
+
+routes.post('/consultas', ConsultaController.create);
+routes.put('/consultas', ConsultaController.update);
+routes.delete('/consultas', ConsultaController.delete);
+
+routes.get('/ficha/:id', FichaController.show);
+routes.get('/historico/:id', HistoricoController.show);
+
+// Vacinas
+routes.post('/vacinas', VacinaController.store);
+routes.delete('/vacinas/:id', VacinaController.delete);
+routes.get('/vacinas/:id', VacinaController.show);
 
 
 module.exports = routes;

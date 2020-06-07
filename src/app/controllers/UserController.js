@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const Yup = require('yup');
 const User = require('../models/User');
 const File = require('../models/File');

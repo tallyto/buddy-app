@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const Yup = require('yup');
 const Pets = require('../models/Pet');
 const User = require('../models/User');

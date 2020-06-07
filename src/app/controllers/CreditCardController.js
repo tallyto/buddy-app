@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const Yup = require('yup');
 const CreditCard = require('../models/CreditCard');
 

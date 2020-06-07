@@ -19,6 +19,10 @@
         "no-param-reassign":"off",
         "no-unreachable": "off",
         "class-methods-use-this":"off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "camelcase": "off",
+        "no-restricted-syntax": "off",
+        "no-await-in-loop": "off",
+        "no-undef": "off"
     }
 }

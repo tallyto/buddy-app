@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const Yup = require('yup');
 const Endereco = require('../models/Endereco');
 const User = require('../models/User');

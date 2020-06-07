@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const Yup = require('yup');
 const Vacinas = require('../models/Vacina');
 const Pet = require('../models/Pet');
@@ -18,6 +17,16 @@ class VacinaController {
     return res.json(vacinas);
   }
 
+  async show(req, res) {
+    const vacinas = await Vacinas.findAll({
+      where: {
+        pet_id: req.params.id,
+      },
+    });
+
+    return res.json(vacinas);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       vacina: Yup.string().required(),
@@ -31,9 +40,7 @@ class VacinaController {
     }
 
     const pet = await Pet.findByPk(req.body.pet_id);
-    if (pet.user_id !== req.userId) {
-      return res.status(401).json({ error: 'Você não pode adicionar uma vacina a um pet que não seja desse usuario' });
-    }
+
     if (!pet) {
       return res.status(400).json({ error: 'Pet does not exist' });
     }

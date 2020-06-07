@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const crypto = require('crypto');
 const moment = require('moment');
 const Provider = require('../models/Provider');

@@ -12,6 +12,7 @@ const Endereco = require('../app/models/Endereco');
 const Post = require('../app/models/Post');
 const Chat = require('../app/models/Chat');
 const ContaBancaria = require('../app/models/ContaBancaria');
+const Consulta = require('../app/models/Consulta');
 
 const databaseConfig = require('../config/database');
 
@@ -29,6 +30,7 @@ const models = [
   Post,
   Chat,
   ContaBancaria,
+  Consulta,
 ];
 
 class Database {

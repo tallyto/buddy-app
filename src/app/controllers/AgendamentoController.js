@@ -1,6 +1,3 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable camelcase */
 const Yup = require('yup');
 const {
   parseISO,
