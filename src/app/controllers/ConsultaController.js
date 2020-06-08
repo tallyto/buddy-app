@@ -7,10 +7,22 @@ class ConsultaController {
     return res.json(consulta);
   }
 
+  async show(req, res) {
+    const consultas = await Consulta.findAll({
+      where: {
+        provider_id: req.providerId,
+      },
+    });
+
+    return res.json(consultas);
+  }
+
   async create(req, res) {
-    const consulta = await Consulta.create(
-      { ...req.body, provider_id: req.providerId, data: new Date() },
-    );
+    const consulta = await Consulta.create({
+      ...req.body,
+      provider_id: req.providerId,
+      data: new Date(),
+    });
     return res.json(consulta);
   }
 
@@ -30,6 +42,5 @@ class ConsultaController {
     return res.json();
   }
 }
-
 
 module.exports = new ConsultaController();

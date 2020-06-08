@@ -58,8 +58,14 @@ routes.post('/forget-password', ForgetPasswordController.store);
 routes.post('/forget-password/:token', ForgetPasswordController.create);
 
 // ForgetPassword provider
-routes.post('/providers/forget-password', ForgetPasswordProviderController.store);
-routes.post('/providers/forget-password/:token', ForgetPasswordProviderController.create);
+routes.post(
+  '/providers/forget-password',
+  ForgetPasswordProviderController.store,
+);
+routes.post(
+  '/providers/forget-password/:token',
+  ForgetPasswordProviderController.create,
+);
 
 // Providers
 routes.get('/providers', ProviderController.index);
@@ -74,7 +80,6 @@ routes.get('/posts', PostController.index);
 routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.update);
 routes.delete('/posts/:id', PostController.delete);
-
 
 // Session
 routes.post('/sessions', SessionController.store);
@@ -114,7 +119,10 @@ routes.delete('/agendamentos/:id', AgentamentoUser.delete);
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
 
 // Agenda diponivel provider
-routes.get('/provider/:providerId/disponivel', AgendaDisponivelController.index);
+routes.get(
+  '/provider/:providerId/disponivel',
+  AgendaDisponivelController.index,
+);
 
 // Pets
 routes.post('/pets', PetController.store);
@@ -154,6 +162,7 @@ routes.delete('/conta-bancaria/:id', ContaBancaria.destroy);
 routes.post('/consultas', ConsultaController.create);
 routes.put('/consultas', ConsultaController.update);
 routes.delete('/consultas', ConsultaController.delete);
+routes.get('/consultas/provider', ConsultaController.show);
 
 routes.get('/ficha/:id', FichaController.show);
 routes.get('/historico/:id', HistoricoController.show);
@@ -162,6 +171,5 @@ routes.get('/historico/:id', HistoricoController.show);
 routes.post('/vacinas', VacinaController.store);
 routes.delete('/vacinas/:id', VacinaController.delete);
 routes.get('/vacinas/:id', VacinaController.show);
-
 
 module.exports = routes;
