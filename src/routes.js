@@ -160,8 +160,8 @@ routes.put('/conta-bancaria/:id', ContaBancaria.update);
 routes.delete('/conta-bancaria/:id', ContaBancaria.destroy);
 
 routes.post('/consultas', ConsultaController.create);
-routes.put('/consultas', ConsultaController.update);
-routes.delete('/consultas', ConsultaController.delete);
+routes.put('/consultas/:id', ConsultaController.update);
+routes.delete('/consultas/:id', ConsultaController.delete);
 routes.get('/consultas/provider', ConsultaController.show);
 
 routes.get('/ficha/:id', FichaController.show);
