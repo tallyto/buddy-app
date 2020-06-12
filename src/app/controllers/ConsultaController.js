@@ -1,4 +1,7 @@
 const Consulta = require('../models/Consulta');
+const Pet = require('../models/Pet');
+const User = require('../models/User');
+
 
 class ConsultaController {
   async index(req, res) {
@@ -12,6 +15,7 @@ class ConsultaController {
       where: {
         provider_id: req.providerId,
       },
+      include: [{ model: Pet, as: 'pets', include: [{ model: User, as: 'user', attributes: ['name'] }] }],
     });
 
     return res.json(consultas);
