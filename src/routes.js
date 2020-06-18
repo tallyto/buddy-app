@@ -25,7 +25,7 @@ const AgentamentoUser = require('./app/controllers/AgendamentoUserController');
 const ContaBancaria = require('./app/controllers/ContaBancariaController');
 const ConsultaController = require('./app/controllers/ConsultaController');
 const HistoricoController = require('./app/controllers/HistoricoController');
-
+const ExameController = require('./app/controllers/ExameController');
 const FichaController = require('./app/controllers/FichaController');
 const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
@@ -45,6 +45,7 @@ routes.get('/vacinas', VacinaController.index);
 routes.get('/agendamentos', AgendamentoController.show);
 routes.get('/conta-bancaria', ContaBancaria.index);
 routes.get('/consultas', ConsultaController.index);
+routes.get('/exames', ExameController.index);
 
 // Chat
 routes.get('/chat/:id', ChatController.index);
@@ -154,16 +155,17 @@ routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos/provider', AgendamentoController.index);
 
 // Conta Bancaria
-
 routes.post('/conta-bancaria', ContaBancaria.store);
 routes.put('/conta-bancaria/:id', ContaBancaria.update);
 routes.delete('/conta-bancaria/:id', ContaBancaria.destroy);
 
+// Consultas
 routes.post('/consultas', ConsultaController.create);
 routes.put('/consultas/:id', ConsultaController.update);
 routes.delete('/consultas/:id', ConsultaController.delete);
 routes.get('/consultas/provider', ConsultaController.show);
 
+// Ficha
 routes.get('/ficha/:id', FichaController.show);
 routes.get('/historico/:id', HistoricoController.show);
 
@@ -171,5 +173,10 @@ routes.get('/historico/:id', HistoricoController.show);
 routes.post('/vacinas', VacinaController.store);
 routes.delete('/vacinas/:id', VacinaController.delete);
 routes.get('/vacinas/:id', VacinaController.show);
+
+// Exames
+routes.post('/exames', ExameController.store);
+routes.put('/exames/:id', ExameController.update);
+routes.delete('/exames/:id', ExameController.delete);
 
 module.exports = routes;

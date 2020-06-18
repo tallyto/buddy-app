@@ -13,6 +13,7 @@ const Post = require('../app/models/Post');
 const Chat = require('../app/models/Chat');
 const ContaBancaria = require('../app/models/ContaBancaria');
 const Consulta = require('../app/models/Consulta');
+const Exame = require('../app/models/Exame');
 
 const databaseConfig = require('../config/database');
 
@@ -31,6 +32,7 @@ const models = [
   Chat,
   ContaBancaria,
   Consulta,
+  Exame,
 ];
 
 class Database {
