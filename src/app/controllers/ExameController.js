@@ -1,8 +1,21 @@
 const Exame = require('../models/Exame');
+const Provider = require('../models/Provider');
+
 
 class ExameController {
   async index(req, res) {
     const exames = await Exame.findAll();
+    return res.json(exames);
+  }
+
+  async getPetExames(req, res) {
+    const exames = await Exame.findAll({
+      where: {
+        pet_id: req.params.id,
+      },
+      include: [{ model: Provider, as: 'providers', attributes: ['name'] }],
+    });
+
     return res.json(exames);
   }
 

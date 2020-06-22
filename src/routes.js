@@ -178,5 +178,6 @@ routes.get('/vacinas/:id', VacinaController.show);
 routes.post('/exames', ExameController.store);
 routes.put('/exames/:id', ExameController.update);
 routes.delete('/exames/:id', ExameController.delete);
+routes.get('/exames/pet/:id', ExameController.getPetExames);
 
 module.exports = routes;
