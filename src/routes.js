@@ -56,7 +56,6 @@ routes.post('/users', UserController.store);
 
 // ForgetPassword
 routes.post('/forget-password', ForgetPasswordController.store);
-routes.post('/forget-password/:token', ForgetPasswordController.create);
 
 // ForgetPassword provider
 routes.post(

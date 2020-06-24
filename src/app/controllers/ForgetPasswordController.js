@@ -1,8 +1,6 @@
 const crypto = require('crypto');
-const moment = require('moment');
+const nodemailer = require('nodemailer');
 const User = require('../models/User');
-const Queue = require('../../lib/Queue');
-const ForgetPassword = require('../Jobs/ForgetPassword');
 
 class ForgetPasswordController {
   async store(req, res) {
@@ -16,57 +14,32 @@ class ForgetPasswordController {
 
     if (!user) {
       return res.status(401).json({
-        error: 'This user not exist',
+        error: 'Usuário não existente!',
       });
     }
 
-    user.token = crypto.randomBytes(10).toString('hex');
-
-    user.token_created_at = new Date();
-
-    const { token } = await user.save();
-
-    /**
-      await Queue.add(ForgetPassword.key, {
-      user: user.name,
-      token,
-      email,
-    });
-    */
-
-    return res.json(token);
-  }
-
-  async create(req, res) {
-    const { token } = req.params;
-    const { password } = req.body;
-    const user = await User.findOne({
-      where: {
-        token,
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: 'AKIAVCHI6YVLMS5DAANS',
+        pass: 'BCp62DLytiGcd8UA7+wg6Vgq81zJUZ8I/DGTMkAF+xrh',
       },
     });
 
-    if (!user) {
-      return res.status(401).json({ error: 'Token not exist' });
-    }
+    const newPassword = crypto.randomBytes(4).toString('hex');
 
-    const tokenExpired = moment()
-      .subtract('1', 'days')
-      .isAfter(user.token_created_at);
+    await user.update({ password: newPassword });
 
-    if (tokenExpired) {
-      return res.status(401).json({
-        error: 'O token de recuperação extá expirado',
+    transporter
+      .sendMail({
+        from: 'Equipe Buddy <noreply@buddy.com>',
+        to: email,
+        subject: 'Recuperação de senha!',
+        html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
       });
-    }
 
-    user.token = null;
-    user.token_created_at = null;
-    user.password = password;
-
-    await user.save();
-
-    return res.json(user);
+    return res.json({ message: 'Senha atualizada com sucesso!' });
   }
 }
 

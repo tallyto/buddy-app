@@ -1,8 +1,7 @@
 const crypto = require('crypto');
 const moment = require('moment');
 const Provider = require('../models/Provider');
-const Queue = require('../../lib/Queue');
-const ForgetPassword = require('../Jobs/ForgetPassword');
+
 
 class ForgetPasswordProviderController {
   async store(req, res) {
