@@ -19,11 +19,11 @@ async function forgetPassword(req, res) {
   }
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io',
-    port: 2525,
+    host: 'email-smtp.us-east-1.amazonaws.com',
+    port: 25,
     auth: {
-      user: 'AKIAVCHI6YVLMS5DAANS',
-      pass: 'BCp62DLytiGcd8UA7+wg6Vgq81zJUZ8I/DGTMkAF+xrh',
+      user: 'AKIAVCHI6YVLNPOHF67H',
+      pass: 'jQ1vlF4rQ0+Ey/xXpNfJhkyR9Nsgdk/e28mOLoVV',
     },
   });
 
