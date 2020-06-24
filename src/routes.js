@@ -30,6 +30,7 @@ const FichaController = require('./app/controllers/FichaController');
 const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
 const multerConfig = require('./config/multer');
+const forgetPassword = require('./app/controllers/ForgetPasswordController');
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -55,7 +56,7 @@ routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
 
 // ForgetPassword
-routes.post('/forget-password', ForgetPasswordController.store);
+routes.post('/forget-password', forgetPassword);
 
 // ForgetPassword provider
 routes.post(
