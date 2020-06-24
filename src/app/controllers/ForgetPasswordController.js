@@ -42,7 +42,7 @@ async function forgetPassword(req, res) {
         user.update({ password: newPassword }).then(() => res.json({ message: 'Senha atualizada com sucesso!' })).catch((error) => {
           res.json({ error: 'Erro ao atualizar a senha' });
         });
-      }).catch((error) => res.json({ error: 'Erro ao enviar o email' }));
+      }).catch((error) => res.json({ error: `Erro ao enviar o email${error}` }));
   } catch (error) {
     return res.json({ error: 'Erro ao atualizar a senha' });
   }
