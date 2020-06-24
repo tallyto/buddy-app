@@ -34,7 +34,7 @@ async function forgetPassword(req, res) {
   try {
     transporter
       .sendMail({
-        from: 'Equipe Buddy <rodrigues.tallyto@gmail.com>',
+        from: 'Equipe Buddy <noreply@buddy.com>',
         to: email,
         subject: 'Recuperação de senha!',
         html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
