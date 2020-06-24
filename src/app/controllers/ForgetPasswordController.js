@@ -22,8 +22,8 @@ async function forgetPassword(req, res) {
     host: 'email-smtp.us-east-1.amazonaws.com',
     port: 25,
     auth: {
-      user: 'AKIAVCHI6YVLNPOHF67H',
-      pass: 'jQ1vlF4rQ0+Ey/xXpNfJhkyR9Nsgdk/e28mOLoVV',
+      user: 'AKIAVCHI6YVLGBG2GBOX',
+      pass: 'BKhV+FjwqrEI3J+ICKFrAvuEutHMKjIYVkr3mv/9alvY',
     },
   });
 
