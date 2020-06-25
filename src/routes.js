@@ -14,7 +14,6 @@ const {
   SessionProviderController,
   UserController,
   VacinaController,
-  NotificationController,
   EnderecoController,
   CreditCardController,
   TypeOfProviderController,
@@ -145,10 +144,6 @@ routes.put('/providers/', ProviderController.update);
 
 // Agenda
 routes.get('/agenda', AgendaController.index);
-
-// Notificações
-routes.get('/notifications', NotificationController.index);
-routes.put('/notifications/:id', NotificationController.update);
 
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
