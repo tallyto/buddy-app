@@ -11,8 +11,6 @@ class ContaBancaria extends Model {
       },
       { sequelize },
     );
-
-
     return this;
   }
 

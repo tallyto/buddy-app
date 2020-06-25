@@ -30,7 +30,6 @@ class UserController {
         },
       ],
     });
-
     return res.json(user);
   }
 
@@ -62,7 +61,6 @@ class UserController {
         },
       ],
     });
-
     return res.json(user);
   }
 

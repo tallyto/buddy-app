@@ -11,7 +11,6 @@ class Categoria extends Model {
         sequelize,
       },
     );
-
     return this;
   }
 }

@@ -8,5 +8,4 @@ class FichaController {
   }
 }
 
-
 module.exports = new FichaController();

@@ -19,6 +19,4 @@ class AgendaController {
     return res.json(agendamentos);
   }
 }
-
-
 module.exports = new AgendaController();

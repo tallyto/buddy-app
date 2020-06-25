@@ -11,7 +11,6 @@ const Provider = require('../models/Provider');
 const File = require('../models/File');
 const Pet = require('../models/Pet');
 
-
 class AgendamentoUserController {
   async index(req, res) {
     const { page = 1 } = req.query;
@@ -110,7 +109,6 @@ class AgendamentoUserController {
 
       response.push(agendamento);
     }
-
 
     return res.json(response);
   }

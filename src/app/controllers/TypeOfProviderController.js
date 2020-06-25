@@ -1,5 +1,4 @@
 const Provider = require('../models/Provider');
-
 const File = require('../models/File');
 const Categoria = require('../models/Categoria');
 
@@ -69,7 +68,6 @@ class TypeOfProvider {
       ],
 
     });
-
     return res.json(clinica);
   }
 
@@ -103,7 +101,6 @@ class TypeOfProvider {
         },
       ],
     });
-
     return res.json(adestrador);
   }
 }

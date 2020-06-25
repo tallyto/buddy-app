@@ -1,7 +1,6 @@
 const Exame = require('../models/Exame');
 const Provider = require('../models/Provider');
 
-
 class ExameController {
   async index(req, res) {
     const exames = await Exame.findAll();

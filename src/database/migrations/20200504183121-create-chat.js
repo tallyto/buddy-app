@@ -36,6 +36,5 @@ module.exports = {
       allowNull: false,
     },
   }),
-
   down: (queryInterface) => queryInterface.dropTable('chats'),
 };

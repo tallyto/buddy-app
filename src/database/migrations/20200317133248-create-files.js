@@ -31,6 +31,5 @@ module.exports = {
       allowNull: false,
     },
   }),
-
   down: (queryInterface, Sequelize) => queryInterface.dropTable('files'),
 };

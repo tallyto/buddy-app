@@ -2,7 +2,6 @@ const Consulta = require('../models/Consulta');
 const Pet = require('../models/Pet');
 const User = require('../models/User');
 
-
 class ConsultaController {
   async index(req, res) {
     const consulta = await Consulta.findAll();

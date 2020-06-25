@@ -12,7 +12,6 @@ class Pets extends Model {
         sexo: Sequelize.STRING,
         condicao: Sequelize.STRING,
         temperamento: Sequelize.STRING,
-
         nascimento: Sequelize.DATE,
       },
       {

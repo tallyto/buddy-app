@@ -6,6 +6,5 @@ module.exports = {
     onDelete: 'SET NULL',
     allowNull: true,
   }),
-
   down: (queryInterface) => queryInterface.removeColumn('users', 'avatar_id'),
 };

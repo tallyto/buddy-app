@@ -12,8 +12,6 @@ class Consultas extends Model {
       },
       { sequelize },
     );
-
-
     return this;
   }
 

@@ -19,5 +19,4 @@ module.exports = {
   TypeOfProviderController: require('../app/controllers/TypeOfProviderController'),
   AgendaDisponivelController: require('../app/controllers/AgendaDisponivelController'),
   ChatController: require('../app/controllers/ChatController'),
-
 };

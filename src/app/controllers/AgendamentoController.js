@@ -110,24 +110,6 @@ class AgendamentoController {
       agendamentos.push(agendamento);
     }
 
-
-    /**
-     * Notifica prestador de serviços sobre novo agendamento
-     */
-    // const user = await User.findByPk(req.userId);
-
-    // const formattedDate = format(
-    //   hourStart,
-    //   "'dia' dd 'de' MMMM', às' H:mm'h'",
-    //   { locale: pt },
-    // );
-
-    // await Notification.create({
-    //   content: `Novo agendamento de ${user.name} para ${formattedDate} `,
-    //   provider_id: req.providerId,
-    //   user_id,
-    // });
-
     return res.json(agendamentos);
   }
 }

@@ -3,6 +3,5 @@ module.exports = {
     type: Sequelize.DATE,
     allowNull: true,
   }),
-
   down: (queryInterface) => queryInterface.removeColumn('providers', 'token_created_at'),
 };

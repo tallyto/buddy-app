@@ -14,7 +14,6 @@ class Vacina extends Model {
         sequelize,
       },
     );
-
     return this;
   }
 

@@ -3,6 +3,5 @@ module.exports = {
     type: Sequelize.BOOLEAN,
     allowNull: true,
   }),
-
   down: (queryInterface) => queryInterface.removeColumn('agendamentos', 'accept'),
 };

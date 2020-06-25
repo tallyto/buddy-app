@@ -6,6 +6,5 @@ module.exports = {
     onDelete: 'SET NULL',
     allowNull: false,
   }),
-
   down: (queryInterface) => queryInterface.removeColumn('agendamentos', 'pet_id'),
 };

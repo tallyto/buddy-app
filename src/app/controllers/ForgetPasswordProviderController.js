@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const moment = require('moment');
 const Provider = require('../models/Provider');
 
-
 class ForgetPasswordProviderController {
   async store(req, res) {
     const { email } = req.body;

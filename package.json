@@ -4,11 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server",
-    "dev": "nodemon src/server",
-    "fila": "nodemon src/queue",
-    "pretest": "test sequelize db:migrate",
-    "test": "test jest",
-    "posttest": "test sequelize db:migrate:undo:all"
+    "dev": "nodemon src/server"
   },
   "license": "MIT",
   "dependencies": {
@@ -32,16 +28,13 @@
     "yup": "^0.28.3"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^25.2.7",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
-    "sequelize-cli": "^5.5.1",
-    "supertest": "^4.0.2"
+    "sequelize-cli": "^5.5.1"
   }
 }
