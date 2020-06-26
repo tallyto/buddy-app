@@ -10,7 +10,6 @@ class UserController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           association: 'pets',
@@ -18,7 +17,6 @@ class UserController {
             {
               model: File,
               as: 'avatar',
-              attributes: ['id', 'name', 'url'],
             },
           ],
         },
@@ -41,7 +39,6 @@ class UserController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           association: 'pets',
@@ -49,7 +46,6 @@ class UserController {
             {
               model: File,
               as: 'avatar',
-              attributes: ['id', 'name', 'url'],
             },
           ],
         },
@@ -75,7 +71,7 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(401).json({ error: 'Erro de validação' });
     }
 
     const userExist = await User.findOne({
@@ -83,7 +79,7 @@ class UserController {
     });
 
     if (userExist) {
-      return res.status(400).json({ error: 'User already exists.' });
+      return res.status(401).json({ error: 'Email já cadastrado' });
     }
 
     const { id, email } = await User.create(req.body);
@@ -107,7 +103,7 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(401).json({ error: 'Erro de validação' });
     }
 
     const { email, oldPassword } = req.body;
@@ -117,18 +113,18 @@ class UserController {
     if (email && email !== user.email) {
       const userExist = await User.findOne({ where: { email } });
       if (userExist) {
-        return res.status(400).json({ error: 'User already exists.' });
+        return res.status(401).json({ error: 'Email já cadastrado' });
       }
     }
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not match' });
+      return res.status(401).json({ error: 'As senhas não são iguais' });
     }
 
     if (req.body.avatar_id) {
       const file = await File.findByPk(req.body.avatar_id);
       if (!file) {
-        return res.status(400).json({ error: 'Avatar not exist' });
+        return res.status(401).json({ error: 'Foto de perfil não encontrada' });
       }
     }
 

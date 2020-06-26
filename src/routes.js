@@ -5,13 +5,9 @@ const {
   AgendamentoController,
   CategoriaController,
   FileController,
-  ForgetPasswordController,
-  ForgetPasswordProviderController,
   PetController,
   ProviderController,
   PostController,
-  SessionController,
-  SessionProviderController,
   UserController,
   VacinaController,
   EnderecoController,
@@ -30,6 +26,7 @@ const authMiddleware = require('./app/middlewares/auth');
 const providerAuth = require('./app/middlewares/providerAuth');
 const multerConfig = require('./config/multer');
 const forgetPassword = require('./app/controllers/ForgetPasswordController');
+const session = require('./app/controllers/SessionController');
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -55,17 +52,10 @@ routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
 
 // ForgetPassword
-routes.post('/forget-password', forgetPassword);
+routes.post('/forget-password/user', forgetPassword.user);
 
 // ForgetPassword provider
-routes.post(
-  '/providers/forget-password',
-  ForgetPasswordProviderController.store,
-);
-routes.post(
-  '/providers/forget-password/:token',
-  ForgetPasswordProviderController.create,
-);
+routes.post('/forget-password/provider', forgetPassword.provider);
 
 // Providers
 routes.get('/providers', ProviderController.index);
@@ -82,8 +72,8 @@ routes.put('/posts/:id', PostController.update);
 routes.delete('/posts/:id', PostController.delete);
 
 // Session
-routes.post('/sessions', SessionController.store);
-routes.post('/sessions/providers', SessionProviderController.store);
+routes.post('/sessions', session.user);
+routes.post('/sessions/providers', session.provider);
 
 // Files
 routes.post('/files', upload.single('file'), FileController.store);

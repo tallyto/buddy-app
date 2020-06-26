@@ -5,7 +5,6 @@ const Pet = require('../models/Pet');
 class VacinaController {
   async index(req, res) {
     const vacinas = await Vacinas.findAll({
-      attributes: ['id', 'vacina', 'data', 'revacinar', 'peso'],
       include: [
         {
           model: Pet,
@@ -36,13 +35,13 @@ class VacinaController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const pet = await Pet.findByPk(req.body.pet_id);
 
     if (!pet) {
-      return res.status(400).json({ error: 'Pet does not exist' });
+      return res.status(400).json({ error: 'Pet não encontrado' });
     }
 
     const data = new Date();
@@ -56,7 +55,7 @@ class VacinaController {
     const vacina = await Vacinas.findByPk(req.params.id);
 
     if (!vacina) {
-      return res.status(400).json({ error: 'Vacina does exist' });
+      return res.status(400).json({ error: 'Vacina não encontrada' });
     }
 
     await vacina.destroy();

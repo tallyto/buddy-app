@@ -16,11 +16,9 @@ class PetsController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           association: 'vacinas',
-          attributes: ['id', 'vacina', 'data', 'revacinar', 'peso'],
         },
       ],
     });
@@ -38,11 +36,9 @@ class PetsController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           association: 'vacinas',
-          attributes: ['id', 'vacina', 'data', 'revacinar', 'peso'],
         },
       ],
     });
@@ -63,12 +59,7 @@ class PetsController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
-    }
-
-    const user = await User.findByPk(req.userId);
-    if (!user) {
-      return res.status(401).json({ error: 'Não é possivel atribuir um pet a um usuário que não existe' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const pets = await Pets.create({
@@ -93,13 +84,13 @@ class PetsController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const pet = await Pets.findByPk(req.params.id);
 
     if (!pet) {
-      return res.status(400).json({ error: 'Pet does not exist' });
+      return res.status(400).json({ error: 'Pet não cadastrado' });
     }
 
     if (pet.user_id !== req.userId) {
@@ -110,7 +101,7 @@ class PetsController {
     if (req.body.avatar_id) {
       const file = await File.findByPk(req.body.avatar_id);
       if (!file) {
-        return res.status(400).json({ error: 'Avatar not exist' });
+        return res.status(400).json({ error: 'Foto do pet não encontrada' });
       }
     }
 
@@ -123,13 +114,13 @@ class PetsController {
     const pet = await Pets.findByPk(req.params.id);
 
     if (!pet) {
-      return res.status(400).json({ error: 'Pet does not exist' });
+      return res.status(400).json({ error: 'Pet não encontrado' });
     }
 
     if (pet.user_id !== req.userId) {
       return res
         .status(401)
-        .json({ error: "You don't have permition for delete this pet" });
+        .json({ error: 'Você não tem permissão para remover esse pet' });
     }
 
     await pet.destroy();

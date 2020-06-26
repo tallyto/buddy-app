@@ -24,12 +24,10 @@ class TypeOfProvider {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,
           as: 'categoria',
-          attributes: ['name'],
         },
       ],
     });
@@ -58,12 +56,10 @@ class TypeOfProvider {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,
           as: 'categoria',
-          attributes: ['name'],
         },
       ],
 
@@ -92,12 +88,10 @@ class TypeOfProvider {
         {
           model: File,
           as: 'avatar',
-          attributes: ['id', 'name', 'url'],
         },
         {
           model: Categoria,
           as: 'categoria',
-          attributes: ['name'],
         },
       ],
     });

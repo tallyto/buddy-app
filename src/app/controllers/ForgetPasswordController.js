@@ -2,50 +2,94 @@
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
+const Provider = require('../models/Provider');
 
-async function forgetPassword(req, res) {
-  const { email } = req.body;
+class ForgerPasswordController {
+  async user(req, res) {
+    const { email } = req.body;
 
-  const user = await User.findOne({
-    where: {
-      email,
-    },
-  });
-
-  if (!user) {
-    return res.status(401).json({
-      error: 'Usuário não existente!',
+    const user = await User.findOne({
+      where: {
+        email,
+      },
     });
+
+    if (!user) {
+      return res.status(401).json({
+        error: 'Usuário não existente!',
+      });
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: 'email-smtp.us-east-1.amazonaws.com',
+      port: 25,
+      auth: {
+        user: 'AKIAVCHI6YVLGBG2GBOX',
+        pass: 'BKhV+FjwqrEI3J+ICKFrAvuEutHMKjIYVkr3mv/9alvY',
+      },
+    });
+
+    const newPassword = crypto.randomBytes(4).toString('hex');
+
+    try {
+      transporter
+        .sendMail({
+          from: 'Equipe Buddy <contatobuddyapp@gmail.com>',
+          to: email,
+          subject: 'Recuperação de senha!',
+          html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
+        }).then(() => {
+          user.update({ password: newPassword }).then(() => res.json({ message: 'Senha atualizada com sucesso!' })).catch((error) => {
+            res.json({ error: 'Erro ao atualizar a senha' });
+          });
+        }).catch((error) => res.json({ error: `Erro ao enviar o email${error}` }));
+    } catch (error) {
+      return res.json({ error: 'Erro ao atualizar a senha' });
+    }
   }
 
-  const transporter = nodemailer.createTransport({
-    host: 'email-smtp.us-east-1.amazonaws.com',
-    port: 25,
-    auth: {
-      user: 'AKIAVCHI6YVLGBG2GBOX',
-      pass: 'BKhV+FjwqrEI3J+ICKFrAvuEutHMKjIYVkr3mv/9alvY',
-    },
-  });
+  async provider(req, res) {
+    const { email } = req.body;
 
-  const newPassword = crypto.randomBytes(4).toString('hex');
+    const provider = await Provider.findOne({
+      where: {
+        email,
+      },
+    });
 
-  await user.update({ password: newPassword });
+    if (!provider) {
+      return res.status(401).json({
+        error: 'Colaborador não existente!',
+      });
+    }
 
-  try {
-    transporter
-      .sendMail({
-        from: 'Equipe Buddy <contatobuddyapp@gmail.com>',
-        to: email,
-        subject: 'Recuperação de senha!',
-        html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
-      }).then(() => {
-        user.update({ password: newPassword }).then(() => res.json({ message: 'Senha atualizada com sucesso!' })).catch((error) => {
-          res.json({ error: 'Erro ao atualizar a senha' });
-        });
-      }).catch((error) => res.json({ error: `Erro ao enviar o email${error}` }));
-  } catch (error) {
-    return res.json({ error: 'Erro ao atualizar a senha' });
+    const transporter = nodemailer.createTransport({
+      host: 'email-smtp.us-east-1.amazonaws.com',
+      port: 25,
+      auth: {
+        provider: 'AKIAVCHI6YVLGBG2GBOX',
+        pass: 'BKhV+FjwqrEI3J+ICKFrAvuEutHMKjIYVkr3mv/9alvY',
+      },
+    });
+
+    const newPassword = crypto.randomBytes(4).toString('hex');
+
+    try {
+      transporter
+        .sendMail({
+          from: 'Equipe Buddy <contatobuddyapp@gmail.com>',
+          to: email,
+          subject: 'Recuperação de senha!',
+          html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
+        }).then(() => {
+          provider.update({ password: newPassword }).then(() => res.json({ message: 'Senha atualizada com sucesso!' })).catch((error) => {
+            res.json({ error: 'Erro ao atualizar a senha' });
+          });
+        }).catch((error) => res.json({ error: `Erro ao enviar o email${error}` }));
+    } catch (error) {
+      return res.json({ error: 'Erro ao atualizar a senha' });
+    }
   }
 }
 
-module.exports = forgetPassword;
+module.exports = new ForgerPasswordController();

@@ -15,7 +15,7 @@ class PostController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const post = await Post.create(req.body);
@@ -30,13 +30,13 @@ class PostController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const post = await Post.findByPk(req.params.id);
 
     if (!post) {
-      return res.status(400).json({ error: 'Post not exist' });
+      return res.status(401).json({ error: 'Post não encontrado' });
     }
 
     await post.update(req.body);
@@ -48,7 +48,7 @@ class PostController {
     const post = await Post.findByPk(req.params.id);
 
     if (!post) {
-      return res.status(400).json({ error: 'Post not exist' });
+      return res.status(400).json({ error: 'Post não encontrado' });
     }
 
     await post.destroy();

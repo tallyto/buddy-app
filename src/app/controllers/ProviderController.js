@@ -40,34 +40,6 @@ class ProviderController {
     return res.json(provider);
   }
 
-  async store(req, res) {
-    const schema = Yup.object().shape({
-      email: Yup.string().required(),
-      password: Yup.string()
-        .required()
-        .min(6),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
-    }
-
-    const providerExist = await Provider.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (providerExist) {
-      return res.status(400).json({ error: 'Provider already exists.' });
-    }
-
-    const { id, email } = await Provider.create(req.body);
-
-    return res.json({
-      id,
-      email,
-    });
-  }
-
   async show(req, res) {
     const provider = await Provider.findOne({
       where: { id: req.providerId },
@@ -105,6 +77,34 @@ class ProviderController {
     return res.json(provider);
   }
 
+  async store(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string().required(),
+      password: Yup.string()
+        .required()
+        .min(6),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Erro de validação' });
+    }
+
+    const providerExist = await Provider.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (providerExist) {
+      return res.status(400).json({ error: 'Email já cadastrado' });
+    }
+
+    const { id, email } = await Provider.create(req.body);
+
+    return res.json({
+      id,
+      email,
+    });
+  }
+
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
@@ -125,7 +125,7 @@ class ProviderController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const { email, oldPassword, avatar_id } = req.body;
@@ -133,25 +133,19 @@ class ProviderController {
     if (!avatar_id) {
       const avatar = await File.findByPk(avatar_id);
       if (!avatar) {
-        return res.status(401).json({ error: 'Avatar not exist' });
+        return res.status(401).json({ error: 'Foto de perfil não encontrada' });
       }
-    }
-
-    const provider = await Provider.findByPk(req.providerId);
-
-    if (!provider) {
-      return res.status(401).json({ error: 'Provider does not exist' });
     }
 
     if (email && email !== provider.email) {
       const providerExist = await Provider.findOne({ where: { email } });
       if (providerExist) {
-        return res.status(400).json({ error: 'Provider already exists.' });
+        return res.status(400).json({ error: 'Email já cadastrado' });
       }
     }
 
     if (oldPassword && !(await provider.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not match' });
+      return res.status(401).json({ error: 'As senha não são iguais' });
     }
 
     const {
@@ -205,7 +199,7 @@ class ProviderController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const { email, oldPassword } = req.body;
@@ -222,19 +216,19 @@ class ProviderController {
     if (req.body.avatar_id) {
       const file = await File.findByPk(req.body.avatar_id);
       if (!file) {
-        return res.status(400).json({ error: 'Avatar not exist' });
+        return res.status(400).json({ error: 'Foto de perfil não encontrada' });
       }
     }
 
     if (email && email !== provider.email) {
       const providerExist = await Provider.findOne({ where: { email } });
       if (providerExist) {
-        return res.status(400).json({ error: 'Provider already exists.' });
+        return res.status(400).json({ error: 'Email já cadastrado' });
       }
     }
 
     if (oldPassword && !(await provider.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not match' });
+      return res.status(401).json({ error: 'As senhas não são iguais' });
     }
 
     const {
