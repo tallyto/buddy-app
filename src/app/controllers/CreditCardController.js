@@ -19,7 +19,7 @@ class CreditCardController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const creditCard = await CreditCard.create({ ...req.body, user_id: req.userId });
@@ -38,13 +38,13 @@ class CreditCardController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const creditCard = await CreditCard.findByPk(req.params.id);
 
     if (!creditCard) {
-      return res.status(400).json({ error: 'Credit card not exist' });
+      return res.status(400).json({ error: 'Cartão de credito não encontrado' });
     }
 
     await creditCard.update(req.body);
@@ -56,7 +56,7 @@ class CreditCardController {
     const creditCard = await CreditCard.findByPk(req.params.id);
 
     if (!creditCard) {
-      return res.status(400).json({ error: 'Credit card not exist' });
+      return res.status(400).json({ error: 'Cartão de crédito não encontrado' });
     }
 
     await creditCard.destroy();

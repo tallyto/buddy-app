@@ -24,7 +24,7 @@ class EnderecoController {
     const { user_id, provider_id } = req.body;
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     if (user_id) {
@@ -59,13 +59,13 @@ class EnderecoController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const endereco = await Endereco.findByPk(req.params.id);
 
     if (!endereco) {
-      return res.status(400).json({ error: 'Address not exist' });
+      return res.status(400).json({ error: 'Endereço não encontrado' });
     }
 
     await endereco.update(req.body);
@@ -77,7 +77,7 @@ class EnderecoController {
     const endereco = await Endereco.findByPk(req.params.id);
 
     if (!endereco) {
-      return res.status(400).json({ error: 'Address not exist' });
+      return res.status(400).json({ error: 'Endereço não encontrado' });
     }
 
     await endereco.destroy();

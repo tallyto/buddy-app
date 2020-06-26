@@ -14,7 +14,7 @@ class CategoriaController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const categoria = await Categoria.create(req.body);
@@ -28,13 +28,13 @@ class CategoriaController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const categoria = await Categoria.findByPk(req.params.id);
 
     if (!categoria) {
-      return res.status(400).json({ error: 'Categoria does not exist' });
+      return res.status(400).json({ error: 'Categoria não existe' });
     }
 
     await categoria.update(req.body);
@@ -45,7 +45,7 @@ class CategoriaController {
   async delete(req, res) {
     const categoria = await Categoria.findByPk(req.params.id);
     if (!categoria) {
-      return res.status(400).json({ error: 'Categoria does not exist' });
+      return res.status(400).json({ error: 'Categoria não existe' });
     }
     await categoria.destroy();
 

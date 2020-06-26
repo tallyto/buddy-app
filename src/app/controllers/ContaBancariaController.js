@@ -16,7 +16,7 @@ class ContaBancariaController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const conta = await ContaBancaria.create({

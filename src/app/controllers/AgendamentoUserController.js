@@ -87,10 +87,11 @@ class AgendamentoUserController {
 
     const { agendamentos } = req.body;
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const response = [];
+
     for (const agendamento_id of agendamentos) {
       const agendamento = await Agendamento.findByPk(agendamento_id);
       if (!agendamento) {
@@ -116,13 +117,13 @@ class AgendamentoUserController {
   async delete(req, res) {
     const agendamento = await Agendamento.findByPk(req.params.id);
     if (!agendamento) {
-      return res.status(400).json({ error: 'Appointtment does not exist' });
+      return res.status(400).json({ error: 'Agendamento não encontrado' });
     }
     if (agendamento.user_id !== req.userId) {
       return res
         .status(401)
         .json({
-          error: "You don't heve permission to cancel this appointment",
+          error: 'Você não tem permissão para cancelar esse agendamento',
         });
     }
 
@@ -132,7 +133,7 @@ class AgendamentoUserController {
       return res
         .status(401)
         .json({
-          error: 'You cant only cancel appointments 2 hours in advance',
+          error: 'Você só pode cancelar um agentamento com 2 horas de antecedencia',
         });
     }
 

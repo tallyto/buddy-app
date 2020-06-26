@@ -60,7 +60,7 @@ class AgendamentoController {
       description: Yup.string().required(),
     });
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+      return res.status(400).json({ error: 'Erro de validação' });
     }
 
     const {
@@ -75,12 +75,13 @@ class AgendamentoController {
     }
 
     const agendamentos = [];
+
     for (const datas of date) {
       const hourStart = startOfHour(parseISO(datas));
 
       // Verifica se a data passou
       if (isBefore(hourStart, new Date())) {
-        return res.status(400).json({ error: 'Past dates are not permitted' });
+        return res.status(400).json({ error: 'Datas anteriores não são permitidas' });
       }
 
       // Verifica se a data esta disponivel
