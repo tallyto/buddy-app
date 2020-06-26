@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const routes = require('./routes');
 require('./database');
 
@@ -14,6 +15,7 @@ class App {
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: true }));
     this.server.use(cors());
+    this.server.use(morgan('short'));
   }
 
   routes() {
