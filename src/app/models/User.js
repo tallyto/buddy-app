@@ -11,8 +11,6 @@ class User extends Model {
         telefone: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        token: Sequelize.STRING,
-        token_created_at: Sequelize.DATE,
         location: Sequelize.BOOLEAN,
         notification: Sequelize.BOOLEAN,
       },
