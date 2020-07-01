@@ -1,4 +1,3 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('providers', {
     id: {
@@ -48,6 +47,25 @@ module.exports = {
     password_hash: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    crmv: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    location: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    notification: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    crmv_file: {
+      type: Sequelize.INTEGER,
+      references: { model: 'files', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
+      allowNull: true,
     },
     categoria_id: {
       type: Sequelize.INTEGER,

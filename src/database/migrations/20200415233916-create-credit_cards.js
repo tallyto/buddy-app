@@ -22,6 +22,10 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    payment: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     user_id: {
       type: Sequelize.INTEGER,
       references: { model: 'users', key: 'id' },

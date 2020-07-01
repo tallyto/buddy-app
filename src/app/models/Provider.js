@@ -15,11 +15,11 @@ class Provider extends Model {
         clinica: Sequelize.BOOLEAN,
         passeador: Sequelize.BOOLEAN,
         adestrador: Sequelize.BOOLEAN,
+        location: Sequelize.BOOLEAN,
+        notification: Sequelize.BOOLEAN,
         crmv: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        token: Sequelize.STRING,
-        token_created_at: Sequelize.DATE,
       },
       { sequelize },
     );
@@ -35,9 +35,11 @@ class Provider extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'crmv_file' });
     this.belongsTo(models.Categoria, { foreignKey: 'categoria_id', as: 'categoria' });
     this.hasMany(models.Endereco, { foreignKey: 'provider_id', as: 'enderecos' });
     this.hasMany(models.ContaBancaria, { foreignKey: 'provider_id', as: 'contas' });
+    this.belongsToMany(models.Especialidades, { foreignKey: 'provider_id', through: 'provider_especialidades', as: 'especialidades' });
   }
 
   checkPassword(password) {

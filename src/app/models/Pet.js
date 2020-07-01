@@ -13,6 +13,8 @@ class Pets extends Model {
         condicao: Sequelize.STRING,
         temperamento: Sequelize.STRING,
         nascimento: Sequelize.DATE,
+        notification_saude: Sequelize.BOOLEAN,
+        notification_servicos: Sequelize.BOOLEAN,
       },
       {
         sequelize,

@@ -30,9 +30,21 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    temperamento: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     nascimento: {
       type: Sequelize.DATE,
       allowNull: false,
+    },
+    notification_saude: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    notification_servicos: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
     },
     user_id: {
       type: Sequelize.INTEGER,

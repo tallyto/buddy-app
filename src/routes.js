@@ -27,6 +27,7 @@ const providerAuth = require('./app/middlewares/providerAuth');
 const multerConfig = require('./config/multer');
 const forgetPassword = require('./app/controllers/ForgetPasswordController');
 const session = require('./app/controllers/SessionController');
+const EspecialidadeController = require('./app/controllers/EspecialidadeController');
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -34,6 +35,9 @@ const upload = multer(multerConfig);
 routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
+
+routes.post('/especialidades/:provider_id', EspecialidadeController.store);
+routes.get('/especialidades/', EspecialidadeController.show);
 
 // Global
 routes.get('/credit-card', CreditCardController.index);

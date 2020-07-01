@@ -19,17 +19,17 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    location: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
+    notification: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
     password_hash: {
       type: Sequelize.STRING,
       allowNull: false,
-    },
-    token: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
-    token_created_at: {
-      type: Sequelize.DATE,
-      allowNull: true,
     },
     created_at: {
       type: Sequelize.DATE,

@@ -10,6 +10,22 @@ module.exports = {
       type: Sequelize.DATE,
       allowNull: false,
     },
+    value: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    payment: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    accept: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
     user_id: {
       type: Sequelize.INTEGER,
       references: { model: 'users', key: 'id' },
@@ -20,6 +36,13 @@ module.exports = {
     provider_id: {
       type: Sequelize.INTEGER,
       references: { model: 'providers', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
+      allowNull: false,
+    },
+    pet_id: {
+      type: Sequelize.INTEGER,
+      references: { model: 'pets', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',
       allowNull: false,
