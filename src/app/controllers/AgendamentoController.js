@@ -84,20 +84,20 @@ class AgendamentoController {
         return res.status(400).json({ error: 'Datas anteriores não são permitidas' });
       }
 
-      // Verifica se a data esta disponivel
-      const checkAvailability = await Agendamento.findOne({
-        where: {
-          date: hourStart,
-          provider_id: req.providerId,
-          canceled_at: null,
-        },
-      });
+      // // Verifica se a data esta disponivel
+      // const checkAvailability = await Agendamento.findOne({
+      //   where: {
+      //     date: hourStart,
+      //     provider_id: req.providerId,
+      //     canceled_at: null,
+      //   },
+      // });
 
-      if (checkAvailability) {
-        return res
-          .status(400)
-          .json({ error: 'Data de agendamento nao disponivel' });
-      }
+      // if (checkAvailability) {
+      //   return res
+      //     .status(400)
+      //     .json({ error: 'Data de agendamento nao disponivel' });
+      // }
 
       const agendamento = await Agendamento.create({
         user_id,

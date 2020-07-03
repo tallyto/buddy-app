@@ -5,7 +5,7 @@ const File = require('../models/File');
 class UserController {
   async index(req, res) {
     const user = await User.findAll({
-      attributes: ['id', 'email', 'name', 'telefone', 'avatar_id'],
+      attributes: ['id', 'email', 'name', 'telefone', 'avatar_id', 'location', 'notification'],
       include: [
         {
           model: File,
@@ -34,7 +34,7 @@ class UserController {
   async show(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
-      attributes: ['id', 'email', 'name', 'avatar_id', 'telefone'],
+      attributes: ['id', 'email', 'name', 'avatar_id', 'telefone', 'location', 'notification'],
       include: [
         {
           model: File,
@@ -129,7 +129,7 @@ class UserController {
     }
 
     const {
-      id, name, telefone, avatar_id,
+      id, name, telefone, avatar_id, location, notification,
     } = await user.update(req.body);
 
     return res.json({
@@ -138,6 +138,8 @@ class UserController {
       email,
       telefone,
       avatar_id,
+      location,
+      notification,
     });
   }
 }

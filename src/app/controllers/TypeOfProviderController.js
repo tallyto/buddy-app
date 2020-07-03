@@ -17,6 +17,8 @@ class TypeOfProvider {
         'bio',
         'passeador',
         'nascimento',
+        'location',
+        'notification',
         'avatar_id',
         'categoria_id',
       ],
@@ -49,6 +51,8 @@ class TypeOfProvider {
         'bio',
         'clinica',
         'nascimento',
+        'location',
+        'notification',
         'avatar_id',
         'categoria_id',
       ],
@@ -61,8 +65,11 @@ class TypeOfProvider {
           model: Categoria,
           as: 'categoria',
         },
+        {
+          model: File,
+          as: 'crmv_file',
+        },
       ],
-
     });
     return res.json(clinica);
   }
@@ -81,6 +88,8 @@ class TypeOfProvider {
         'bio',
         'adestrador',
         'nascimento',
+        'location',
+        'notification',
         'avatar_id',
         'categoria_id',
       ],

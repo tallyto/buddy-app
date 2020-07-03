@@ -42,6 +42,7 @@ class ChatController {
         {
           model: Pet,
           as: 'pets',
+          include: [{ model: File, as: 'avatar', attributes: ['url'] }],
         },
       ],
     });

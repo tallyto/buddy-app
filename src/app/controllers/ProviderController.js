@@ -18,6 +18,8 @@ class ProviderController {
         'adestrador',
         'clinica',
         'crmv',
+        'location',
+        'notification',
         'avatar_id',
         'categoria_id',
       ],
@@ -29,6 +31,10 @@ class ProviderController {
         {
           model: Categoria,
           as: 'categoria',
+        },
+        {
+          model: File,
+          as: 'crmv_file',
         },
         {
           association: 'enderecos',
@@ -55,6 +61,8 @@ class ProviderController {
         'passeador',
         'clinica',
         'adestrador',
+        'location',
+        'notification',
         'avatar_id',
         'categoria_id',
       ],
@@ -66,6 +74,10 @@ class ProviderController {
         {
           model: Categoria,
           as: 'categoria',
+        },
+        {
+          model: File,
+          as: 'crmv_file',
         },
         {
           association: 'enderecos',
@@ -159,7 +171,10 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
+      location,
+      notification,
       categoria_id,
+      crmv_file,
     } = await provider.update(req.body);
 
     return res.json({
@@ -174,8 +189,11 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
+      location,
+      notification,
       avatar_id,
       categoria_id,
+      crmv_file,
     });
   }
 
@@ -242,8 +260,11 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
+      location,
+      notification,
       avatar_id,
       categoria_id,
+      crmv_file,
     } = await provider.update(req.body);
 
     return res.json({
@@ -258,8 +279,11 @@ class ProviderController {
       adestrador,
       passeador,
       crmv,
+      location,
+      notification,
       avatar_id,
       categoria_id,
+      crmv_file,
     });
   }
 }
