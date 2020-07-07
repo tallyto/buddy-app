@@ -1,7 +1,9 @@
 const Yup = require('yup');
+
 const Pets = require('../models/Pet');
 const User = require('../models/User');
 const File = require('../models/File');
+const { formatIdade } = require('../utils/data');
 
 class PetsController {
   async index(req, res) {
@@ -23,6 +25,18 @@ class PetsController {
       ],
     });
     return res.json(pets);
+  }
+
+  async getPet(req, res) {
+    const pet = await Pets.findByPk(req.params.id);
+    if (!pet) {
+      return res.status(400).json({ error: 'pet não encontrado' });
+    }
+    const { nascimento } = pet;
+
+    const idade = formatIdade(nascimento);
+
+    return res.json({ pet, idade });
   }
 
   async show(req, res) {
@@ -48,60 +62,53 @@ class PetsController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      raca: Yup.string().required(),
-      especie: Yup.string().required(),
-      pelagem: Yup.string().required(),
-      sexo: Yup.string().required(),
-      condicao: Yup.string().required(),
-      temperamento: Yup.string().required(),
-      nascimento: Yup.string().required(),
+      name: Yup.string().required('precisa informar o nome'),
+      raca: Yup.string().required('precisa informar a raça'),
+      especie: Yup.string().required('precisa informar a especie'),
+      pelagem: Yup.string().required('precisa informar a pelagem'),
+      sexo: Yup.string().required('precisa informar o sexo'),
+      condicao: Yup.string().required('precisa informar a condição'),
+      temperamento: Yup.string().required('precisa informar o temperamento'),
+      nascimento: Yup.string().required('precisa informar o nascimento'),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+      if (req.body.avatar_id) {
+        const file = await File.findByPk(req.body.avatar_id);
+        if (!file) {
+          return res.status(400).json({ error: 'foto não encontrada' });
+        }
+      }
+
+      const pets = await Pets.create({
+        ...req.body,
+        user_id: req.userId,
+      });
+
+      return res.json(pets);
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    const pets = await Pets.create({
-      ...req.body,
-      user_id: req.userId,
-    });
-
-    return res.json(pets);
   }
 
   async update(req, res) {
-    const schema = Yup.object().shape({
-      name: Yup.string(),
-      raca: Yup.string(),
-      especie: Yup.string(),
-      pelagem: Yup.string(),
-      sexo: Yup.string(),
-      condicao: Yup.string(),
-      temperamento: Yup.string(),
-
-      nascimento: Yup.string(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
-
     const pet = await Pets.findByPk(req.params.id);
 
     if (!pet) {
-      return res.status(400).json({ error: 'Pet não cadastrado' });
+      return res.status(400).json({ error: 'pet não encontrado' });
     }
 
     if (pet.user_id !== req.userId) {
-      return res.status(401).json({ error: 'Você não pode atualizar um pet que não é seu' });
+      return res
+        .status(401)
+        .json({ error: 'você não tem permissão para atualizar esse pet' });
     }
 
-    // Verifica se o avatar é valido
     if (req.body.avatar_id) {
       const file = await File.findByPk(req.body.avatar_id);
       if (!file) {
-        return res.status(400).json({ error: 'Foto do pet não encontrada' });
+        return res.status(400).json({ error: 'foto não encontrada' });
       }
     }
 
@@ -114,13 +121,13 @@ class PetsController {
     const pet = await Pets.findByPk(req.params.id);
 
     if (!pet) {
-      return res.status(400).json({ error: 'Pet não encontrado' });
+      return res.status(400).json({ error: 'pet não encontrado' });
     }
 
     if (pet.user_id !== req.userId) {
       return res
         .status(401)
-        .json({ error: 'Você não tem permissão para remover esse pet' });
+        .json({ error: 'você não tem permissão ara remover esse pet' });
     }
 
     await pet.destroy();

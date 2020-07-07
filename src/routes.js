@@ -38,6 +38,8 @@ routes.get('/', (req, res) => {
 routes.post('/especialidades/:provider_id', EspecialidadeController.store);
 routes.get('/especialidades/', EspecialidadeController.show);
 
+routes.get('/pet/:id', PetController.getPet);
+
 // Global
 routes.get('/credit-card', CreditCardController.index);
 routes.get('/pets/all', PetController.show);
