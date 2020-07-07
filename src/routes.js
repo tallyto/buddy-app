@@ -51,6 +51,7 @@ routes.get('/exames', ExameController.index);
 
 // Chat
 routes.get('/chat/:id', ChatController.index);
+routes.get('/chat/user/:id', ChatController.chatUser);
 
 // Users
 routes.get('/users', UserController.index);

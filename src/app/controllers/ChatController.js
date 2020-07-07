@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const Chat = require('../models/Chat');
 const User = require('../models/User');
+const Provider = require('../models/Provider');
 const File = require('../models/File');
 const Pet = require('../models/Pet');
 
@@ -42,6 +43,24 @@ class ChatController {
         {
           model: Pet,
           as: 'pets',
+          include: [{ model: File, as: 'avatar', attributes: ['url'] }],
+        },
+      ],
+    });
+
+    return res.json(chats);
+  }
+
+  async chatUser(req, res) {
+    const chats = await Chat.findAll({
+      where: {
+        user_id: req.params.id,
+      },
+      include: [
+        {
+          model: Provider,
+          as: 'provider',
+          attributes: ['name'],
           include: [{ model: File, as: 'avatar', attributes: ['url'] }],
         },
       ],
