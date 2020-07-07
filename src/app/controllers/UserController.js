@@ -5,7 +5,15 @@ const File = require('../models/File');
 class UserController {
   async index(req, res) {
     const user = await User.findAll({
-      attributes: ['id', 'email', 'name', 'telefone', 'avatar_id', 'location', 'notification'],
+      attributes: [
+        'id',
+        'email',
+        'name',
+        'telefone',
+        'avatar_id',
+        'location',
+        'notification',
+      ],
       include: [
         {
           model: File,
@@ -34,7 +42,15 @@ class UserController {
   async show(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
-      attributes: ['id', 'email', 'name', 'avatar_id', 'telefone', 'location', 'notification'],
+      attributes: [
+        'id',
+        'email',
+        'name',
+        'avatar_id',
+        'telefone',
+        'location',
+        'notification',
+      ],
       include: [
         {
           model: File,
@@ -63,84 +79,90 @@ class UserController {
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
-        .email()
-        .required(),
+        .email('e-mail invalido')
+        .required('e-mail obrigatório'),
       password: Yup.string()
-        .required()
-        .min(6),
+        .required('senha obrigatória')
+        .min(6, 'senha menor que 6 caracteres'),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(401).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+
+      const userExist = await User.findOne({
+        where: { email: req.body.email },
+      });
+
+      if (userExist) {
+        return res.status(401).json({ error: 'e-mail já cadastrado' });
+      }
+
+      const { id, email } = await User.create(req.body);
+
+      return res.json({
+        id,
+        email,
+      });
+    } catch (error) {
+      return res.status(500).json({ errror });
     }
-
-    const userExist = await User.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (userExist) {
-      return res.status(401).json({ error: 'Email já cadastrado' });
-    }
-
-    const { id, email } = await User.create(req.body);
-
-    return res.json({
-      id,
-      email,
-    });
   }
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string().email(),
-      telefone: Yup.string(),
-      oldPassword: Yup.string().min(6),
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPassword, field) => (oldPassword ? field.required() : field)),
-      comfirmPassword: Yup.string().when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
+      email: Yup.string().email('e-mail invalido'),
+      password: Yup.string().min(6, 'senha menor que 6 caracteres'),
+      comfirmPassword: Yup.string().when('password', (password, field) => (password
+        ? field
+          .required('senha de confirmação requerida')
+          .oneOf([Yup.ref('password')], 'as senhas não são iguais')
+        : field)),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(401).json({ error: 'Erro de validação' });
-    }
+    try {
+      await schema.validate(req.body);
 
-    const { email, oldPassword } = req.body;
+      const { email } = req.body;
 
-    const user = await User.findByPk(req.userId);
+      const user = await User.findByPk(req.userId);
 
-    if (email && email !== user.email) {
-      const userExist = await User.findOne({ where: { email } });
-      if (userExist) {
-        return res.status(401).json({ error: 'Email já cadastrado' });
+      if (email && email !== user.email) {
+        const userExist = await User.findOne({ where: { email } });
+        if (userExist) {
+          return res.status(401).json({ error: 'e-mail já cadastrado' });
+        }
       }
-    }
 
-    if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'As senhas não são iguais' });
-    }
-
-    if (req.body.avatar_id) {
-      const file = await File.findByPk(req.body.avatar_id);
-      if (!file) {
-        return res.status(401).json({ error: 'Foto de perfil não encontrada' });
+      if (req.body.avatar_id) {
+        const file = await File.findByPk(req.body.avatar_id);
+        if (!file) {
+          return res
+            .status(401)
+            .json({ error: 'foto de perfil não encontrada' });
+        }
       }
+
+      const {
+        id,
+        name,
+        telefone,
+        avatar_id,
+        location,
+        notification,
+      } = await user.update(req.body);
+
+      return res.json({
+        id,
+        name,
+        email,
+        telefone,
+        avatar_id,
+        location,
+        notification,
+      });
+    } catch (error) {
+      return res.status(500).json({ error });
     }
-
-    const {
-      id, name, telefone, avatar_id, location, notification,
-    } = await user.update(req.body);
-
-    return res.json({
-      id,
-      name,
-      email,
-      telefone,
-      avatar_id,
-      location,
-      notification,
-    });
   }
 }
 
