@@ -10,33 +10,33 @@ class ContaBancariaController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      conta: Yup.string().required(),
-      agencia: Yup.string().required(),
-      banco: Yup.string().required(),
+      conta: Yup.string().required('conta obrigatória'),
+      agencia: Yup.string().required('agencia obrigatória'),
+      banco: Yup.string().required('banco obrigatório'),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+
+      const conta = await ContaBancaria.create({
+        ...req.body,
+        provider_id: req.providerId,
+      });
+
+      return res.json(conta);
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    const conta = await ContaBancaria.create({
-      ...req.body,
-      provider_id: req.providerId,
-    });
-
-    return res.json(conta);
   }
 
   async update(req, res) {
     const conta = await ContaBancaria.findByPk(req.params.id);
     if (!conta) {
-      return res
-        .status(401)
-        .json({ error: 'Você não pode atualizar uma conta que não existe' });
+      return res.status(400).json({ error: 'conta não encontrada' });
     }
 
     if (conta.provider_id !== req.providerId) {
-      return res.status(401).json({ error: 'Você não pode atulizar uma conta que não é sua' });
+      return res.status(401).json({ error: 'operação não autorizada' });
     }
 
     await conta.update(req.body);
@@ -47,10 +47,11 @@ class ContaBancariaController {
   async destroy(req, res) {
     const conta = await ContaBancaria.findByPk(req.params.id);
     if (!conta) {
-      return res.status(401).json({ error: 'Você não pode remover uma conta que não existe' });
+      return res.status(400).json({ error: 'conta não encontrada' });
     }
+
     if (conta.provider_id !== req.providerId) {
-      return res.status(401).json({ error: 'Você não pode remover uma conta que não lhe pertence' });
+      return res.status(401).json({ error: 'operação não autorizada' });
     }
 
     await conta.destroy();
