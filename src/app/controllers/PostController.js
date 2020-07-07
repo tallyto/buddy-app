@@ -1,5 +1,7 @@
 const Yup = require('yup');
+const { response } = require('express');
 const Post = require('../models/Post');
+const File = require('../models/File');
 
 class PostController {
   async index(req, res) {
@@ -10,33 +12,32 @@ class PostController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      title: Yup.string().required(),
-      content: Yup.string().required(),
+      title: Yup.string().required('titulo obrigatório'),
+      content: Yup.string().required('conteúdo obrigatório'),
     });
+    const { avatar_id } = req.body;
+    try {
+      await schema.validate(req.body);
+      if (avatar_id) {
+        const avatar = await File.findByPk(avatar_id);
+        if (!avatar) {
+          return res.status(401).json({ error: 'avatar não encontrado' });
+        }
+      }
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+      const post = await Post.create(req.body);
+
+      return res.json(post);
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    const post = await Post.create(req.body);
-
-    return res.json(post);
   }
 
   async update(req, res) {
-    const schema = Yup.object().shape({
-      title: Yup.string(),
-      content: Yup.string(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
-
     const post = await Post.findByPk(req.params.id);
 
     if (!post) {
-      return res.status(401).json({ error: 'Post não encontrado' });
+      return res.status(401).json({ error: 'post não encontrado' });
     }
 
     await post.update(req.body);
@@ -48,7 +49,7 @@ class PostController {
     const post = await Post.findByPk(req.params.id);
 
     if (!post) {
-      return res.status(400).json({ error: 'Post não encontrado' });
+      return res.status(400).json({ error: 'post não encontrado' });
     }
 
     await post.destroy();
