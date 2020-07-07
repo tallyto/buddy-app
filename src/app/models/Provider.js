@@ -11,7 +11,6 @@ class Provider extends Model {
         telefone: Sequelize.STRING,
         cpf: Sequelize.STRING,
         bio: Sequelize.STRING,
-        nascimento: Sequelize.DATE,
         clinica: Sequelize.BOOLEAN,
         passeador: Sequelize.BOOLEAN,
         adestrador: Sequelize.BOOLEAN,
@@ -35,8 +34,8 @@ class Provider extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
-    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'crmv_frente' });
-    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'crmv_verso' });
+    this.belongsTo(models.File, { foreignKey: 'crmv_frente_id', as: 'crmv_frente' });
+    this.belongsTo(models.File, { foreignKey: 'crmv_verso_id', as: 'crmv_verso' });
     this.hasMany(models.Endereco, { foreignKey: 'provider_id', as: 'enderecos' });
     this.hasMany(models.ContaBancaria, { foreignKey: 'provider_id', as: 'contas' });
     this.belongsToMany(models.Especialidades, { foreignKey: 'provider_id', through: 'provider_especialidades', as: 'especialidades' });

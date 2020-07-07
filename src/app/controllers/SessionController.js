@@ -21,7 +21,7 @@ class SessionController {
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        return res.status(401).json({ error: 'e-mail cadastrado' });
+        return res.status(401).json({ error: 'e-mail ou senha incorreto' });
       }
 
       if (!(await user.checkPassword(password))) {
@@ -59,7 +59,7 @@ class SessionController {
       const provider = await Provider.findOne({ where: { email } });
 
       if (!provider) {
-        return res.status(401).json({ error: 'e-mail não cadastrado' });
+        return res.status(401).json({ error: 'e-mail ou senha icorreto' });
       }
 
       if (!(await provider.checkPassword(password))) {

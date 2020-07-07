@@ -124,7 +124,7 @@ class UserController {
     try {
       await schema.validate(req.body);
 
-      const { email } = req.body;
+      const { email, avatar_id } = req.body;
 
       const user = await User.findByPk(req.userId);
 
@@ -135,8 +135,8 @@ class UserController {
         }
       }
 
-      if (req.body.avatar_id) {
-        const file = await File.findByPk(req.body.avatar_id);
+      if (avatar_id) {
+        const file = await File.findByPk(avatar_id);
         if (!file) {
           return res
             .status(401)
@@ -148,7 +148,6 @@ class UserController {
         id,
         name,
         telefone,
-        avatar_id,
         location,
         notification,
         boletim_informativo,

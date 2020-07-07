@@ -15,7 +15,6 @@ class TypeOfProvider {
         'cpf',
         'bio',
         'passeador',
-        'nascimento',
         'location',
         'notification',
         'avatar_id',
@@ -44,7 +43,6 @@ class TypeOfProvider {
         'cpf',
         'bio',
         'clinica',
-        'nascimento',
         'location',
         'notification',
         'avatar_id',
@@ -56,7 +54,11 @@ class TypeOfProvider {
         },
         {
           model: File,
-          as: 'crmv_file',
+          as: 'crmv_frente',
+        },
+        {
+          model: File,
+          as: 'crmv_verso',
         },
       ],
     });
@@ -76,7 +78,6 @@ class TypeOfProvider {
         'cpf',
         'bio',
         'adestrador',
-        'nascimento',
         'location',
         'notification',
         'avatar_id',

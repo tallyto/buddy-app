@@ -5,22 +5,6 @@ const File = require('../models/File');
 class ProviderController {
   async index(req, res) {
     const provider = await Provider.findAll({
-      attributes: [
-        'id',
-        'name',
-        'email',
-        'telefone',
-        'bio',
-        'cpf',
-        'nascimento',
-        'passeador',
-        'adestrador',
-        'clinica',
-        'crmv',
-        'location',
-        'notification',
-        'avatar_id',
-      ],
       include: [
         {
           model: File,
@@ -28,7 +12,11 @@ class ProviderController {
         },
         {
           model: File,
-          as: 'crmv_file',
+          as: 'crmv_frente',
+        },
+        {
+          model: File,
+          as: 'crmv_verso',
         },
         {
           association: 'enderecos',
@@ -43,22 +31,6 @@ class ProviderController {
   async show(req, res) {
     const provider = await Provider.findOne({
       where: { id: req.providerId },
-      attributes: [
-        'id',
-        'name',
-        'email',
-        'telefone',
-        'bio',
-        'cpf',
-        'crmv',
-        'nascimento',
-        'passeador',
-        'clinica',
-        'adestrador',
-        'location',
-        'notification',
-        'avatar_id',
-      ],
       include: [
         {
           model: File,
@@ -66,7 +38,11 @@ class ProviderController {
         },
         {
           model: File,
-          as: 'crmv_file',
+          as: 'crmv_frente',
+        },
+        {
+          model: File,
+          as: 'crmv_verso',
         },
         {
           association: 'enderecos',
@@ -75,201 +51,152 @@ class ProviderController {
       ],
     });
 
+    provider.password_hash = null;
+
     return res.json(provider);
   }
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      email: Yup.string().required(),
+      email: Yup.string()
+        .email('e-mail inválido')
+        .required('e-mail obrigatório'),
       password: Yup.string()
-        .required()
-        .min(6),
+        .min(6, 'senha menor que 6 caracteres')
+        .required('senha obrigatória'),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+
+      const providerExist = await Provider.findOne({
+        where: { email: req.body.email },
+      });
+
+      if (providerExist) {
+        return res.status(400).json({ error: 'e-mail já cadastrado' });
+      }
+
+      const { id, email } = await Provider.create(req.body);
+
+      return res.json({
+        id,
+        email,
+      });
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    const providerExist = await Provider.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (providerExist) {
-      return res.status(400).json({ error: 'Email já cadastrado' });
-    }
-
-    const { id, email } = await Provider.create(req.body);
-
-    return res.json({
-      id,
-      email,
-    });
   }
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string().email(),
-      telefone: Yup.string(),
-      cpf: Yup.string(),
-      bio: Yup.string(),
-      nascimento: Yup.date(),
-      clinica: Yup.boolean(),
-      adestrador: Yup.boolean(),
-      passeador: Yup.boolean(),
-      crmv: Yup.string(),
-      oldPassword: Yup.string().min(6),
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPassword, field) => (oldPassword ? field.required() : field)),
-      comfirmPassword: Yup.string().when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
+      email: Yup.string().email('e-mail inválido'),
+      password: Yup.string().min(6, 'senha menor que 6 caracteres'),
+      comfirmPassword: Yup.string().when('password', (password, field) => (password
+        ? field
+          .required('senha de confirmação requerida')
+          .oneOf([Yup.ref('password')], 'as senhas não são iguais')
+        : field)),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
+    try {
+      await schema.validate(req.body);
 
-    const { email, oldPassword, avatar_id } = req.body;
+      const {
+        email, avatar_id, crmv_frente_id, crmv_verso_id,
+      } = req.body;
 
-    if (!avatar_id) {
-      const avatar = await File.findByPk(avatar_id);
-      if (!avatar) {
-        return res.status(401).json({ error: 'Foto de perfil não encontrada' });
+      if (avatar_id) {
+        const avatar = await File.findByPk(avatar_id);
+        if (!avatar) {
+          return res.status(401).json({ error: 'foto não encontrada' });
+        }
       }
-    }
 
-    if (email && email !== provider.email) {
-      const providerExist = await Provider.findOne({ where: { email } });
-      if (providerExist) {
-        return res.status(400).json({ error: 'Email já cadastrado' });
+      if (crmv_frente_id) {
+        const crmv = await File.findByPk(crmv_frente_id);
+        if (!crmv) {
+          return res.status(401).json({ error: 'crmv não encontrado' });
+        }
       }
+
+      if (crmv_verso_id) {
+        const crmv = await File.findByPk(crmv_verso_id);
+        if (!crmv) {
+          return res.status(401).json({ error: 'crmv não encontrado' });
+        }
+      }
+
+      const provider = await Provider.findByPk(req.providerId);
+
+      if (email && email !== provider.email) {
+        const providerExist = await Provider.findOne({ where: { email } });
+        if (providerExist) {
+          return res.status(400).json({ error: 'e-mail já cadastrado' });
+        }
+      }
+
+      await provider.update(req.body);
+
+      provider.password_hash = null;
+
+      return res.json(provider);
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    if (oldPassword && !(await provider.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'As senha não são iguais' });
-    }
-
-    const {
-      id,
-      name,
-      telefone,
-      cpf,
-      bio,
-      nascimento,
-      clinica,
-      adestrador,
-      passeador,
-      crmv,
-      location,
-      notification,
-      crmv_file,
-    } = await provider.update(req.body);
-
-    return res.json({
-      id,
-      name,
-      email,
-      telefone,
-      cpf,
-      bio,
-      nascimento,
-      clinica,
-      adestrador,
-      passeador,
-      crmv,
-      location,
-      notification,
-      avatar_id,
-      crmv_file,
-    });
   }
 
   async cadastro(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string().email(),
-      telefone: Yup.string(),
-      cpf: Yup.string(),
-      bio: Yup.string(),
-      nascimento: Yup.date(),
-      clinica: Yup.boolean(),
-      adestrador: Yup.boolean(),
-      passeador: Yup.boolean(),
-      crmv: Yup.string(),
-      oldPassword: Yup.string().min(6),
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPassword, field) => (oldPassword ? field.required() : field)),
-      comfirmPassword: Yup.string().when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
+      email: Yup.string().email('e-mail inválido'),
+      password: Yup.string().min(6, 'senha menor que 6 caracteres'),
+      comfirmPassword: Yup.string().when('password', (password, field) => (password
+        ? field
+          .required('senha de confirmação requerida')
+          .oneOf([Yup.ref('password')], 'as senhas não são iguais')
+        : field)),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
+    const { email, avatar_id } = req.body;
 
-    const { email, oldPassword } = req.body;
+    try {
+      await schema.validate(req.body);
+      const provider = await Provider.findByPk(req.params.id);
 
-    const provider = await Provider.findByPk(req.params.id);
-
-    if (!provider) {
-      return res
-        .status(401)
-        .json({ error: 'Você não pode cadastar um usuario que não existe' });
-    }
-
-    // Verifica se o avatar é valido
-    if (req.body.avatar_id) {
-      const file = await File.findByPk(req.body.avatar_id);
-      if (!file) {
-        return res.status(400).json({ error: 'Foto de perfil não encontrada' });
+      if (avatar_id) {
+        const avatar = await File.findByPk(avatar_id);
+        if (!avatar) {
+          return res.status(401).json({ error: 'foto não encontrada' });
+        }
       }
-    }
 
-    if (email && email !== provider.email) {
-      const providerExist = await Provider.findOne({ where: { email } });
-      if (providerExist) {
-        return res.status(400).json({ error: 'Email já cadastrado' });
+      if (crmv_frente_id) {
+        const crmv = await File.findByPk(crmv_frente_id);
+        if (!crmv) {
+          return res.status(401).json({ error: 'crmv não encontrado' });
+        }
       }
+
+      if (crmv_verso_id) {
+        const crmv = await File.findByPk(crmv_verso_id);
+        if (!crmv) {
+          return res.status(401).json({ error: 'crmv não encontrado' });
+        }
+      }
+
+      if (email && email !== provider.email) {
+        const providerExist = await Provider.findOne({ where: { email } });
+        if (providerExist) {
+          return res.status(400).json({ error: 'e-mail já cadastrado' });
+        }
+      }
+
+      await provider.update(req.body);
+      provider.password_hash = null;
+      return res.json(provider);
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    if (oldPassword && !(await provider.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'As senhas não são iguais' });
-    }
-
-    const {
-      id,
-      name,
-      telefone,
-      cpf,
-      bio,
-      nascimento,
-      clinica,
-      adestrador,
-      passeador,
-      crmv,
-      location,
-      notification,
-      avatar_id,
-      crmv_file,
-    } = await provider.update(req.body);
-
-    return res.json({
-      id,
-      name,
-      email,
-      telefone,
-      cpf,
-      bio,
-      nascimento,
-      clinica,
-      adestrador,
-      passeador,
-      crmv,
-      location,
-      notification,
-      avatar_id,
-      crmv_file,
-    });
   }
 }
 

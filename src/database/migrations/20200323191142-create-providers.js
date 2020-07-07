@@ -20,10 +20,6 @@ module.exports = {
       allowNull: true,
       unique: true,
     },
-    nascimento: {
-      type: Sequelize.DATE,
-      allowNull: true,
-    },
     bio: {
       type: Sequelize.STRING,
       allowNull: true,
@@ -60,14 +56,14 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       allowNull: true,
     },
-    crmv_frente: {
+    crmv_frente_id: {
       type: Sequelize.INTEGER,
       references: { model: 'files', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',
       allowNull: true,
     },
-    crmv_verso: {
+    crmv_verso_id: {
       type: Sequelize.INTEGER,
       references: { model: 'files', key: 'id' },
       onUpdate: 'CASCADE',
