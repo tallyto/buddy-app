@@ -10,41 +10,30 @@ class CreditCardController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      titular: Yup.string().required(),
-      card_number: Yup.string().required(),
-      validade: Yup.string().required(),
-      cvv: Yup.string().required(),
-      payment: Yup.string().required(),
+      titular: Yup.string().required('titular obrigatório'),
+      card_number: Yup.string().required('número do cartão obrigatório'),
+      validade: Yup.string().required('validade obrigatório'),
+      cvv: Yup.string().required('cvv obrigatório'),
+      payment: Yup.string().required('metodo de pagamento obigatório'),
 
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+
+      const creditCard = await CreditCard.create({ ...req.body, user_id: req.userId });
+
+      return res.json(creditCard);
+    } catch (error) {
+      return res.status(500).json(error);
     }
-
-    const creditCard = await CreditCard.create({ ...req.body, user_id: req.userId });
-
-    return res.json(creditCard);
   }
 
   async update(req, res) {
-    const schema = Yup.object().shape({
-      titular: Yup.string(),
-      card_number: Yup.string(),
-      validade: Yup.string(),
-      cvv: Yup.string(),
-      payment: Yup.string(),
-
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
-
     const creditCard = await CreditCard.findByPk(req.params.id);
 
     if (!creditCard) {
-      return res.status(400).json({ error: 'Cartão de credito não encontrado' });
+      return res.status(400).json({ error: 'cartão de credito não encontrado' });
     }
 
     await creditCard.update(req.body);
@@ -56,7 +45,7 @@ class CreditCardController {
     const creditCard = await CreditCard.findByPk(req.params.id);
 
     if (!creditCard) {
-      return res.status(400).json({ error: 'Cartão de crédito não encontrado' });
+      return res.status(400).json({ error: 'cartão de credito não encontrado' });
     }
 
     await creditCard.destroy();
