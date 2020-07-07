@@ -13,6 +13,7 @@ class User extends Model {
         password_hash: Sequelize.STRING,
         location: Sequelize.BOOLEAN,
         notification: Sequelize.BOOLEAN,
+        boletim_informativo: Sequelize.BOOLEAN,
       },
       { sequelize },
     );

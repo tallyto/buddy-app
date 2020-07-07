@@ -13,6 +13,7 @@ class UserController {
         'avatar_id',
         'location',
         'notification',
+        'boletim_informativo',
       ],
       include: [
         {
@@ -50,6 +51,7 @@ class UserController {
         'telefone',
         'location',
         'notification',
+        'boletim_informativo',
       ],
       include: [
         {
@@ -149,6 +151,7 @@ class UserController {
         avatar_id,
         location,
         notification,
+        boletim_informativo,
       } = await user.update(req.body);
 
       return res.json({
@@ -159,6 +162,7 @@ class UserController {
         avatar_id,
         location,
         notification,
+        boletim_informativo,
       });
     } catch (error) {
       return res.status(500).json(error);

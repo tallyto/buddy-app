@@ -6,7 +6,7 @@
     "start": "node src/server",
     "dev": "nodemon src/server",
     "create:db": "sequelize db:create",
-    "drop:db": "sequelize db:remove",
+    "drop:db": "sequelize db:drop",
     "migrate": "sequelize db:migrate",
     "undo:all": "sequelize db:migrate:undo:all",
     "undo": "sequelize db:migrate:undo"

@@ -2,7 +2,6 @@
 module.exports = {
   AgendaController: require('../app/controllers/AgendaController'),
   AgendamentoController: require('../app/controllers/AgendamentoController'),
-  CategoriaController: require('../app/controllers/CategoriaController'),
   FileController: require('../app/controllers/FileController'),
   PetController: require('../app/controllers/PetController'),
   ProviderController: require('../app/controllers/ProviderController'),

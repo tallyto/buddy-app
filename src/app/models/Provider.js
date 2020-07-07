@@ -35,8 +35,8 @@ class Provider extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
-    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'crmv_file' });
-    this.belongsTo(models.Categoria, { foreignKey: 'categoria_id', as: 'categoria' });
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'crmv_frente' });
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'crmv_verso' });
     this.hasMany(models.Endereco, { foreignKey: 'provider_id', as: 'enderecos' });
     this.hasMany(models.ContaBancaria, { foreignKey: 'provider_id', as: 'contas' });
     this.belongsToMany(models.Especialidades, { foreignKey: 'provider_id', through: 'provider_especialidades', as: 'especialidades' });

@@ -3,7 +3,6 @@ const multer = require('multer');
 const {
   AgendaController,
   AgendamentoController,
-  CategoriaController,
   FileController,
   PetController,
   ProviderController,
@@ -83,12 +82,6 @@ routes.post('/sessions/providers', session.provider);
 routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/files', FileController.index);
 routes.delete('/files/:id', FileController.delete);
-
-// Categorias
-routes.post('/categorias', CategoriaController.store);
-routes.get('/categorias', CategoriaController.index);
-routes.put('/categorias/:id', CategoriaController.update);
-routes.delete('/categorias/:id', CategoriaController.delete);
 
 // Enderecos
 routes.get('/enderecos', EnderecoController.index);

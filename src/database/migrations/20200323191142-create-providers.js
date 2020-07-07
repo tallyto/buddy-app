@@ -60,16 +60,16 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       allowNull: true,
     },
-    crmv_file: {
+    crmv_frente: {
       type: Sequelize.INTEGER,
       references: { model: 'files', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',
       allowNull: true,
     },
-    categoria_id: {
+    crmv_verso: {
       type: Sequelize.INTEGER,
-      references: { model: 'categoria', key: 'id' },
+      references: { model: 'files', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',
       allowNull: true,

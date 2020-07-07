@@ -1,6 +1,5 @@
 const Provider = require('../models/Provider');
 const File = require('../models/File');
-const Categoria = require('../models/Categoria');
 
 class TypeOfProvider {
   async passeador(req, res) {
@@ -20,16 +19,11 @@ class TypeOfProvider {
         'location',
         'notification',
         'avatar_id',
-        'categoria_id',
       ],
       include: [
         {
           model: File,
           as: 'avatar',
-        },
-        {
-          model: Categoria,
-          as: 'categoria',
         },
       ],
     });
@@ -54,16 +48,11 @@ class TypeOfProvider {
         'location',
         'notification',
         'avatar_id',
-        'categoria_id',
       ],
       include: [
         {
           model: File,
           as: 'avatar',
-        },
-        {
-          model: Categoria,
-          as: 'categoria',
         },
         {
           model: File,
@@ -91,16 +80,11 @@ class TypeOfProvider {
         'location',
         'notification',
         'avatar_id',
-        'categoria_id',
       ],
       include: [
         {
           model: File,
           as: 'avatar',
-        },
-        {
-          model: Categoria,
-          as: 'categoria',
         },
       ],
     });

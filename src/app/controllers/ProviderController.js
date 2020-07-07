@@ -1,7 +1,6 @@
 const Yup = require('yup');
 const Provider = require('../models/Provider');
 const File = require('../models/File');
-const Categoria = require('../models/Categoria');
 
 class ProviderController {
   async index(req, res) {
@@ -21,16 +20,11 @@ class ProviderController {
         'location',
         'notification',
         'avatar_id',
-        'categoria_id',
       ],
       include: [
         {
           model: File,
           as: 'avatar',
-        },
-        {
-          model: Categoria,
-          as: 'categoria',
         },
         {
           model: File,
@@ -64,16 +58,11 @@ class ProviderController {
         'location',
         'notification',
         'avatar_id',
-        'categoria_id',
       ],
       include: [
         {
           model: File,
           as: 'avatar',
-        },
-        {
-          model: Categoria,
-          as: 'categoria',
         },
         {
           model: File,
@@ -173,7 +162,6 @@ class ProviderController {
       crmv,
       location,
       notification,
-      categoria_id,
       crmv_file,
     } = await provider.update(req.body);
 
@@ -192,7 +180,6 @@ class ProviderController {
       location,
       notification,
       avatar_id,
-      categoria_id,
       crmv_file,
     });
   }
@@ -263,7 +250,6 @@ class ProviderController {
       location,
       notification,
       avatar_id,
-      categoria_id,
       crmv_file,
     } = await provider.update(req.body);
 
@@ -282,7 +268,6 @@ class ProviderController {
       location,
       notification,
       avatar_id,
-      categoria_id,
       crmv_file,
     });
   }
