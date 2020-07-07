@@ -16,7 +16,7 @@ class ForgerPasswordController {
 
     if (!user) {
       return res.status(401).json({
-        error: 'Usuário não existente!',
+        error: 'usuário não encontrado',
       });
     }
 
@@ -39,12 +39,12 @@ class ForgerPasswordController {
           subject: 'Recuperação de senha!',
           html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
         }).then(() => {
-          user.update({ password: newPassword }).then(() => res.json({ message: 'Senha atualizada com sucesso!' })).catch((error) => {
-            res.json({ message: 'Erro ao atualizar a senha', error });
+          user.update({ password: newPassword }).then(() => res.json({ message: 'senha atualizada com sucesso' })).catch((error) => {
+            res.json({ message: 'erro ao atualizar sua senha', error });
           });
-        }).catch((error) => res.json({ message: 'Erro ao enviar o email', error }));
+        }).catch((error) => res.json({ message: 'erro ao enviar o e-mail', error }));
     } catch (error) {
-      return res.json({ message: 'Erro ao atualizar a senha', error });
+      return res.json({ message: 'erro ao atualizar sua senha', error });
     }
   }
 
@@ -82,12 +82,12 @@ class ForgerPasswordController {
           subject: 'Recuperação de senha!',
           html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p>`,
         }).then(() => {
-          provider.update({ password: newPassword }).then(() => res.json({ message: 'Senha atualizada com sucesso!' })).catch((error) => {
-            res.json({ message: 'Erro ao atualizar a senha', error });
+          provider.update({ password: newPassword }).then(() => res.json({ message: 'senha atualizada com sucesso' })).catch((error) => {
+            res.json({ message: 'erro ao atualizar sua senha', error });
           });
-        }).catch((error) => res.json({ message: 'Erro ao enviar o email', error }));
+        }).catch((error) => res.json({ message: 'erro ao enviar o e-mail', error }));
     } catch (error) {
-      return res.json({ message: 'Erro ao atualizar a senha', error });
+      return res.json({ message: 'erro ao atualizar sua senha', error });
     }
   }
 }

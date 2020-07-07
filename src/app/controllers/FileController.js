@@ -26,7 +26,7 @@ class FileController {
     const file = await File.findByPk(req.params.id);
 
     if (!file) {
-      return res.status(400).json({ error: 'Avatar não encontrado' });
+      return res.status(400).json({ error: 'arquivo não encontrado' });
     }
 
     removeImageS3(file.key);

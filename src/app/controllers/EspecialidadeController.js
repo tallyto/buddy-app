@@ -25,7 +25,7 @@ class EspecialidadeController {
 
     const provider = await Provider.findByPk(provider_id);
     if (!provider) {
-      return res.status(400).json({ message: 'Usuário não encontrado' });
+      return res.status(400).json({ error: 'usuário não encontrado' });
     }
 
     const [especialidade] = await Especialidade.findOrCreate({
