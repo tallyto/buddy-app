@@ -9,73 +9,77 @@ class SessionController {
   async user(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
-        .email()
-        .required(),
-      password: Yup.string().required(),
+        .email('e-mail inválido')
+        .required('e-mail obrigatório'),
+      password: Yup.string().min(6, 'senha menor que 6 caracteres').required('senha obrigatória'),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+      const { email, password } = req.body;
+
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) {
+        return res.status(401).json({ error: 'e-mail cadastrado' });
+      }
+
+      if (!(await user.checkPassword(password))) {
+        return res.status(401).json({ error: 'e-mail ou senha incorreto' });
+      }
+
+      const { id } = user;
+
+      return res.json({
+        user: {
+          id,
+          email,
+        },
+        token: jwt.sign({ id }, authConfig.secret, {
+          expiresIn: authConfig.expiresIn,
+        }),
+      });
+    } catch (error) {
+      return res.status(500).json(error);
     }
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      return res.status(401).json({ error: 'Email não cadastrado' });
-    }
-
-    if (!(await user.checkPassword(password))) {
-      return res.status(401).json({ error: 'Senha incorreta' });
-    }
-
-    const { id } = user;
-
-    return res.json({
-      user: {
-        id,
-        email,
-      },
-      token: jwt.sign({ id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
-    });
   }
 
   async provider(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
-        .email()
-        .required(),
-      password: Yup.string().required(),
+        .email('e-mail inválido')
+        .required('e-mail obrigatório'),
+      password: Yup.string().min(6, 'senha menor que 6 caracteres').required('senha obrigatória'),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
+    try {
+      await schema.validate(req.body);
+      const { email, password } = req.body;
+
+      const provider = await Provider.findOne({ where: { email } });
+
+      if (!provider) {
+        return res.status(401).json({ error: 'e-mail não cadastrado' });
+      }
+
+      if (!(await provider.checkPassword(password))) {
+        return res.status(401).json({ error: 'e-mail ou senha icorreto' });
+      }
+
+      const { id } = provider;
+
+      return res.json({
+        provider: {
+          id,
+          email,
+        },
+        token: jwt.sign({ id }, authConfig.secret, {
+          expiresIn: authConfig.expiresIn,
+        }),
+      });
+    } catch (error) {
+      return res.status(500).json(error);
     }
-    const { email, password } = req.body;
-
-    const provider = await Provider.findOne({ where: { email } });
-
-    if (!provider) {
-      return res.status(401).json({ error: 'Email não cadastrado' });
-    }
-
-    if (!(await provider.checkPassword(password))) {
-      return res.status(401).json({ error: 'Senha incorreta' });
-    }
-
-    const { id } = provider;
-
-    return res.json({
-      provider: {
-        id,
-        email,
-      },
-      token: jwt.sign({ id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
-    });
   }
 }
 

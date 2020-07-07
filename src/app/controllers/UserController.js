@@ -79,7 +79,7 @@ class UserController {
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
-        .email('e-mail invalido')
+        .email('e-mail inválido')
         .required('e-mail obrigatório'),
       password: Yup.string()
         .required('senha obrigatória')
@@ -104,13 +104,13 @@ class UserController {
         email,
       });
     } catch (error) {
-      return res.status(500).json({ errror });
+      return res.status(500).json(error);
     }
   }
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      email: Yup.string().email('e-mail invalido'),
+      email: Yup.string().email('e-mail inválido'),
       password: Yup.string().min(6, 'senha menor que 6 caracteres'),
       comfirmPassword: Yup.string().when('password', (password, field) => (password
         ? field
@@ -161,7 +161,7 @@ class UserController {
         notification,
       });
     } catch (error) {
-      return res.status(500).json({ error });
+      return res.status(500).json(error);
     }
   }
 }

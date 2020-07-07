@@ -32,6 +32,10 @@ class User extends Model {
     this.hasMany(models.CreditCard, { foreignKey: 'user_id', as: 'credit_cards' });
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
+  }
 }
 
 module.exports = User;
