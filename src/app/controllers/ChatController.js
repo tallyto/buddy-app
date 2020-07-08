@@ -63,6 +63,11 @@ class ChatController {
           attributes: ['name', 'passeador', 'adestrador', 'clinica'],
           include: [{ model: File, as: 'avatar', attributes: ['url'] }],
         },
+        {
+          model: Pet,
+          as: 'pets',
+          include: [{ model: File, as: 'avatar', attributes: ['url'] }],
+        },
       ],
     });
 
