@@ -100,10 +100,11 @@ routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
 
 // Agendamentos
-routes.get('/agendamentos/user', AgentamentoUser.index);
+routes.get('/agendamentos/user', AgentamentoUser.getAcceptedSchedules);
+routes.get('/agendamento/:providerId', AgentamentoUser.getAcceptedSchedulesFromProvider);
+routes.get('/agendamentos/nao/confirmados', AgentamentoUser.getUnconfirmedSchedules);
 routes.post('/agendamenos/aceitar', AgentamentoUser.store);
-routes.get('/agendamento/:providerId', AgentamentoUser.show);
-routes.delete('/agendamentos/:id', AgentamentoUser.delete);
+routes.delete('/agendamentos/:id', AgentamentoUser.cancelAppointment);
 
 // Chat
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
@@ -137,7 +138,7 @@ routes.get('/agenda', AgendaController.index);
 
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
-routes.get('/agendamentos/provider', AgendamentoController.index);
+routes.get('/agendamentos/provider', AgendamentoController.getProviderAppointmens);
 
 // Conta Bancaria
 routes.post('/conta-bancaria', ContaBancaria.store);

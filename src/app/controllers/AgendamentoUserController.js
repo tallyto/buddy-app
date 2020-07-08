@@ -12,7 +12,7 @@ const File = require('../models/File');
 const Pet = require('../models/Pet');
 
 class AgendamentoUserController {
-  async index(req, res) {
+  async getAcceptedSchedules(req, res) {
     const { page = 1 } = req.query;
     const agendamento = await Agendamento.findAll({
       where: {
@@ -45,7 +45,40 @@ class AgendamentoUserController {
     return res.json(agendamento);
   }
 
-  async show(req, res) {
+  async getUnconfirmedSchedules(req, res) {
+    const { page = 1 } = req.query;
+    const agendamento = await Agendamento.findAll({
+      where: {
+        user_id: req.userId,
+        canceled_at: null,
+        accept: null,
+      },
+      include: [
+        {
+          model: Provider,
+          as: 'provider',
+          attributes: ['name', 'email'],
+
+          include: [
+            { model: File, as: 'avatar' },
+          ],
+        },
+        {
+          model: Pet,
+          as: 'pets',
+          include: [
+            { model: File, as: 'avatar' },
+          ],
+        },
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+      order: ['date'],
+    });
+    return res.json(agendamento);
+  }
+
+  async getAcceptedSchedulesFromProvider(req, res) {
     const { page = 1 } = req.query;
     const agendamento = await Agendamento.findAll({
       where: {
@@ -94,16 +127,9 @@ class AgendamentoUserController {
 
     for (const agendamento_id of agendamentos) {
       const agendamento = await Agendamento.findByPk(agendamento_id);
-      if (!agendamento) {
-        return res.status(400).json({ error: 'Agendamento não existe' });
-      }
 
-      if (agendamento.user_id !== req.userId) {
-        return res
-          .status(401)
-          .json({
-            error: 'Você não pode aceitar um agendamento que não lhe pertence',
-          });
+      if (!agendamento) {
+        return res.status(400).json({ error: 'agendamento não encontrado' });
       }
 
       await agendamento.update({ ...req.body, accept: true });
@@ -114,16 +140,16 @@ class AgendamentoUserController {
     return res.json(response);
   }
 
-  async delete(req, res) {
+  async cancelAppointment(req, res) {
     const agendamento = await Agendamento.findByPk(req.params.id);
     if (!agendamento) {
-      return res.status(400).json({ error: 'Agendamento não encontrado' });
+      return res.status(400).json({ error: 'agendamento não encontrado' });
     }
     if (agendamento.user_id !== req.userId) {
       return res
         .status(401)
         .json({
-          error: 'Você não tem permissão para cancelar esse agendamento',
+          error: 'você não tem permissão para cancelar esse agendamento',
         });
     }
 
@@ -133,7 +159,7 @@ class AgendamentoUserController {
       return res
         .status(401)
         .json({
-          error: 'Você só pode cancelar um agentamento com 2 horas de antecedencia',
+          error: 'o agandamento só pode ser cancelado com 2 horas de antecedencia',
         });
     }
 

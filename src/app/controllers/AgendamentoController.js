@@ -16,7 +16,7 @@ const Pet = require('../models/Pet');
 const Notification = require('../models/Notification');
 
 class AgendamentoController {
-  async index(req, res) {
+  async getProviderAppointmens(req, res) {
     const { page = 1 } = req.query;
     const agendamento = await Agendamento.findAll({
       where: {
@@ -81,7 +81,7 @@ class AgendamentoController {
 
       // Verifica se a data passou
       if (isBefore(hourStart, new Date())) {
-        return res.status(400).json({ error: 'Datas anteriores não são permitidas' });
+        return res.status(400).json({ error: 'datas passadas não são permitidas' });
       }
 
       // // Verifica se a data esta disponivel
