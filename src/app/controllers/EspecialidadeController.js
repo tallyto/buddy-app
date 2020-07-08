@@ -1,6 +1,7 @@
 const Yup = require('yup');
 const Especialidade = require('../models/Especialidade');
 const Provider = require('../models/Provider');
+const File = require('../models/File');
 
 class EspecialidadeController {
   async show(req, res) {
@@ -11,7 +12,11 @@ class EspecialidadeController {
         {
           model: Provider,
           as: 'providers',
-          attributes: ['id', 'name', 'crmv'],
+          attributes: ['id', 'name', 'crmv', 'bio', 'avatar_id'],
+          include: [{
+            model: File,
+            as: 'avatar',
+          }],
         },
       ],
     });
