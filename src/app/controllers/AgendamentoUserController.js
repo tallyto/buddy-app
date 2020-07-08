@@ -78,6 +78,30 @@ class AgendamentoUserController {
     return res.json(agendamento);
   }
 
+  async getPetSchedules(req, res) {
+    const { page = 1 } = req.query;
+    const agendamento = await Agendamento.findAll({
+      where: {
+        pet_id: req.params.pet_id,
+        canceled_at: null,
+        accept: true,
+      },
+      include: [{
+        model: Provider,
+        as: 'provider',
+        attributes: ['name', 'email', 'clinica', 'passeador', 'adestrador'],
+
+        include: [
+          { model: File, as: 'avatar' },
+        ],
+      }],
+      limit: 20,
+      offset: (page - 1) * 20,
+      order: ['date'],
+    });
+    return res.json(agendamento);
+  }
+
   async getAcceptedSchedulesFromProvider(req, res) {
     const { page = 1 } = req.query;
     const agendamento = await Agendamento.findAll({

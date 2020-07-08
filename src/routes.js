@@ -105,6 +105,7 @@ routes.get('/agendamento/:providerId', AgentamentoUser.getAcceptedSchedulesFromP
 routes.get('/agendamentos/nao/confirmados', AgentamentoUser.getUnconfirmedSchedules);
 routes.post('/agendamenos/aceitar', AgentamentoUser.store);
 routes.delete('/agendamentos/:id', AgentamentoUser.cancelAppointment);
+routes.get('/agendamentos/pet/:pet_id', AgentamentoUser.getPetSchedules);
 
 // Chat
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
