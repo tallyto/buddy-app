@@ -8,11 +8,11 @@ module.exports = {
     },
     comentario: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     avaliacao: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
+      type: Sequelize.STRING,
+      allowNull: true,
     },
     provider_id: {
       type: Sequelize.INTEGER,
@@ -25,7 +25,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: { model: 'users', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onDelete: 'CASCADE',
       allowNull: false,
     },
     created_at: {

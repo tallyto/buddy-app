@@ -5,8 +5,10 @@ class Avaliacoes extends Model {
   static init(sequelize) {
     super.init(
       {
+
         comentario: Sequelize.STRING,
-        avaliacao: Sequelize.INTEGER,
+        avaliacao: Sequelize.STRING,
+
       },
       { sequelize },
     );

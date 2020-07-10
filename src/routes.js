@@ -27,6 +27,7 @@ const multerConfig = require('./config/multer');
 const forgetPassword = require('./app/controllers/ForgetPasswordController');
 const session = require('./app/controllers/SessionController');
 const EspecialidadeController = require('./app/controllers/EspecialidadeController');
+const AvaliacaoController = require('./app/controllers/AvalicaoController');
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -94,6 +95,9 @@ routes.delete('/enderecos/:id', EnderecoController.delete);
 
 // Rotas protegidas por autenticação de usuario
 routes.use(authMiddleware);
+
+// Avaliacao
+routes.post('/avaliacao/provider/:provider_id', AvaliacaoController.createAvaliacao);
 
 // User
 routes.get('/users/profile', UserController.show);

@@ -14,6 +14,7 @@ const ContaBancaria = require('../app/models/ContaBancaria');
 const Consulta = require('../app/models/Consulta');
 const Exame = require('../app/models/Exame');
 const Especialidade = require('../app/models/Especialidade');
+const Avaliacao = require('../app/models/Avaliacao');
 
 const databaseConfig = require('../config/database');
 
@@ -33,6 +34,7 @@ const models = [
   Consulta,
   Exame,
   Especialidade,
+  Avaliacao,
 ];
 
 class Database {
