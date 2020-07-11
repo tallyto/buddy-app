@@ -36,6 +36,8 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
+routes.get('/avaliacao', AvaliacaoController.getAvalicao);
+
 routes.post('/especialidades/:provider_id', EspecialidadeController.store);
 routes.get('/especialidades/', EspecialidadeController.show);
 
@@ -98,6 +100,7 @@ routes.use(authMiddleware);
 
 // Avaliacao
 routes.post('/avaliacao/provider/:provider_id', AvaliacaoController.createAvaliacao);
+routes.get('/avaliacao/provider/:provider_id', AvaliacaoController.getAvaliacaoForProvider);
 
 // User
 routes.get('/users/profile', UserController.show);
