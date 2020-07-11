@@ -37,7 +37,8 @@ class ForgerPasswordController {
           from: 'Equipe Buddy <contatobuddyapp@gmail.com>',
           to: email,
           subject: 'Recuperação de senha!',
-          html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br><a href="http://localhost:3333/login">Sistema</a>`,
+          html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br>
+          <p>Equipe buddy agradece!</p>`,
         }).then(() => {
           user.update({ password: newPassword }).then(() => res.json({ message: 'senha atualizada com sucesso' })).catch((error) => {
             res.json({ message: 'erro ao atualizar sua senha', error });
