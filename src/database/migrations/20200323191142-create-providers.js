@@ -40,6 +40,10 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       allowNull: true,
     },
+    accept: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
     password_hash: {
       type: Sequelize.STRING,
       allowNull: false,

@@ -34,7 +34,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: { model: 'providers', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onDelete: 'CASCADE',
       allowNull: false,
     },
     pet_id: {

@@ -21,6 +21,13 @@ module.exports = {
       onDelete: 'SET NULL',
       allowNull: true,
     },
+    admin_id: {
+      type: Sequelize.INTEGER,
+      references: { model: 'admins', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
+      allowNull: false,
+    },
     created_at: {
       type: Sequelize.DATE,
       allowNull: false,

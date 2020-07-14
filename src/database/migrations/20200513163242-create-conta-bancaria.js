@@ -23,7 +23,7 @@ module.exports = {
       references: { model: 'providers', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
-      allowNull: true,
+      allowNull: false,
     },
     created_at: {
       type: Sequelize.DATE,

@@ -26,25 +26,29 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       allowNull: true,
     },
+    finish: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
     user_id: {
       type: Sequelize.INTEGER,
       references: { model: 'users', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onDelete: 'CASCADE',
       allowNull: false,
     },
     provider_id: {
       type: Sequelize.INTEGER,
       references: { model: 'providers', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onDelete: 'CASCADE',
       allowNull: false,
     },
     pet_id: {
       type: Sequelize.INTEGER,
       references: { model: 'pets', key: 'id' },
       onUpdate: 'CASCADE',
-      onDelete: 'SET NULL',
+      onDelete: 'CASCADE',
       allowNull: false,
     },
     canceled_at: {
