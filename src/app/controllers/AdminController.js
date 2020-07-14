@@ -2,12 +2,6 @@ const Yup = require('yup');
 const Admin = require('../models/Admin');
 
 class AdminController {
-  async index(req, res) {
-    const admin = await Admin.findAll()
-    return res.json(admin);
-  }
-
- 
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()

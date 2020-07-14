@@ -2,11 +2,6 @@ const Yup = require('yup');
 const CreditCard = require('../models/CreditCard');
 
 class CreditCardController {
-  async index(req, res) {
-    const creditCard = await CreditCard.findAll();
-
-    return res.json(creditCard);
-  }
 
   async store(req, res) {
     const schema = Yup.object().shape({

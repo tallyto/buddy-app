@@ -4,12 +4,6 @@ const User = require('../models/User');
 const Provider = require('../models/Provider');
 
 class EnderecoController {
-  async index(req, res) {
-    const endereco = await Endereco.findAll();
-
-    return res.json(endereco);
-  }
-
   async store(req, res) {
     const schema = Yup.object().shape({
       rua: Yup.string().required('rua é um campo obrigatório'),

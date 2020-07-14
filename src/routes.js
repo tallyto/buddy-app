@@ -21,8 +21,7 @@ const ConsultaController = require('./app/controllers/ConsultaController');
 const HistoricoController = require('./app/controllers/HistoricoController');
 const ExameController = require('./app/controllers/ExameController');
 const FichaController = require('./app/controllers/FichaController');
-const authMiddleware = require('./app/middlewares/auth');
-const providerAuth = require('./app/middlewares/providerAuth');
+const {authAdmin,authProvider,authUser} = require('./app/middlewares/auth');
 const multerConfig = require('./config/multer');
 const forgetPassword = require('./app/controllers/ForgetPasswordController');
 const session = require('./app/controllers/SessionController');
@@ -37,24 +36,12 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
-routes.get('/avaliacao', AvaliacaoController.getAvalicao);
-
+routes.get('/posts', PostController.index);
 routes.post('/especialidades/:provider_id', EspecialidadeController.store);
 routes.get('/especialidades/', EspecialidadeController.show);
 
 routes.get('/pet/:id', PetController.getPet);
 
-// Global
-routes.get('/credit-card', CreditCardController.index);
-routes.get('/pets/all', PetController.show);
-routes.get('/vacinas', VacinaController.index);
-routes.get('/agendamentos', AgendamentoController.show);
-routes.get('/conta-bancaria', ContaBancaria.index);
-routes.get('/consultas', ConsultaController.index);
-routes.get('/exames', ExameController.index);
-
-// Admin
-routes.get('/admin', AdminController.index);
 routes.post('/admin', AdminController.store);
 
 // Chat
@@ -62,7 +49,6 @@ routes.get('/chat/:id', ChatController.index);
 routes.get('/chat/user/:id', ChatController.chatUser);
 
 // Users
-routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
 
 // ForgetPassword
@@ -72,24 +58,16 @@ routes.post('/forget-password/user', forgetPassword.user);
 routes.post('/forget-password/provider', forgetPassword.provider);
 
 // Providers
-routes.get('/providers', ProviderController.index);
 routes.post('/providers', ProviderController.store);
 routes.get('/providers/clinica', TypeOfProviderController.clinica);
 routes.get('/providers/passeador', TypeOfProviderController.passeador);
 routes.get('/providers/adestrador', TypeOfProviderController.adestrador);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
-// Posts
-routes.get('/posts', PostController.index);
-routes.post('/posts', PostController.store);
-routes.put('/posts/:id', PostController.update);
-routes.delete('/posts/:id', PostController.delete);
-
 // Session
 routes.post('/sessions', session.user);
 routes.post('/sessions/providers', session.provider);
 routes.post('/sessions/admin', session.admin);
-
 
 // Files
 routes.post('/files', upload.single('file'), FileController.store);
@@ -97,13 +75,12 @@ routes.get('/files', FileController.index);
 routes.delete('/files/:id', FileController.delete);
 
 // Enderecos
-routes.get('/enderecos', EnderecoController.index);
 routes.post('/enderecos', EnderecoController.store);
 routes.put('/enderecos/:id', EnderecoController.update);
 routes.delete('/enderecos/:id', EnderecoController.delete);
 
 // Rotas protegidas por autenticação de usuario
-routes.use(authMiddleware);
+routes.use(authUser);
 
 // Avaliacao
 routes.post('/avaliacao/provider/:provider_id', AvaliacaoController.createAvaliacao);
@@ -142,7 +119,7 @@ routes.put('/credit-card/:id', CreditCardController.update);
 routes.delete('/credit-card/:id', CreditCardController.delete);
 
 // Rotas protegidas por autenticação de provider
-routes.use(providerAuth);
+routes.use(authProvider);
 
 // Provider
 routes.get('/providers/profile', ProviderController.show);
@@ -180,5 +157,14 @@ routes.post('/exames', ExameController.store);
 routes.put('/exames/:id', ExameController.update);
 routes.delete('/exames/:id', ExameController.delete);
 routes.get('/exames/pet/:id', ExameController.getPetExames);
+
+routes.use(authAdmin)
+
+routes.put('/admin', AdminController.update);
+
+// Posts
+routes.post('/posts', PostController.store);
+routes.put('/posts/:id', PostController.update);
+routes.delete('/posts/:id', PostController.delete);
 
 module.exports = routes;

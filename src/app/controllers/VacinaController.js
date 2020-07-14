@@ -3,18 +3,6 @@ const Vacinas = require('../models/Vacina');
 const Pet = require('../models/Pet');
 
 class VacinaController {
-  async index(req, res) {
-    const vacinas = await Vacinas.findAll({
-      include: [
-        {
-          model: Pet,
-          as: 'pets',
-        },
-      ],
-    });
-
-    return res.json(vacinas);
-  }
 
   async show(req, res) {
     const vacinas = await Vacinas.findAll({

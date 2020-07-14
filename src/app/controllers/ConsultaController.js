@@ -3,11 +3,6 @@ const Pet = require('../models/Pet');
 const User = require('../models/User');
 
 class ConsultaController {
-  async index(req, res) {
-    const consulta = await Consulta.findAll();
-
-    return res.json(consulta);
-  }
 
   async show(req, res) {
     const consultas = await Consulta.findAll({

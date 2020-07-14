@@ -3,44 +3,7 @@ const User = require('../models/User');
 const File = require('../models/File');
 
 class UserController {
-  async index(req, res) {
-    const user = await User.findAll({
-      attributes: [
-        'id',
-        'email',
-        'name',
-        'telefone',
-        'avatar_id',
-        'location',
-        'notification',
-        'boletim_informativo',
-      ],
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-        },
-        {
-          association: 'pets',
-          include: [
-            {
-              model: File,
-              as: 'avatar',
-            },
-          ],
-        },
-        {
-          association: 'enderecos',
-        },
-        {
-          association: 'credit_cards',
-        },
-      ],
-    });
-    return res.json(user);
-  }
-
-  async show(req, res) {
+   async show(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
       attributes: [

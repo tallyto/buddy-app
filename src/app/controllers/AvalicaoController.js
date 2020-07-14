@@ -11,11 +11,6 @@ class AvaliacaoController {
     return res.json(avaliacao);
   }
 
-  async getAvalicao(req, res) {
-    const avaliacoes = await Avaliacao.findAll();
-    return res.json(avaliacoes);
-  }
-
   async getAvaliacaoForProvider(req, res) {
     const avaliacoes = await Avaliacao.findAll({
       where: {

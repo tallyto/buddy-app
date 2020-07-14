@@ -3,31 +3,7 @@ const Provider = require('../models/Provider');
 const File = require('../models/File');
 
 class ProviderController {
-  async index(req, res) {
-    const provider = await Provider.findAll({
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-        },
-        {
-          model: File,
-          as: 'crmv_frente',
-        },
-        {
-          model: File,
-          as: 'crmv_verso',
-        },
-        {
-          association: 'enderecos',
-        },
-        { association: 'contas' },
-      ],
-    });
-
-    return res.json(provider);
-  }
-
+  
   async show(req, res) {
     const provider = await Provider.findOne({
       where: { id: req.providerId },
