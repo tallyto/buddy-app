@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const User = require('../app/models/User');
+const Admin = require('../app/models/Admin');
 const File = require('../app/models/File');
 const Pet = require('../app/models/Pet');
 const Vacina = require('../app/models/Vacina');
@@ -35,6 +36,7 @@ const models = [
   Exame,
   Especialidade,
   Avaliacao,
+  Admin
 ];
 
 class Database {

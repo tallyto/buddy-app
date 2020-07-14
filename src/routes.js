@@ -28,6 +28,7 @@ const forgetPassword = require('./app/controllers/ForgetPasswordController');
 const session = require('./app/controllers/SessionController');
 const EspecialidadeController = require('./app/controllers/EspecialidadeController');
 const AvaliacaoController = require('./app/controllers/AvalicaoController');
+const AdminController = require('./app/controllers/AdminController')
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -51,6 +52,10 @@ routes.get('/agendamentos', AgendamentoController.show);
 routes.get('/conta-bancaria', ContaBancaria.index);
 routes.get('/consultas', ConsultaController.index);
 routes.get('/exames', ExameController.index);
+
+// Admin
+routes.get('/admin', AdminController.index);
+routes.post('/admin', AdminController.store);
 
 // Chat
 routes.get('/chat/:id', ChatController.index);
@@ -83,6 +88,8 @@ routes.delete('/posts/:id', PostController.delete);
 // Session
 routes.post('/sessions', session.user);
 routes.post('/sessions/providers', session.provider);
+routes.post('/sessions/admin', session.admin);
+
 
 // Files
 routes.post('/files', upload.single('file'), FileController.store);
