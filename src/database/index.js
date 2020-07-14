@@ -6,7 +6,6 @@ const Pet = require('../app/models/Pet');
 const Vacina = require('../app/models/Vacina');
 const Provider = require('../app/models/Provider');
 const Agendamento = require('../app/models/Agendamento');
-const Notification = require('../app/models/Notification');
 const CreditCard = require('../app/models/CreditCard');
 const Endereco = require('../app/models/Endereco');
 const Post = require('../app/models/Post');
@@ -26,7 +25,6 @@ const models = [
   Vacina,
   Provider,
   Agendamento,
-  Notification,
   CreditCard,
   Endereco,
   Post,

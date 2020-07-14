@@ -11,6 +11,7 @@ class Agendamento extends Model {
         description: Sequelize.STRING,
         payment: Sequelize.STRING,
         accept: Sequelize.BOOLEAN,
+        finish: Sequelize.BOOLEAN,
       },
       { sequelize },
     );
