@@ -4,7 +4,7 @@ const Provider = require('../models/Provider');
 const File = require('../models/File');
 
 class EspecialidadeController {
-  async show(req, res) {
+  async getEspecialistas(req, res) {
     const { name } = req.query;
     const especialidade = await Especialidade.findAll({
       where: { name },
@@ -24,7 +24,7 @@ class EspecialidadeController {
     return res.json(especialidade);
   }
 
-  async store(req, res) {
+  async createEspecialidade(req, res) {
     const { provider_id } = req.params;
     const { name } = req.body;
 

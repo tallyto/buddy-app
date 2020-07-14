@@ -11,7 +11,7 @@ const { Op } = require('sequelize');
 const Agendamento = require('../models/Agendamento');
 
 class AgendamentoDisponivelController {
-  async index(req, res) {
+  async getProviderScheduleAvailable(req, res) {
     const { date } = req.query;
     if (!date) {
       return res.status(400).json({ error: 'Data invalida' });

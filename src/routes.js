@@ -1,33 +1,32 @@
 const { Router } = require('express');
 const multer = require('multer');
-const {
-  AgendaController,
-  AgendamentoController,
-  FileController,
-  PetController,
-  ProviderController,
-  PostController,
-  UserController,
-  VacinaController,
-  EnderecoController,
-  CreditCardController,
-  TypeOfProviderController,
-  AgendaDisponivelController,
-  ChatController,
-} = require('./config/require');
 const AgentamentoUser = require('./app/controllers/AgendamentoUserController');
 const ContaBancaria = require('./app/controllers/ContaBancariaController');
 const ConsultaController = require('./app/controllers/ConsultaController');
 const HistoricoController = require('./app/controllers/HistoricoController');
 const ExameController = require('./app/controllers/ExameController');
 const FichaController = require('./app/controllers/FichaController');
-const {authAdmin,authProvider,authUser} = require('./app/middlewares/auth');
 const multerConfig = require('./config/multer');
 const forgetPassword = require('./app/controllers/ForgetPasswordController');
 const session = require('./app/controllers/SessionController');
 const EspecialidadeController = require('./app/controllers/EspecialidadeController');
 const AvaliacaoController = require('./app/controllers/AvalicaoController');
 const AdminController = require('./app/controllers/AdminController')
+const AgendaController = require('./app/controllers/AgendaController');
+const AgendamentoController = require('./app/controllers/AgendamentoController');
+const FileController = require('./app/controllers/FileController');
+const PetController = require('./app/controllers/PetController');
+const ProviderController = require('./app/controllers/ProviderController');
+const PostController = require('./app/controllers/PostController');
+const UserController = require('./app/controllers/UserController');
+const VacinaController = require('./app/controllers/VacinaController');
+const EnderecoController = require('./app/controllers/EnderecoController');
+const CreditCardController = require('./app/controllers/CreditCardController');
+const TypeOfProviderController = require('./app/controllers/TypeOfProviderController');
+const AgendaDisponivelController = require('./app/controllers/AgendaDisponivelController');
+const ChatController = require('./app/controllers/ChatController');
+const { authAdmin, authProvider, authUser } = require('./app/middlewares/auth');
+
 
 const routes = Router();
 const upload = multer(multerConfig);
@@ -36,11 +35,11 @@ routes.get('/', (req, res) => {
   res.send('<h1>Buddypet</h1>');
 });
 
-routes.get('/posts', PostController.index);
-routes.post('/especialidades/:provider_id', EspecialidadeController.store);
-routes.get('/especialidades/', EspecialidadeController.show);
+routes.get('/posts', PostController.getPosts);
+routes.post('/especialidades/:provider_id', EspecialidadeController.createEspecialidade);
+routes.get('/especialidades/', EspecialidadeController.getEspecialistas);
 
-routes.get('/pet/:id', PetController.getPet);
+routes.get('/pet/:id', PetController.getPetAged);
 
 routes.post('/admin', AdminController.store);
 
@@ -104,14 +103,14 @@ routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
 // Agenda diponivel provider
 routes.get(
   '/provider/:providerId/disponivel',
-  AgendaDisponivelController.index,
+  AgendaDisponivelController.getProviderScheduleAvailable,
 );
 
 // Pets
-routes.post('/pets', PetController.store);
-routes.get('/pets', PetController.index);
-routes.put('/pets/:id', PetController.update);
-routes.delete('/pets/:id', PetController.delete);
+routes.get('/pets', PetController.getUserPets);
+routes.post('/pets', PetController.createPet);
+routes.put('/pets/:id', PetController.updatePet);
+routes.delete('/pets/:id', PetController.removePet);
 
 // Cartão de crédito
 routes.post('/credit-card', CreditCardController.store);

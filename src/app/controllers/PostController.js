@@ -4,7 +4,7 @@ const Post = require('../models/Post');
 const File = require('../models/File');
 
 class PostController {
-  async index(req, res) {
+  async getPosts(req, res) {
     const post = await Post.findAll();
 
     return res.json(post);

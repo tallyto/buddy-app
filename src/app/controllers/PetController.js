@@ -6,7 +6,7 @@ const File = require('../models/File');
 const { formatIdade } = require('../utils/data');
 
 class PetsController {
-  async index(req, res) {
+  async getUserPets(req, res) {
     const pets = await Pets.findAll({
       where: { user_id: req.userId },
       include: [
@@ -27,7 +27,7 @@ class PetsController {
     return res.json(pets);
   }
 
-  async getPet(req, res) {
+  async getPetAged(req, res) {
     const pet = await Pets.findByPk(req.params.id);
     if (!pet) {
       return res.status(400).json({ error: 'pet não encontrado' });
@@ -39,28 +39,7 @@ class PetsController {
     return res.json({ pet, idade });
   }
 
-  async show(req, res) {
-    const pets = await Pets.findAll({
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['name', 'email'],
-        },
-        {
-          model: File,
-          as: 'avatar',
-        },
-        {
-          association: 'vacinas',
-        },
-      ],
-    });
-
-    return res.json(pets);
-  }
-
-  async store(req, res) {
+  async createPet(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required('precisa informar o nome'),
       raca: Yup.string().required('precisa informar a raça'),
@@ -92,7 +71,7 @@ class PetsController {
     }
   }
 
-  async update(req, res) {
+  async updatePet(req, res) {
     const pet = await Pets.findByPk(req.params.id);
 
     if (!pet) {
@@ -117,7 +96,7 @@ class PetsController {
     return res.json(pet);
   }
 
-  async delete(req, res) {
+  async removePet(req, res) {
     const pet = await Pets.findByPk(req.params.id);
 
     if (!pet) {
