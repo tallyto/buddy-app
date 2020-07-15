@@ -6,16 +6,6 @@ class UserController {
    async show(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
-      attributes: [
-        'id',
-        'email',
-        'name',
-        'avatar_id',
-        'telefone',
-        'location',
-        'notification',
-        'boletim_informativo',
-      ],
       include: [
         {
           model: File,
@@ -38,6 +28,7 @@ class UserController {
         },
       ],
     });
+    user.password_hash = null
     return res.json(user);
   }
 
@@ -107,25 +98,11 @@ class UserController {
         }
       }
 
-      const {
-        id,
-        name,
-        telefone,
-        location,
-        notification,
-        boletim_informativo,
-      } = await user.update(req.body);
+     await user.update(req.body);
 
-      return res.json({
-        id,
-        name,
-        email,
-        telefone,
-        avatar_id,
-        location,
-        notification,
-        boletim_informativo,
-      });
+     user.password_hash = null
+
+      return res.json(user);
     } catch (error) {
       return res.status(500).json(error);
     }

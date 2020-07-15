@@ -42,7 +42,7 @@ routes.get('/pet/:id', PetController.getPetAged);
 routes.post('/admin', AdminController.store);
 
 // Chat
-routes.get('/chat/:id', ChatController.index);
+routes.get('/chat/:id', ChatController.chatProvider);
 routes.get('/chat/user/:id', ChatController.chatUser);
 
 // Users

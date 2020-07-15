@@ -15,17 +15,6 @@ class VacinaController {
   }
 
   async store(req, res) {
-    const schema = Yup.object().shape({
-      vacina: Yup.string().required(),
-      pet_id: Yup.number().required(),
-      revacinar: Yup.date().required(),
-      peso: Yup.number().required(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
-
     const pet = await Pet.findByPk(req.body.pet_id);
 
     if (!pet) {
@@ -43,7 +32,7 @@ class VacinaController {
     const vacina = await Vacinas.findByPk(req.params.id);
 
     if (!vacina) {
-      return res.status(400).json({ error: 'Vacina não encontrada' });
+      return res.status(400).json({ error: 'vacina não encontrada' });
     }
 
     await vacina.destroy();

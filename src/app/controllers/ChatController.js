@@ -28,7 +28,7 @@ class ChatController {
     return res.json(newChat);
   }
 
-  async index(req, res) {
+  async chatProvider(req, res) {
     const chats = await Chat.findAll({
       where: {
         provider_id: req.params.id,
