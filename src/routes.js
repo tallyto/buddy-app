@@ -12,7 +12,6 @@ const session = require('./app/controllers/SessionController');
 const EspecialidadeController = require('./app/controllers/EspecialidadeController');
 const AvaliacaoController = require('./app/controllers/AvalicaoController');
 const AdminController = require('./app/controllers/AdminController')
-const AgendaController = require('./app/controllers/AgendaController');
 const AgendamentoController = require('./app/controllers/AgendamentoController');
 const FileController = require('./app/controllers/FileController');
 const PetController = require('./app/controllers/PetController');
@@ -124,8 +123,6 @@ routes.use(authProvider);
 routes.get('/providers/profile', ProviderController.show);
 routes.put('/providers/', ProviderController.update);
 
-// Agenda
-routes.get('/agenda', AgendaController.index);
 
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
