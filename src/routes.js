@@ -22,7 +22,6 @@ const VacinaController = require('./app/controllers/VacinaController');
 const EnderecoController = require('./app/controllers/EnderecoController');
 const CreditCardController = require('./app/controllers/CreditCardController');
 const TypeOfProviderController = require('./app/controllers/TypeOfProviderController');
-const AgendaDisponivelController = require('./app/controllers/AgendaDisponivelController');
 const ChatController = require('./app/controllers/ChatController');
 const { authAdmin, authProvider, authUser } = require('./app/middlewares/auth');
 
@@ -99,12 +98,6 @@ routes.get('/agendamentos/pet/:pet_id', AgentamentoUser.getPetSchedules);
 // Chat
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
 
-// Agenda diponivel provider
-routes.get(
-  '/provider/:providerId/disponivel',
-  AgendaDisponivelController.getProviderScheduleAvailable,
-);
-
 // Pets
 routes.get('/pets', PetController.getUserPets);
 routes.post('/pets', PetController.createPet);
@@ -122,7 +115,6 @@ routes.use(authProvider);
 // Provider
 routes.get('/providers/profile', ProviderController.show);
 routes.put('/providers/', ProviderController.update);
-
 
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
