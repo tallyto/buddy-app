@@ -108,7 +108,7 @@ class AgendamentoUserController {
       where: {
         user_id: req.userId,
         canceled_at: null,
-        provider_id: req.params.providerId,
+        provider_id: req.params.provider_id,
         accept: true,
       },
       include: [
@@ -136,47 +136,37 @@ class AgendamentoUserController {
     return res.json(agendamento);
   }
 
-  async store(req, res) {
+  async aceitarAgendamento(req, res) {
     const schema = Yup.object().shape({
       payment: Yup.string(),
-      agendamentos: Yup.array().required(),
+      agendamentos: Yup.array().required('agendamento requerido'),
     });
-
     const { agendamentos } = req.body;
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
-
     const response = [];
+    try {
+      await schema.isValid(req.body)
+      for (const agendamento_id of agendamentos) {
+        const agendamento = await Agendamento.findByPk(agendamento_id);
 
-    for (const agendamento_id of agendamentos) {
-      const agendamento = await Agendamento.findByPk(agendamento_id);
+        if (!agendamento) {
+          return res.status(400).json({ error: 'agendamento não encontrado' });
+        }
 
-      if (!agendamento) {
-        return res.status(400).json({ error: 'agendamento não encontrado' });
+        await agendamento.update({ ...req.body, accept: true });
+
+        response.push(agendamento);
       }
-
-      await agendamento.update({ ...req.body, accept: true });
-
-      response.push(agendamento);
+      return res.json(response);
+    } catch (error) {
+      return res.status(500).json(error)
     }
-
-    return res.json(response);
   }
 
-  async cancelAppointment(req, res) {
+  async cancelarAgendamento(req, res) {
     const agendamento = await Agendamento.findByPk(req.params.id);
     if (!agendamento) {
       return res.status(400).json({ error: 'agendamento não encontrado' });
     }
-    if (agendamento.user_id !== req.userId) {
-      return res
-        .status(401)
-        .json({
-          error: 'você não tem permissão para cancelar esse agendamento',
-        });
-    }
-
     const dateWithSub = subHours(agendamento.date, 2);
 
     if (isBefore(dateWithSub, new Date())) {

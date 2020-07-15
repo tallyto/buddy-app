@@ -13,7 +13,6 @@ const Provider = require('../models/Provider');
 const User = require('../models/User');
 const Pet = require('../models/Pet');
 
-const Notification = require('../models/Notification');
 
 class AgendamentoController {
   async getProviderAppointmens(req, res) {
@@ -29,9 +28,7 @@ class AgendamentoController {
           model: User,
           as: 'user',
           attributes: ['name', 'email'],
-
           include: [{ model: File, as: 'avatar' }, { association: 'enderecos' }],
-
         },
         { model: Pet, as: 'pets', include: [{ model: File, as: 'avatar' }] },
       ],
@@ -44,64 +41,61 @@ class AgendamentoController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      user_id: Yup.number().required(),
-      pet_id: Yup.number().required(),
-      value: Yup.string().required(),
-      description: Yup.string().required(),
+      user_id: Yup.number().required('usuário é obrigatório'),
+      pet_id: Yup.number().required('pet é obrigatório'),
+      value: Yup.string().required('valor é obrigatório'),
+      description: Yup.string().required('descrição é obrigatória'),
+      date: Yup.array().required('data agendamento obrigatória')
     });
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Erro de validação' });
-    }
 
-    const {
-      user_id, date, value, description, pet_id,
-    } = req.body;
+    try {
+      const {
+        user_id, date, value, description, pet_id,
+      } = req.body;
+          
+      const agendamentos = [];  
+      await schema.validate(req.body)
 
-    const pet = await Pet.findByPk(pet_id);
-    if (!pet) {
-      return res.status(401).json({
-        error: 'Você precisa informar um pet para cadastrar um agendamento',
-      });
-    }
-
-    const agendamentos = [];
-
-    for (const datas of date) {
-      const hourStart = startOfHour(parseISO(datas));
-
-      // Verifica se a data passou
-      if (isBefore(hourStart, new Date())) {
-        return res.status(400).json({ error: 'datas passadas não são permitidas' });
+      for (const agendamento of date) {
+        const hourStart = startOfHour(parseISO(agendamento));
+  
+        // Verifica se a data passou
+        if (isBefore(hourStart, new Date())) {
+          return res.status(400).json({ error: 'datas passadas não são permitidas' });
+        }
+  
+        // // Verifica se a data esta disponivel
+        // const checkAvailability = await Agendamento.findOne({
+        //   where: {
+        //     date: hourStart,
+        //     provider_id: req.providerId,
+        //     canceled_at: null,
+        //   },
+        // });
+  
+        // if (checkAvailability) {
+        //   return res
+        //     .status(400)
+        //     .json({ error: 'Data de agendamento nao disponivel' });
+        // }
+  
+        const agendamento = await Agendamento.create({
+          user_id,
+          date: hourStart,
+          provider_id: req.providerId,
+          value,
+          description,
+          pet_id,
+        });
+  
+        agendamentos.push(agendamento);
       }
-
-      // // Verifica se a data esta disponivel
-      // const checkAvailability = await Agendamento.findOne({
-      //   where: {
-      //     date: hourStart,
-      //     provider_id: req.providerId,
-      //     canceled_at: null,
-      //   },
-      // });
-
-      // if (checkAvailability) {
-      //   return res
-      //     .status(400)
-      //     .json({ error: 'Data de agendamento nao disponivel' });
-      // }
-
-      const agendamento = await Agendamento.create({
-        user_id,
-        date: hourStart,
-        provider_id: req.providerId,
-        value,
-        description,
-        pet_id,
-      });
-
-      agendamentos.push(agendamento);
-    }
-
-    return res.json(agendamentos);
+  
+      return res.json(agendamentos);
+      
+    } catch (error) {
+      return res.status(500).json(error)
+    }    
   }
 }
 

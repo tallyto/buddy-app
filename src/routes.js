@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const multer = require('multer');
-const AgentamentoUser = require('./app/controllers/AgendamentoUserController');
+const AgentamentoUserController = require('./app/controllers/AgendamentoUserController');
 const ContaBancaria = require('./app/controllers/ContaBancariaController');
 const ConsultaController = require('./app/controllers/ConsultaController');
 const HistoricoController = require('./app/controllers/HistoricoController');
@@ -88,12 +88,12 @@ routes.get('/users/profile', UserController.show);
 routes.put('/users', UserController.update);
 
 // Agendamentos
-routes.get('/agendamentos/user', AgentamentoUser.getAcceptedSchedules);
-routes.get('/agendamento/:providerId', AgentamentoUser.getAcceptedSchedulesFromProvider);
-routes.get('/agendamentos/nao/confirmados', AgentamentoUser.getUnconfirmedSchedules);
-routes.post('/agendamenos/aceitar', AgentamentoUser.store);
-routes.delete('/agendamentos/:id', AgentamentoUser.cancelAppointment);
-routes.get('/agendamentos/pet/:pet_id', AgentamentoUser.getPetSchedules);
+routes.get('/agendamentos/user', AgentamentoUserController.getAcceptedSchedules);
+routes.get('/agendamento/:provider_id', AgentamentoUserController.getAcceptedSchedulesFromProvider);
+routes.get('/agendamentos/nao/confirmados', AgentamentoUserController.getUnconfirmedSchedules);
+routes.post('/agendamenos/aceitar', AgentamentoUserController.aceitarAgendamento);
+routes.delete('/agendamentos/:id', AgentamentoUserController.cancelarAgendamento);
+routes.get('/agendamentos/pet/:pet_id', AgentamentoUserController.getPetSchedules);
 
 // Chat
 routes.post('/chat/provider/:providerId/pet/:petId', ChatController.store);
