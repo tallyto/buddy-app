@@ -47,55 +47,48 @@ class AgendamentoController {
       description: Yup.string().required('descrição é obrigatória'),
       date: Yup.array().required('data agendamento obrigatória')
     });
-
-    try {
-      const {
-        user_id, date, value, description, pet_id,
-      } = req.body;
-
-      await schema.validate(req.body)
-      const agendamentos = [];
-      for (const agendamento of date) {
-        const hourStart = startOfHour(parseISO(agendamento));
+    const agendamentos = [];
+    const {
+      user_id, date, value, description, pet_id,
+    } = req.body;
     
-
-        // Verifica se a data passou
-        if (isBefore(hourStart, new Date())) {
-          return res.status(400).json({ error: 'datas passadas não são permitidas' });
-        }
-
-        // // Verifica se a data esta disponivel
-        // const checkAvailability = await Agendamento.findOne({
-        //   where: {
-        //     date: hourStart,
-        //     provider_id: req.providerId,
-        //     canceled_at: null,
-        //   },
-        // });
-
-        // if (checkAvailability) {
-        //   return res
-        //     .status(400)
-        //     .json({ error: 'Data de agendamento nao disponivel' });
-        // }
-
-        const agendamento = await Agendamento.create({
-          user_id,
-          date: hourStart,
-          provider_id: req.providerId,
-          value,
-          description,
-          pet_id,
-        });
-
-        agendamentos.push(agendamento);
-        return res.json(agendamentos);
+    for (const agendamento of date) {
+      const hourStart = startOfHour(parseISO(agendamento));
+      if (isBefore(hourStart, new Date())) {
+        return res.status(400).json({ error: 'datas passadas não são permitidas' });
       }
 
-    } catch (error) {
-      return res.status(500).json(error)
+      // // Verifica se a data esta disponivel
+      // const checkAvailability = await Agendamento.findOne({
+      //   where: {
+      //     date: hourStart,
+      //     provider_id: req.providerId,
+      //     canceled_at: null,
+      //   },
+      // });
+
+      // if (checkAvailability) {
+      //   return res
+      //     .status(400)
+      //     .json({ error: 'Data de agendamento nao disponivel' });
+      // }
+
+
+      const agendado = await Agendamento.create({
+        user_id,
+        date: hourStart,
+        provider_id: req.providerId,
+        value,
+        description,
+        pet_id,
+      });
+
+      agendamentos.push(agendado);
     }
+
+    return res.json(agendamentos);
   }
 }
+
 
 module.exports = new AgendamentoController();
