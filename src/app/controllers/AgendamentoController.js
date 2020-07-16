@@ -52,18 +52,18 @@ class AgendamentoController {
       const {
         user_id, date, value, description, pet_id,
       } = req.body;
-          
-      const agendamentos = [];  
+
       await schema.validate(req.body)
 
       for (const agendamento of date) {
         const hourStart = startOfHour(parseISO(agendamento));
-  
+        const agendamentos = [];
+
         // Verifica se a data passou
         if (isBefore(hourStart, new Date())) {
           return res.status(400).json({ error: 'datas passadas não são permitidas' });
         }
-  
+
         // // Verifica se a data esta disponivel
         // const checkAvailability = await Agendamento.findOne({
         //   where: {
@@ -72,13 +72,13 @@ class AgendamentoController {
         //     canceled_at: null,
         //   },
         // });
-  
+
         // if (checkAvailability) {
         //   return res
         //     .status(400)
         //     .json({ error: 'Data de agendamento nao disponivel' });
         // }
-  
+
         const agendamento = await Agendamento.create({
           user_id,
           date: hourStart,
@@ -87,15 +87,14 @@ class AgendamentoController {
           description,
           pet_id,
         });
-  
+
         agendamentos.push(agendamento);
+        return res.json(agendamentos);
       }
-  
-      return res.json(agendamentos);
-      
+
     } catch (error) {
       return res.status(500).json(error)
-    }    
+    }
   }
 }
 
