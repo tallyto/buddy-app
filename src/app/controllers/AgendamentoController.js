@@ -54,10 +54,10 @@ class AgendamentoController {
       } = req.body;
 
       await schema.validate(req.body)
-
+      const agendamentos = [];
       for (const agendamento of date) {
         const hourStart = startOfHour(parseISO(agendamento));
-        const agendamentos = [];
+    
 
         // Verifica se a data passou
         if (isBefore(hourStart, new Date())) {
