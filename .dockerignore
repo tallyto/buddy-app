@@ -1,0 +1,12 @@
+.env.test
+node_modules
+.git
+.eslintrc.json
+.gitignore
+.prettierrc
+.sequelizerc
+config.txt
+nodemon.json
+readme.md
+squelize-cli.sh
+yarn.lock
