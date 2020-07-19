@@ -1,14 +1,13 @@
 version: '3.8'
+
 services:
+    nginx-proxy:
+      image: jwilder/nginx-proxy
+      ports:
+        - "80:80"
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+  
     app:
-        labels:
-            - "traefik.enable=true"
-            - "traefik.frontend.rule=Host:dominio"
-    reverse-proxy:
-        image: traefik
-        command: --api --docker.exposedbydefault=false
-        ports:
-            - "80:80",
-            - '8080:8080'
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
+      environment:
+        - VIRTUAL_HOST=api.buddyaplicativo.com.br

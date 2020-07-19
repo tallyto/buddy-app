@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
 const User = require('../models/User');
 const Provider = require('../models/Provider');
 const AWS = require('aws-sdk')

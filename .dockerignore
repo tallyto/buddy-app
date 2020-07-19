@@ -10,3 +10,4 @@ nodemon.json
 readme.md
 squelize-cli.sh
 yarn.lock
+access.log
