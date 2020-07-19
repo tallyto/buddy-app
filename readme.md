@@ -21,5 +21,5 @@ npm start
 ```bash
 docker build -t buddy .
 
-docker run --name buddy -p 8000:3001 -d buddy
+docker run --name buddy -p 3001:3001 -d -t buddy
 ```
