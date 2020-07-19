@@ -1,9 +1,10 @@
 const Yup = require('yup');
 const User = require('../models/User');
 const File = require('../models/File');
+const Sentry = require('@sentry/node');
 
 class UserController {
-   async show(req, res) {
+  async show(req, res) {
     const user = await User.findOne({
       where: { id: req.userId },
       include: [
@@ -60,6 +61,7 @@ class UserController {
         email,
       });
     } catch (error) {
+      Sentry.captureException(error)
       return res.status(500).json(error);
     }
   }
@@ -98,12 +100,13 @@ class UserController {
         }
       }
 
-     await user.update(req.body);
+      await user.update(req.body);
 
-     user.password_hash = null
+      user.password_hash = null
 
       return res.json(user);
     } catch (error) {
+      Sentry.captureException(error)
       return res.status(500).json(error);
     }
   }
