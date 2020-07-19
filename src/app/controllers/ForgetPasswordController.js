@@ -3,6 +3,14 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
 const Provider = require('../models/Provider');
+const AWS = require('aws-sdk')
+const ses = new AWS.SES(
+  {
+    accessKeyId: "AKIAVCHI6YVLMMVSHFWC",
+    secretAccessKey: "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",
+    region: "us-east-1"
+  }
+)
 
 class ForgerPasswordController {
   async user(req, res) {
@@ -20,33 +28,42 @@ class ForgerPasswordController {
       });
     }
 
-    const transporter = nodemailer.createTransport({
-      host: 'email-smtp.us-east-1.amazonaws.com',
-      port: 25,
-      auth: {
-        user: 'AKIAVCHI6YVLKH52C74R',
-        pass: 'BF0TuZ2cRcEbTzcHqP2n8gwinBMiggfoPpbmA9ynkbqc',
-      },
-    });
-
     const newPassword = crypto.randomBytes(4).toString('hex');
 
-    try {
-      transporter
-        .sendMail({
-          from: 'Equipe Buddy <contatobuddyapp@gmail.com>',
-          to: email,
-          subject: 'Recuperação de senha!',
-          html: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br>
-          <p>Equipe buddy agradece!</p>`,
-        }).then(() => {
-          user.update({ password: newPassword }).then(() => res.json({ message: 'senha atualizada com sucesso' })).catch((error) => {
-            res.json({ message: 'erro ao atualizar sua senha', error });
-          });
-        }).catch((error) => res.json({ message: 'erro ao enviar o e-mail', error }));
-    } catch (error) {
-      return res.json({ message: 'erro ao atualizar sua senha', error });
+    const params = {
+      Destination: {
+        ToAddresses: [email]
+      },
+      Message: {
+        Body: {
+          Html: {
+            Charset: 'UTF-8',
+            Data:
+              `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br>
+            <p>Equipe buddy agradece!</p>`
+          },
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          Data: 'Recuperação de senha!'
+        }
+      },
+      ReturnPath: 'contatobuddyapp@gmail.com',
+      Source: 'contatobuddyapp@gmail.com'
     }
+
+    ses.sendEmail(params,async (err, data) => {
+      if (err) {
+        return res.json({ message: 'erro ao atualizar sua senha', err });
+      }
+      else {
+       await user.update({ password: newPassword })
+
+        return res.json({ message: 'senha atualizada com sucesso' })
+      }
+    })
+
+
   }
 
   async provider(req, res) {
@@ -62,35 +79,43 @@ class ForgerPasswordController {
       return res.status(401).json({
         error: 'Usuário não existente',
       });
-    }
-
-    const transporter = nodemailer.createTransport({
-      host: 'email-smtp.us-east-1.amazonaws.com',
-      port: 25,
-      auth: {
-        user: 'AKIAVCHI6YVLKH52C74R',
-        pass: 'BF0TuZ2cRcEbTzcHqP2n8gwinBMiggfoPpbmA9ynkbqc',
-      },
-    });
+    } 
 
     const newPassword = crypto.randomBytes(4).toString('hex');
 
-    try {
-      transporter
-        .sendMail({
-          from: 'Equipe Buddy <contatobuddyapp@gmail.com>',
-          to: email,
-          subject: 'Recuperação de senha!',
-          hhtml: `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br>
-          <p>Equipe buddy agradece!</p>`,
-        }).then(() => {
-          provider.update({ password: newPassword }).then(() => res.json({ message: 'senha atualizada com sucesso' })).catch((error) => {
-            res.json({ message: 'erro ao atualizar sua senha', error });
-          });
-        }).catch((error) => res.json({ message: 'erro ao enviar o e-mail', error }));
-    } catch (error) {
-      return res.json({ message: 'erro ao atualizar sua senha', error });
+    const params = {
+      Destination: {
+        ToAddresses: [email]
+      },
+      Message: {
+        Body: {
+          Html: {
+            Charset: 'UTF-8',
+            Data:
+              `<p>Olá, sua nova senha para acesar o sistema é: ${newPassword}</p></br>
+            <p>Equipe buddy agradece!</p>`
+          },
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          Data: 'Recuperação de senha!'
+        }
+      },
+      ReturnPath: 'contatobuddyapp@gmail.com',
+      Source: 'contatobuddyapp@gmail.com'
     }
+
+    ses.sendEmail(params,async (err, data) => {
+      if (err) {
+        return res.json({ message: 'erro ao atualizar sua senha', err });
+      }
+      else {
+       await provider.update({ password: newPassword })
+
+        return res.json({ message: 'senha atualizada com sucesso' })
+      }
+    })
+
   }
 }
 
