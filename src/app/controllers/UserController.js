@@ -1,7 +1,7 @@
 const Yup = require('yup');
+const Sentry = require('@sentry/node');
 const User = require('../models/User');
 const File = require('../models/File');
-const Sentry = require('@sentry/node');
 
 class UserController {
   async show(req, res) {
@@ -29,7 +29,7 @@ class UserController {
         },
       ],
     });
-    user.password_hash = null
+    user.password_hash = null;
     return res.json(user);
   }
 
@@ -61,7 +61,7 @@ class UserController {
         email,
       });
     } catch (error) {
-      Sentry.captureException(error)
+      Sentry.captureException(error);
       return res.status(500).json(error);
     }
   }
@@ -102,11 +102,11 @@ class UserController {
 
       await user.update(req.body);
 
-      user.password_hash = null
+      user.password_hash = null;
 
       return res.json(user);
     } catch (error) {
-      Sentry.captureException(error)
+      Sentry.captureException(error);
       return res.status(500).json(error);
     }
   }

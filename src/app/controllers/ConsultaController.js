@@ -3,7 +3,6 @@ const Pet = require('../models/Pet');
 const User = require('../models/User');
 
 class ConsultaController {
-
   async show(req, res) {
     const consultas = await Consulta.findAll({
       where: {

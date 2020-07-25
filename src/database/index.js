@@ -15,6 +15,8 @@ const Consulta = require('../app/models/Consulta');
 const Exame = require('../app/models/Exame');
 const Especialidade = require('../app/models/Especialidade');
 const Avaliacao = require('../app/models/Avaliacao');
+const Promocoes = require('../app/models/Promocoes');
+
 
 const databaseConfig = require('../config/database');
 
@@ -34,7 +36,8 @@ const models = [
   Exame,
   Especialidade,
   Avaliacao,
-  Admin
+  Admin,
+  Promocoes
 ];
 
 class Database {

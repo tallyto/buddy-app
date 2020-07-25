@@ -11,13 +11,8 @@ class PostController {
   }
 
   async store(req, res) {
-    const schema = Yup.object().shape({
-      title: Yup.string().required('titulo obrigatório'),
-      content: Yup.string().required('conteúdo obrigatório'),
-    });
     const { avatar_id } = req.body;
     try {
-      await schema.validate(req.body);
       if (avatar_id) {
         const avatar = await File.findByPk(avatar_id);
         if (!avatar) {
@@ -25,7 +20,7 @@ class PostController {
         }
       }
 
-      const post = await Post.create(req.body);
+      const post = await Post.create({...req.body, admin_id: req.adminId});
 
       return res.json(post);
     } catch (error) {
