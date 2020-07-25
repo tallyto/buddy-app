@@ -17,6 +17,7 @@ class Provider extends Model {
         location: Sequelize.BOOLEAN,
         notification: Sequelize.BOOLEAN,
         crmv: Sequelize.STRING,
+        accept: Sequelize.BOOLEAN,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
       },

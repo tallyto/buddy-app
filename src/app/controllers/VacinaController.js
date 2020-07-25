@@ -3,7 +3,6 @@ const Vacinas = require('../models/Vacina');
 const Pet = require('../models/Pet');
 
 class VacinaController {
-
   async show(req, res) {
     const vacinas = await Vacinas.findAll({
       where: {

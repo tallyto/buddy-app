@@ -4,7 +4,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server",
-    "dev": "NODE_ENV=development nodemon src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "NODE_ENV=test nodemon src/server.js",
     "db:create": "NODE_ENV=test sequelize db:create",
     "db:drop": "NODE_ENV=test sequelize db:drop",
@@ -39,5 +39,8 @@
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "sequelize-cli": "^6.2.0"
-  }
+  },
+  "description": "api",
+  "repository": "https://github.com/otallyto/buddy.git",
+  "author": "Tallyto Rodrigues"
 }

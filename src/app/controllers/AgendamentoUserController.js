@@ -144,7 +144,7 @@ class AgendamentoUserController {
     const { agendamentos } = req.body;
     const response = [];
     try {
-      await schema.isValid(req.body)
+      await schema.isValid(req.body);
       for (const agendamento_id of agendamentos) {
         const agendamento = await Agendamento.findByPk(agendamento_id);
 
@@ -158,7 +158,7 @@ class AgendamentoUserController {
       }
       return res.json(response);
     } catch (error) {
-      return res.status(500).json(error)
+      return res.status(500).json(error);
     }
   }
 

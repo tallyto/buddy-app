@@ -13,7 +13,6 @@ const Provider = require('../models/Provider');
 const User = require('../models/User');
 const Pet = require('../models/Pet');
 
-
 class AgendamentoController {
   async getProviderAppointmens(req, res) {
     const { page = 1 } = req.query;
@@ -45,13 +44,13 @@ class AgendamentoController {
       pet_id: Yup.number().required('pet é obrigatório'),
       value: Yup.string().required('valor é obrigatório'),
       description: Yup.string().required('descrição é obrigatória'),
-      date: Yup.array().required('data agendamento obrigatória')
+      date: Yup.array().required('data agendamento obrigatória'),
     });
     const agendamentos = [];
     const {
       user_id, date, value, description, pet_id,
     } = req.body;
-    
+
     for (const agendamento of date) {
       const hourStart = startOfHour(parseISO(agendamento));
       if (isBefore(hourStart, new Date())) {
@@ -73,7 +72,6 @@ class AgendamentoController {
       //     .json({ error: 'Data de agendamento nao disponivel' });
       // }
 
-
       const agendado = await Agendamento.create({
         user_id,
         date: hourStart,
@@ -89,6 +87,5 @@ class AgendamentoController {
     return res.json(agendamentos);
   }
 }
-
 
 module.exports = new AgendamentoController();

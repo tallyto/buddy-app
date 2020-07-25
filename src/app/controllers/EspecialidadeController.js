@@ -17,6 +17,9 @@ class EspecialidadeController {
             model: File,
             as: 'avatar',
           }],
+          where: {
+            accept: true,
+          },
         },
       ],
     });

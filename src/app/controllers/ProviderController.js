@@ -3,7 +3,6 @@ const Provider = require('../models/Provider');
 const File = require('../models/File');
 
 class ProviderController {
-  
   async show(req, res) {
     const provider = await Provider.findOne({
       where: { id: req.providerId },
@@ -24,6 +23,7 @@ class ProviderController {
           association: 'enderecos',
         },
         { association: 'contas' },
+        { association: 'especialidades' },
       ],
     });
 

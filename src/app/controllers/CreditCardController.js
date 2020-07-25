@@ -2,7 +2,6 @@ const Yup = require('yup');
 const CreditCard = require('../models/CreditCard');
 
 class CreditCardController {
-
   async store(req, res) {
     const schema = Yup.object().shape({
       titular: Yup.string().required('titular obrigatório'),

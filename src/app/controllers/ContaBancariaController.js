@@ -2,7 +2,6 @@ const Yup = require('yup');
 const ContaBancaria = require('../models/ContaBancaria');
 
 class ContaBancariaController {
-  
   async store(req, res) {
     const schema = Yup.object().shape({
       conta: Yup.string().required('conta obrigatória'),

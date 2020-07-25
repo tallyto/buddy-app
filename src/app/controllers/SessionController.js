@@ -4,7 +4,6 @@ const User = require('../models/User');
 const Provider = require('../models/Provider');
 const Admin = require('../models/Admin');
 
-
 const authConfig = require('../../config/auth');
 
 class SessionController {
@@ -118,7 +117,6 @@ class SessionController {
         }),
       });
     } catch (error) {
-      console.log(error)
       return res.status(500).json(error);
     }
   }

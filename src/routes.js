@@ -11,7 +11,7 @@ const forgetPassword = require('./app/controllers/ForgetPasswordController');
 const session = require('./app/controllers/SessionController');
 const EspecialidadeController = require('./app/controllers/EspecialidadeController');
 const AvaliacaoController = require('./app/controllers/AvalicaoController');
-const AdminController = require('./app/controllers/AdminController')
+const AdminController = require('./app/controllers/AdminController');
 const AgendamentoController = require('./app/controllers/AgendamentoController');
 const FileController = require('./app/controllers/FileController');
 const PetController = require('./app/controllers/PetController');
@@ -24,8 +24,8 @@ const CreditCardController = require('./app/controllers/CreditCardController');
 const TypeOfProviderController = require('./app/controllers/TypeOfProviderController');
 const ChatController = require('./app/controllers/ChatController');
 const { authAdmin, authProvider, authUser } = require('./app/middlewares/auth');
-
-
+const AdminProviderController = require('./app/controllers/AdminProviderController');
+const PromocoesController = require('./app/controllers/PromocoesController');
 const routes = Router();
 const upload = multer(multerConfig);
 
@@ -34,6 +34,8 @@ routes.get('/', (req, res) => {
 });
 
 routes.get('/posts', PostController.getPosts);
+routes.get('/promocoes', PromocoesController.getPromocoes);
+
 routes.post('/especialidades/:provider_id', EspecialidadeController.createEspecialidade);
 routes.get('/especialidades/', EspecialidadeController.getEspecialistas);
 
@@ -146,7 +148,7 @@ routes.put('/exames/:id', ExameController.update);
 routes.delete('/exames/:id', ExameController.delete);
 routes.get('/exames/pet/:id', ExameController.getPetExames);
 
-routes.use(authAdmin)
+routes.use(authAdmin);
 
 routes.put('/admin', AdminController.update);
 
@@ -154,5 +156,12 @@ routes.put('/admin', AdminController.update);
 routes.post('/posts', PostController.store);
 routes.put('/posts/:id', PostController.update);
 routes.delete('/posts/:id', PostController.delete);
+
+routes.post('/promocoes', PromocoesController.store);
+routes.put('/promocoes/:id', PromocoesController.update);
+routes.delete('/promocoes/:id', PromocoesController.delete);
+
+routes.get('/admin/pending/provider', AdminProviderController.getPendingProvider);
+routes.put('/admin/approve/:provider_id', AdminProviderController.approveProvider);
 
 module.exports = routes;

@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 
-class Post extends Model {
+class Promocoes extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -19,4 +19,4 @@ class Post extends Model {
   }
 }
 
-module.exports = Post;
+module.exports = Promocoes;

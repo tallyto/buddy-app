@@ -61,7 +61,7 @@ class AdminController {
 
       await admin.update(req.body);
 
-      admin.password_hash = null
+      admin.password_hash = null;
 
       return res.json(admin);
     } catch (error) {
