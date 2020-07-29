@@ -3,7 +3,10 @@ const File = require('../models/File');
 
 class PromocoesController {
   async getPromocoes(req, res) {
-    const promocoes = await Promocoes.findAll();
+    const promocoes = await Promocoes.findAll({include: [{
+      model: File,
+      as: 'avatar',
+    }]});
 
     return res.json(promocoes);
   }
