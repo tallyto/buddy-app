@@ -6,6 +6,7 @@ class TypeOfProvider {
     const passeador = await Provider.findAll({
       where: {
         passeador: true,
+        accept: true,
       },
       attributes: [
         'id',
