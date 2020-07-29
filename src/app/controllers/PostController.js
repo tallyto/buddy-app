@@ -5,7 +5,10 @@ const File = require('../models/File');
 
 class PostController {
   async getPosts(req, res) {
-    const post = await Post.findAll();
+    const post = await Post.findAll({include: [{
+      model: File,
+      as: 'avatar',
+    }]});
 
     return res.json(post);
   }
