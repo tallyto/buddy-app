@@ -163,6 +163,8 @@ routes.delete('/promocoes/:id', PromocoesController.delete);
 
 routes.get('/admin/pending/provider', AdminProviderController.getPendingProvider);
 routes.get('/admin/approved/provider', AdminProviderController.getApprovedProvider);
+routes.get('/admin/rejected/provider', AdminProviderController.getRejectedProvider);
+
 
 routes.put('/admin/approve/:provider_id', AdminProviderController.approveProvider);
 
