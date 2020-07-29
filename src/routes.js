@@ -162,6 +162,8 @@ routes.put('/promocoes/:id', PromocoesController.update);
 routes.delete('/promocoes/:id', PromocoesController.delete);
 
 routes.get('/admin/pending/provider', AdminProviderController.getPendingProvider);
+routes.get('/admin/approved/provider', AdminProviderController.getApprovedProvider);
+
 routes.put('/admin/approve/:provider_id', AdminProviderController.approveProvider);
 
 module.exports = routes;
