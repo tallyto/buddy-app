@@ -48,6 +48,14 @@ class AdminProviderController {
 
     return res.json({ message: 'profissional aprovado!' });
   }
+
+  async rejectProvider(req, res) {
+    const provider = await Provider.findByPk(req.params.provider_id);
+
+    await provider.update({ accept: false });
+
+    return res.json({ message: 'profissional reprovado!' });
+  }
 }
 
 module.exports = new AdminProviderController();

@@ -167,5 +167,6 @@ routes.get('/admin/rejected/provider', AdminProviderController.getRejectedProvid
 
 
 routes.put('/admin/approve/:provider_id', AdminProviderController.approveProvider);
+routes.put('/admin/reject/:provider_id', AdminProviderController.rejectProvider);
 
 module.exports = routes;
