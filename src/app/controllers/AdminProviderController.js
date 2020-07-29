@@ -1,4 +1,5 @@
 const Provider = require('../models/Provider');
+const File = require('../models/File');
 
 class AdminProviderController {
   async getPendingProvider(req, res) {
@@ -6,6 +7,9 @@ class AdminProviderController {
       where: {
         accept: null,
       },
+      include: [{ model: File, as: 'avatar' },
+       { model: File, as: 'crmv_frente' }, 
+       { model: File, as: 'crmv_verso' }]
     });
     response.forEach((provider) => { provider.password_hash = null; });
     return res.json(response);
