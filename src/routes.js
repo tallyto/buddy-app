@@ -20,6 +20,7 @@ const PostController = require('./app/controllers/PostController');
 const UserController = require('./app/controllers/UserController');
 const VacinaController = require('./app/controllers/VacinaController');
 const EnderecoController = require('./app/controllers/EnderecoController');
+const TransacaoController = require('./app/controllers/TransacaoController');
 const CreditCardController = require('./app/controllers/CreditCardController');
 const TypeOfProviderController = require('./app/controllers/TypeOfProviderController');
 const ChatController = require('./app/controllers/ChatController');
@@ -30,7 +31,7 @@ const routes = Router();
 const upload = multer(multerConfig);
 
 routes.get('/', (req, res) => {
-  res.send('<h1>Buddypet</h1>');
+  res.send('<h1>Buddypet Pagar me</h1>');
 });
 
 routes.get('/posts', PostController.getPosts);
@@ -62,6 +63,9 @@ routes.get('/providers/clinica', TypeOfProviderController.clinica);
 routes.get('/providers/passeador', TypeOfProviderController.passeador);
 routes.get('/providers/adestrador', TypeOfProviderController.adestrador);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
+
+//Transacao
+routes.post('/transacao', TransacaoController.store);
 
 // Session
 routes.post('/sessions', session.user);

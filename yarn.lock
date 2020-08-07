@@ -2249,6 +2249,11 @@ packet-reader@1.0.0:
   resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-1.0.0.tgz#9238e5480dedabacfe1fe3f2771063f164157d74"
   integrity sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==
 
+pagarme@^4.12.0:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.12.0.tgz#651f8644219766298a28ae215df958be6649141e"
+  integrity sha512-YJkEZJHyZAPEMpAolE3T/f7jjGrJ5coFH4oqRe0q6ZG40ucYJRCX13J9z01p0cjgbGV+Ddo0LOq+HDfjItbu0A==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
