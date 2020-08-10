@@ -89,7 +89,7 @@ class AgendamentoUserController {
       include: [{
         model: Provider,
         as: 'provider',
-        attributes: ['name', 'email', 'clinica', 'passeador', 'adestrador'],
+        attributes: ['id' , 'name', 'email', 'clinica', 'passeador', 'adestrador'],
 
         include: [
           { model: File, as: 'avatar' },
@@ -167,15 +167,14 @@ class AgendamentoUserController {
     if (!agendamento) {
       return res.status(400).json({ error: 'agendamento não encontrado' });
     }
-    const dateWithSub = subHours(agendamento.date, 2);
-
-    if (isBefore(dateWithSub, new Date())) {
-      return res
-        .status(401)
-        .json({
-          error: 'o agandamento só pode ser cancelado com 2 horas de antecedencia',
-        });
-    }
+    // const dateWithSub = subHours(agendamento.date, 2);
+    // if (isBefore(dateWithSub, new Date())) {
+    //   return res
+    //     .status(401)
+    //     .json({
+    //       error: 'o agandamento só pode ser cancelado com 2 horas de antecedencia',
+    //     });
+    // }
 
     agendamento.canceled_at = new Date();
 

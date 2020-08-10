@@ -47,7 +47,8 @@ class ContaBancariaController {
       console.log('error')
       try {
       
-        return res.json(exp);
+       return res.status(401).json({ error: 'No momento estamos corrigindo essa função' });
+        ;
       } catch (error) {
         return res.status(500).json(error);
       }

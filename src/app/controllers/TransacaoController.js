@@ -16,10 +16,11 @@ class TransacaoController {
     pagarme.client.connect({ api_key: 'ak_test_X2rJRGqCaE4O97mh8xsYULpqxlT4RI' })
   .then(client => client.transactions.create({
     "amount": valor,
-    "card_number": creditCard.card_number,
-    "card_cvv": creditCard.cvv,
-    "card_expiration_date": creditCard.validate,
-    "card_holder_name": creditCard.titular,
+    "card_id":creditCard.card_id,
+    // "card_number": creditCard.card_number,
+    // "card_cvv": creditCard.cvv,
+    // "card_expiration_date": creditCard.validate,
+    // "card_holder_name": creditCard.titular,
     "customer": {
       "external_id": "#3311",
       "name": "Morpheus Fishburne",
@@ -103,7 +104,7 @@ class TransacaoController {
     }
   })  
   .catch(function(exp){
-    console.log('error')
+    console.log(exp)
     try {
     
       return res.json(exp);

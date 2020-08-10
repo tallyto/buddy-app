@@ -21,12 +21,16 @@ class CreditCardController {
      card_expiration_date: validade,
      card_cvv: cvv,
    }))
-  .then(async function(recipient){
-    console.log(recipient)
+  .then(async function(card){
+    console.log(card)
     try {
       await schema.validate(req.body);
 
-      const creditCard = await CreditCard.create({ ...req.body, user_id: req.userId });
+      const creditCard = await CreditCard.create({ 
+        ...req.body,  
+        card_id: card.id, 
+        user_id: req.userId
+       });
 
       return res.json(creditCard);
     } catch (error) {
@@ -42,9 +46,7 @@ class CreditCardController {
       return res.status(500).json(error);
     }
   })
-  
 
-  
   }
 
   async update(req, res) {

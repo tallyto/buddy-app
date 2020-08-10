@@ -60,7 +60,7 @@ class ChatController {
         {
           model: Provider,
           as: 'provider',
-          attributes: ['name', 'passeador', 'adestrador', 'clinica'],
+          attributes: ['id' , 'name', 'passeador', 'adestrador', 'clinica'],
           include: [{ model: File, as: 'avatar', attributes: ['url'] }],
         },
         {
