@@ -9,7 +9,7 @@ module.exports = {
     let age = date;
 
     const years = differenceInYears(now, age);
-    if (years > 0) {
+    if (years > 0 && years > 1) {
       result.push(`${years} anos`);
       age = addYears(age, years);
     }
