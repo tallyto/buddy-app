@@ -14,14 +14,19 @@ module.exports = {
       age = addYears(age, years);
     }
 
-    if (years == 1) {
+    if (years === 1) {
       result.push(`${years} ano`);
       age = addYears(age, years);
     }
 
     const months = differenceInMonths(now, age);
-    if (months > 0) {
+    if (months > 0 && months > 1) {
       result.push(`${months} e meses`);
+      age = addMonths(age, months);
+    }
+
+    if (months === 1) {
+      result.push(`${months} e mês`);
       age = addMonths(age, months);
     }
 
