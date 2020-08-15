@@ -28,6 +28,7 @@ const ChatController = require('./app/controllers/ChatController');
 const { authAdmin, authProvider, authUser } = require('./app/middlewares/auth');
 const AdminProviderController = require('./app/controllers/AdminProviderController');
 const PromocoesController = require('./app/controllers/PromocoesController');
+
 const routes = Router();
 const upload = multer(multerConfig);
 
@@ -65,7 +66,7 @@ routes.get('/providers/passeador', TypeOfProviderController.passeador);
 routes.get('/providers/adestrador', TypeOfProviderController.adestrador);
 routes.put('/providers/cadastro/:id', ProviderController.cadastro);
 
-//Pagar me
+// Pagar me
 routes.post('/transacao', TransacaoController.store);
 routes.post('/transferencia', TransacaoController.store);
 
@@ -157,6 +158,8 @@ routes.get('/exames/pet/:id', ExameController.getPetExames);
 routes.use(authAdmin);
 
 routes.put('/admin', AdminController.update);
+routes.get('/admin/find/providers', ProviderController.findProviders);
+routes.delete('/admin/remove/provider/:provider_id', ProviderController.remove);
 
 // Posts
 routes.post('/posts', PostController.store);
@@ -170,7 +173,6 @@ routes.delete('/promocoes/:id', PromocoesController.delete);
 routes.get('/admin/pending/provider', AdminProviderController.getPendingProvider);
 routes.get('/admin/approved/provider', AdminProviderController.getApprovedProvider);
 routes.get('/admin/rejected/provider', AdminProviderController.getRejectedProvider);
-
 
 routes.put('/admin/approve/:provider_id', AdminProviderController.approveProvider);
 routes.put('/admin/reject/:provider_id', AdminProviderController.rejectProvider);

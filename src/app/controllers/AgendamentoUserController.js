@@ -147,13 +147,10 @@ class AgendamentoUserController {
       await schema.isValid(req.body);
       for (const agendamento_id of agendamentos) {
         const agendamento = await Agendamento.findByPk(agendamento_id);
-
         if (!agendamento) {
           return res.status(400).json({ error: 'agendamento não encontrado' });
         }
-
         await agendamento.update({ ...req.body, accept: true });
-
         response.push(agendamento);
       }
       return res.json(response);
@@ -175,11 +172,8 @@ class AgendamentoUserController {
     //       error: 'o agandamento só pode ser cancelado com 2 horas de antecedencia',
     //     });
     // }
-
     agendamento.canceled_at = new Date();
-
     await agendamento.save();
-
     return res.json(agendamento);
   }
 }

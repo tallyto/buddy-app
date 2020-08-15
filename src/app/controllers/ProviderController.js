@@ -174,6 +174,22 @@ class ProviderController {
       return res.status(500).json(error);
     }
   }
+
+  async remove(req, res) {
+    const provider = await Provider.findByPk(req.params.provider_id);
+    if (!provider) {
+      res.status(400).json({ erro: 'profissional não encontrado' });
+    }
+    await provider.destroy();
+
+    return res.json();
+  }
+
+  async findProviders(req, res) {
+    const providers = await Provider.findAll();
+
+    return res.json(providers);
+  }
 }
 
 module.exports = new ProviderController();
