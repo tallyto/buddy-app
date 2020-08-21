@@ -21,12 +21,12 @@ module.exports = {
 
     const months = differenceInMonths(now, age);
     if (months > 0 && months > 1) {
-      result.push(`${months} e meses`);
+      result.push(`${months} meses`);
       age = addMonths(age, months);
     }
 
     if (months === 1) {
-      result.push(`${months} e mês`);
+      result.push(`${months} mês`);
       age = addMonths(age, months);
     }
 
