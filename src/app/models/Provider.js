@@ -20,6 +20,8 @@ class Provider extends Model {
         accept: Sequelize.BOOLEAN,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        avaliacao: Sequelize.NUMBER,
+
       },
       { sequelize },
     );
