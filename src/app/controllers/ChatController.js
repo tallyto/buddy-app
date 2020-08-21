@@ -46,6 +46,7 @@ class ChatController {
           include: [{ model: File, as: 'avatar', attributes: ['url'] }],
         },
       ],
+      order: [['created_at', 'desc']],
     });
 
     return res.json(chats);
@@ -69,6 +70,7 @@ class ChatController {
           include: [{ model: File, as: 'avatar', attributes: ['url'] }],
         },
       ],
+      order: [['created_at', 'desc']],
     });
 
     return res.json(chats);
