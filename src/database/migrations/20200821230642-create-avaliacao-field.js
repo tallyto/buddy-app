@@ -1,8 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.addColumn('providers', 'avaliacao', {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: true,
-    default: 0,
   }),
   down: (queryInterface) => queryInterface.removeColumn('providers', 'avaliacao'),
 };
