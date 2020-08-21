@@ -2,81 +2,66 @@ const Yup = require('yup');
 const pagarme = require('pagarme')
 const ContaBancaria = require('../models/ContaBancaria');
 const CreditCard = require('../models/CreditCard');
+const User = require('../models/User');
+const Endereco = require('../models/Endereco');
+
+
 
 class TransacaoController {
   async store(req, res) {
 
-    const { creditID , bankId , valor , split1 , split2 } = req.body
+    const { creditID , bankId , userId, valor , split1 , split2 , parcelas, description, idAgendamento} = req.body
     const creditCard = await CreditCard.findOne({
         where: { id: creditID },
       });
       const contaBancaria = await ContaBancaria.findOne({
         where: { id: bankId },
       });
-    pagarme.client.connect({ api_key: 'ak_test_X2rJRGqCaE4O97mh8xsYULpqxlT4RI' })
+      const user = await User.findOne({
+        where: { id: userId },
+      });
+      const endereco = await Endereco.findOne({
+        where: { id: creditCard.endereco_id },
+      });
+    pagarme.client.connect({ api_key: 'ak_live_R7gax2DaMemgk2QlU6JNCzQ8VhPNpf' })
   .then(client => client.transactions.create({
     "amount": valor,
     "card_id":creditCard.card_id,
-    // "card_number": creditCard.card_number,
-    // "card_cvv": creditCard.cvv,
-    // "card_expiration_date": creditCard.validate,
-    // "card_holder_name": creditCard.titular,
+    "installments":parcelas,
+    "soft_descriptor":description,
     "customer": {
-      "external_id": "#3311",
-      "name": "Morpheus Fishburne",
+      "external_id": `#${user.id}`,
+      "name":user.name,
       "type": "individual",
       "country": "br",
-      "email": "mopheus@nabucodonozor.com",
+      "email": user.email,
       "documents": [
         {
           "type": "cpf",
-          "number": "30621143049"
+          "number": creditCard.cpf
         }
       ],
-      "phone_numbers": ["+5511999998888", "+5511888889999"],
-      "birthday": "1965-01-01"
+      "phone_numbers": [`+55${user.telefone}`],
     },
     "billing": {
-      "name": "Trinity Moss",
+      "name": creditCard.titular,
       "address": {
         "country": "br",
-        "state": "sp",
-        "city": "Cotia",
-        "neighborhood": "Rio Cotia",
-        "street": "Rua Matrix",
-        "street_number": "9999",
-        "zipcode": "06714360"
-      }
-    },
-    "shipping": {
-      "name": "Neo Reeves",
-      "fee": 1000,
-      "delivery_date": "2000-12-21",
-      "expedited": true,
-      "address": {
-        "country": "br",
-        "state": "sp",
-        "city": "Cotia",
-        "neighborhood": "Rio Cotia",
-        "street": "Rua Matrix",
-        "street_number": "9999",
-        "zipcode": "06714360"
+        "state": "rj",
+        "city": endereco.cidade,
+        "neighborhood":endereco.bairro,
+        "street": endereco.rua,
+        "street_number": endereco.numero,
+        "zipcode": endereco.cep
       }
     },
     "items": [
       {
-        "id": "r123",
-        "title": "Red pill",
-        "unit_price": 10000,
+        "id": idAgendamento,
+        "title": description,
+        "unit_price": valor,
         "quantity": 1,
-        "tangible": true
-      },
-      {
-        "id": "b123",
-        "title": "Blue pill",
-        "unit_price": 10000,
-        "quantity": 1,
-        "tangible": true
+        "tangible": false
       }
     ],
     "split_rules": [
@@ -87,7 +72,7 @@ class TransacaoController {
           "charge_processing_fee": true
         },
         {
-          "recipient_id": "re_ckdjc8oue02x26c6eiyaskhil",
+          "recipient_id": "re_cke4l0k020r7b6y60jerq116j",
           "percentage": split2,
           "liable": true,
           "charge_processing_fee": true

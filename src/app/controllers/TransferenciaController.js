@@ -10,7 +10,7 @@ class TransferenciaController {
       const contaBancaria = await ContaBancaria.findOne({
         where: { id: bankId },
       });
-    pagarme.client.connect({ api_key: 'ak_test_X2rJRGqCaE4O97mh8xsYULpqxlT4RI' })
+    pagarme.client.connect({ api_key: 'ak_live_R7gax2DaMemgk2QlU6JNCzQ8VhPNpf' })
     .then(client => client.transfers.create({
         amount: valor,
         recipient_id: contaBancaria.recipient_id,

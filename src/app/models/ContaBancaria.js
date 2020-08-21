@@ -8,6 +8,7 @@ class ContaBancaria extends Model {
         conta: Sequelize.STRING,
         agencia: Sequelize.STRING,
         banco: Sequelize.STRING,
+        conta_dv: Sequelize.STRING,
         recipient_id:Sequelize.STRING
       },
       { sequelize },

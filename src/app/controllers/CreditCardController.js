@@ -14,7 +14,7 @@ class CreditCardController {
     });
     const { titular , card_number , validade , cvv, payment} = req.body
 
-    pagarme.client.connect({ api_key: 'ak_test_X2rJRGqCaE4O97mh8xsYULpqxlT4RI' })
+    pagarme.client.connect({ api_key: 'ak_live_R7gax2DaMemgk2QlU6JNCzQ8VhPNpf' })
    .then(client => client.cards.create({
      card_number: card_number,
      card_holder_name: titular,
