@@ -10,17 +10,17 @@ class ContaBancariaController {
       banco: Yup.string().required('banco obrigatório'),
     });
 
-    const { agencia , banco , conta , cpf, code} = req.body
-    pagarme.client.connect({ api_key: 'ak_test_X2rJRGqCaE4O97mh8xsYULpqxlT4RI' })
+    const { agencia  , conta , conta_dv , cpf , code , nome} = req.body
+    pagarme.client.connect({ api_key: 'ak_live_R7gax2DaMemgk2QlU6JNCzQ8VhPNpf' })
     .then(client => client.bankAccounts.create({
       bank_code: code,
       agencia: agencia,
       conta: conta,
-      conta_dv: '9',
-      legal_name: banco,
+      conta_dv: conta_dv,
+      legal_name: nome,
       document_number: cpf
     }))
-    .then(bankAccount => pagarme.client.connect({ api_key: 'ak_test_X2rJRGqCaE4O97mh8xsYULpqxlT4RI' })
+    .then(bankAccount => pagarme.client.connect({ api_key: 'ak_live_R7gax2DaMemgk2QlU6JNCzQ8VhPNpf' })
     .then(client => client.recipients.create({
       bank_account_id: bankAccount.id,
       transfer_interval: 'weekly',
@@ -44,11 +44,11 @@ class ContaBancariaController {
       }
     }))
     .catch(function(exp){
-      console.log('error')
+      console.log(exp)
       try {
       
-       return res.status(401).json({ error: 'No momento estamos corrigindo essa função' });
-        ;
+       return res.status(401).json(exp);
+        
       } catch (error) {
         return res.status(500).json(error);
       }
