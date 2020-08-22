@@ -12,7 +12,7 @@ class EspecialidadeController {
         {
           model: Provider,
           as: 'providers',
-          attributes: ['id', 'name', 'crmv', 'bio', 'avatar_id'],
+          attributes: ['id', 'name', 'crmv', 'bio', 'avatar_id', 'avaliacao'],
           include: [{
             model: File,
             as: 'avatar',
@@ -20,9 +20,9 @@ class EspecialidadeController {
           where: {
             accept: true,
           },
+          order: ['avaliacao'],
         },
       ],
-      order: ['avaliacao'],
     });
 
     return res.json(especialidade);
