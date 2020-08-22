@@ -19,6 +19,7 @@ class TypeOfProvider {
         'location',
         'notification',
         'avatar_id',
+        'avaliacao',
       ],
       include: [
         {
