@@ -22,6 +22,7 @@ class EspecialidadeController {
           },
         },
       ],
+      order: ['avaliacao'],
     });
 
     return res.json(especialidade);

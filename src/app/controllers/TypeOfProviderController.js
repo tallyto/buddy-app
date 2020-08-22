@@ -26,6 +26,7 @@ class TypeOfProvider {
           as: 'avatar',
         },
       ],
+      order: ['avaliacao'],
     });
 
     return res.json(passeador);
