@@ -15,7 +15,7 @@ class AvaliacaoController {
     let total = 0;
     avaliacoes.forEach((item) => total += Number(item.avaliacao));
     const provider = await Provider.findByPk(provider_id);
-    provider.avaliacao = total / avaliacoes.length;
+    provider.avaliacao = (total / avaliacoes.length).toFixed(2);
     await provider.save();
     return res.json(avaliacao);
   }

@@ -39,20 +39,13 @@ class AgendamentoController {
   }
 
   async store(req, res) {
-    const schema = Yup.object().shape({
-      user_id: Yup.number().required('usuário é obrigatório'),
-      pet_id: Yup.number().required('pet é obrigatório'),
-      value: Yup.string().required('valor é obrigatório'),
-      description: Yup.string().required('descrição é obrigatória'),
-      date: Yup.array().required('data agendamento obrigatória'),
-    });
     const agendamentos = [];
     const {
       user_id, date, value, description, pet_id,
     } = req.body;
 
     for (const agendamento of date) {
-      const hourStart = startOfHour(parseISO(agendamento));
+      const hourStart = parseISO(agendamento);
       if (isBefore(hourStart, new Date())) {
         return res.status(400).json({ error: 'datas passadas não são permitidas' });
       }
@@ -85,6 +78,28 @@ class AgendamentoController {
     }
 
     return res.json(agendamentos);
+  }
+
+  async cancelarAgendamento(req, res) {
+    const agendamento = await Agendamento.findByPk(req.params.id);
+    const provider = await Provider.findByPk(req.providerId)
+
+    if (!agendamento) {
+      return res.status(400).json({ error: 'agendamento não encontrado' });
+    }
+    // const dateWithSub = subHours(agendamento.date, 2);
+    // if (isBefore(dateWithSub, new Date())) {
+    //   return res
+    //     .status(401)
+    //     .json({
+    //       error: 'o agandamento só pode ser cancelado com 2 horas de antecedencia',
+    //     });
+    // }
+    provider.avaliacao = (provider.avaliacao - 0.5).toFixed(2)
+    await provider.save()
+    agendamento.canceled_at = new Date();
+    await agendamento.save();
+    return res.json(agendamento);
   }
 }
 

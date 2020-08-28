@@ -128,6 +128,8 @@ routes.put('/providers/', ProviderController.update);
 // Agendemantos
 routes.post('/agendamentos', AgendamentoController.store);
 routes.get('/agendamentos/provider', AgendamentoController.getProviderAppointmens);
+routes.delete('/providers/agendamentos/:id', AgendamentoController.cancelarAgendamento);
+
 
 // Conta Bancaria
 routes.post('/conta-bancaria', ContaBancaria.store);
