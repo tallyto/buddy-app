@@ -28,7 +28,7 @@
     "multer-s3": "^2.9.0",
     "pagarme": "^4.12.0",
     "pg": "^8.3.0",
-    "sequelize": "^6.3.4",
+    "sequelize": "^6.28.2",
     "yup": "^0.29.1"
   },
   "devDependencies": {
